@@ -52,7 +52,7 @@ function LoginForm() {
                         <FormGroup>
                             <Label for="question6">6. Anh/Chị hoặc người thân tiếp xúc gần có vừa di chuyển từ nơi khác về không?</Label>
                             <div>
-                                <CustomInput type="radio" id="none7" name="question6" label="Không" required/>
+                                <CustomInput type="radio" id="none7" name="question6" label="Không" required />
                                 <CustomInput type="radio" id="dichuyen1" name="question6" label="Có và đã khai báo trong 14 ngày" />
                                 <CustomInput type="radio" id="dichuyen2" name="question6" label="Anh/Chị là người di chuyển" />
                                 <CustomInput type="radio" id="dichuyen3" name="question6" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển" />
@@ -62,7 +62,7 @@ function LoginForm() {
                         <FormGroup>
                             <Label for="question7">7. Anh/Chị hoặc người thân tiếp xúc gần có tiếp xúc gần với người từ nước ngoài/người từ vùng dịch về/người được xếp loại F không?</Label>
                             <div>
-                                <CustomInput type="radio" id="none8" name="question7" label="Không" required/>
+                                <CustomInput type="radio" id="none8" name="question7" label="Không" required />
                                 <CustomInput type="radio" id="tiepxuc1" name="question7" label="Có và đã khai báo trong 14 ngày" />
                                 <CustomInput type="radio" id="tiepxuc2" name="question7" label="Anh/Chị là người tiếp xúc" />
                                 <CustomInput type="radio" id="tiepxuc3" name="question7" label="Người thân tiếp xúc gần của Anh/Chị là người tiếp xúc" />
@@ -72,11 +72,11 @@ function LoginForm() {
                         <FormGroup>
                             <Label for="question8">8. Anh/Chị có đến hoặc lưu trú tại các địa điểm liên quan đến người nhiễm Covid được công bố hoặc có tiếp xúc với người nhiễm/nghi nhiễm Covid không?</Label>
                             <div>
-                                    <CustomInput type="radio" id="none9" name="question8" label="Không" required/>
-                                    <CustomInput type="radio" id="luutru1" name="question8" label="Có và đã khai báo trong 14 ngày" />
-                                    <CustomInput type="radio" id="luutru2" name="question8" label="Anh/Chị là người di chuyển/tiếp xúc" />
-                                    <CustomInput type="radio" id="luutru3" name="question8" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc" />
-                                    <CustomInput type="radio" id="luutru4" name="question8" label="Cả hai đều là người di chuyển/tiếp xúc" />
+                                <CustomInput type="radio" id="none9" name="question8" label="Không" required />
+                                <CustomInput type="radio" id="luutru1" name="question8" label="Có và đã khai báo trong 14 ngày" />
+                                <CustomInput type="radio" id="luutru2" name="question8" label="Anh/Chị là người di chuyển/tiếp xúc" />
+                                <CustomInput type="radio" id="luutru3" name="question8" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc" />
+                                <CustomInput type="radio" id="luutru4" name="question8" label="Cả hai đều là người di chuyển/tiếp xúc" />
                             </div>
                         </FormGroup>
                         <Button outline color="info">Gửi</Button>
