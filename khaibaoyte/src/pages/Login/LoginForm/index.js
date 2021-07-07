@@ -40,43 +40,43 @@ function LoginForm() {
                             <Input className="without_number" type="number" name="userTel" id="userTel" placeholder="ex: 0845372112" required />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="question6">6. Anh/Chị có dấu hiệu lâm sàng nào dưới đây?</Label>
+                            <Label for="question5">5. Anh/Chị có dấu hiệu lâm sàng nào dưới đây?</Label>
                             <div>
-                                <CustomInput class="sr-only" type="checkbox" id="dauhieu1" label="Ho khan hoặc đau họng" />
-                                <CustomInput class="sr-only" type="checkbox" id="dauhieu2" label="Đau ngực hoặc khó thở" />
-                                <CustomInput class="sr-only" type="checkbox" id="dauhieu3" label="Sốt cao (trên 38 độ C)" />
-                                <CustomInput class="sr-only" type="checkbox" id="dauhieu4" label="Chảy nước mũi khó chịu" />
-                                <CustomInput class="sr-only" type="checkbox" id="none6" label="Không có tất cả dấu hiệu trên" required />
+                                <CustomInput type="checkbox" id="dauhieu1" label="Ho khan hoặc đau họng" />
+                                <CustomInput type="checkbox" id="dauhieu2" label="Đau ngực hoặc khó thở" />
+                                <CustomInput type="checkbox" id="dauhieu3" label="Sốt cao (trên 38 độ C)" />
+                                <CustomInput type="checkbox" id="dauhieu4" label="Chảy nước mũi khó chịu" />
+                                <CustomInput type="checkbox" id="none6" label="Không có tất cả dấu hiệu trên" required />
                             </div>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="question7">7. Anh/Chị hoặc người thân tiếp xúc gần có vừa di chuyển từ nơi khác về không?</Label>
+                            <Label for="question6">6. Anh/Chị hoặc người thân tiếp xúc gần có vừa di chuyển từ nơi khác về không?</Label>
                             <div>
-                                <CustomInput type="radio" id="none7" name="question7" label="Không" required/>
-                                <CustomInput type="radio" id="dichuyen1" name="question7" label="Có và đã khai báo trong 14 ngày" />
-                                <CustomInput type="radio" id="dichuyen2" name="question7" label="Anh/Chị là người di chuyển" />
-                                <CustomInput type="radio" id="dichuyen3" name="question7" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển" />
-                                <CustomInput type="radio" id="dichuyen4" name="question7" label="Cả hai đều là người di chuyển" />
+                                <CustomInput type="radio" id="none7" name="question6" label="Không" required/>
+                                <CustomInput type="radio" id="dichuyen1" name="question6" label="Có và đã khai báo trong 14 ngày" />
+                                <CustomInput type="radio" id="dichuyen2" name="question6" label="Anh/Chị là người di chuyển" />
+                                <CustomInput type="radio" id="dichuyen3" name="question6" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển" />
+                                <CustomInput type="radio" id="dichuyen4" name="question6" label="Cả hai đều là người di chuyển" />
                             </div>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="question8">8. Anh/Chị hoặc người thân tiếp xúc gần có tiếp xúc gần với người từ nước ngoài/người từ vùng dịch về/người được xếp loại F không?</Label>
+                            <Label for="question7">7. Anh/Chị hoặc người thân tiếp xúc gần có tiếp xúc gần với người từ nước ngoài/người từ vùng dịch về/người được xếp loại F không?</Label>
                             <div>
-                                <CustomInput type="radio" id="none8" name="question8" label="Không" required/>
-                                <CustomInput type="radio" id="tiepxuc1" name="question8" label="Có và đã khai báo trong 14 ngày" />
-                                <CustomInput type="radio" id="tiepxuc2" name="question8" label="Anh/Chị là người tiếp xúc" />
-                                <CustomInput type="radio" id="tiepxuc3" name="question8" label="Người thân tiếp xúc gần của Anh/Chị là người tiếp xúc" />
-                                <CustomInput type="radio" id="tiepxuc4" name="question8" label="Cả hai đều là người tiếp xúc" />
+                                <CustomInput type="radio" id="none8" name="question7" label="Không" required/>
+                                <CustomInput type="radio" id="tiepxuc1" name="question7" label="Có và đã khai báo trong 14 ngày" />
+                                <CustomInput type="radio" id="tiepxuc2" name="question7" label="Anh/Chị là người tiếp xúc" />
+                                <CustomInput type="radio" id="tiepxuc3" name="question7" label="Người thân tiếp xúc gần của Anh/Chị là người tiếp xúc" />
+                                <CustomInput type="radio" id="tiepxuc4" name="question7" label="Cả hai đều là người tiếp xúc" />
                             </div>
                         </FormGroup>
                         <FormGroup>
-                            <Label for="question9">9. Anh/Chị có đến hoặc lưu trú tại các địa điểm liên quan đến người nhiễm Covid được công bố hoặc có tiếp xúc với người nhiễm/nghi nhiễm Covid không?</Label>
+                            <Label for="question8">8. Anh/Chị có đến hoặc lưu trú tại các địa điểm liên quan đến người nhiễm Covid được công bố hoặc có tiếp xúc với người nhiễm/nghi nhiễm Covid không?</Label>
                             <div>
-                                    <CustomInput type="radio" id="none9" name="question9" label="Không" required/>
-                                    <CustomInput type="radio" id="luutru1" name="question9" label="Có và đã khai báo trong 14 ngày" />
-                                    <CustomInput type="radio" id="luutru2" name="question9" label="Anh/Chị là người di chuyển/tiếp xúc" />
-                                    <CustomInput type="radio" id="luutru3" name="question9" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc" />
-                                    <CustomInput type="radio" id="luutru4" name="question9" label="Cả hai đều là người di chuyển/tiếp xúc" />
+                                    <CustomInput type="radio" id="none9" name="question8" label="Không" required/>
+                                    <CustomInput type="radio" id="luutru1" name="question8" label="Có và đã khai báo trong 14 ngày" />
+                                    <CustomInput type="radio" id="luutru2" name="question8" label="Anh/Chị là người di chuyển/tiếp xúc" />
+                                    <CustomInput type="radio" id="luutru3" name="question8" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc" />
+                                    <CustomInput type="radio" id="luutru4" name="question8" label="Cả hai đều là người di chuyển/tiếp xúc" />
                             </div>
                         </FormGroup>
                         <Button outline color="info">Gửi</Button>
