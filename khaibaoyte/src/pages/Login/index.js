@@ -1,6 +1,6 @@
-import React from 'react'
-import { Button, Form, FormGroup, Label, Input, FormText, Col, Container, Row, } from 'reactstrap';
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 
 function Login() {
     return (
@@ -22,6 +22,8 @@ function Login() {
                 <br /><br />
             </Container>
             <Container className="text-center"><h4 className='text-danger font-weight-bold'>LƯU Ý</h4></Container>
+            <Container style={{ border: '1px solid' }}>
+            <div style={{ paddingTop: '30px' }} />
             <p className='text-info'>1. Đối với người dùng mới: </p>
             <p>_ Nhập email vào ô bên trên và nhấn gửi</p>
             <p>_ Đăng nhập email và nhấn vào link xác nhận</p>
@@ -29,8 +31,10 @@ function Login() {
             <p>_ Nhập email vào ô bên trên và nhấn gửi sẽ tiến hành khai báo</p>
             <p className='text-info'>3. Đối với người dùng muốn đăng kí doanh nghiệp: </p>
             <p>_ Nhấp vào link <a href="/register">Đăng Kí</a></p>
-            <p>_ Nhập thông tin vào đơn đăng kí gồm mã số thuế, tên doanh nghiệp và xác nhận qua email</p>
-            <p className='text-info'>4. Mọi thắc mắc xin vui lòng liên lạc để được <a href="tel:123-456-7890">hỗ trợ</a> </p>
+            <br/>
+            <p className='text-primary font-italic'>Mọi thắc mắc xin vui lòng liên lạc để được <a href="tel:123-456-7890">hỗ trợ</a></p>
+            <div style={{ paddingBottom: '20px' }} />
+            </Container>
         </Container>
     )
 }

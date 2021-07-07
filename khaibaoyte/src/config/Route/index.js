@@ -6,7 +6,7 @@ export const routeConfig = {
         "list-url": "/register"
     },
     "registerForm":{
-        "list-url": "/register/form"
+        "list-url": "/registerform"
     },
     "loginForm": {
         "list-url": "/form"
