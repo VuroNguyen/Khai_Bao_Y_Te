@@ -34,12 +34,12 @@ const Navbars = (props) => {
                 <Nav className="ml-auto" navbar>
                     <Col xs="auto">
                         <NavItem>
-                            <NavLink href="/">Đăng kí</NavLink>
+                            <NavLink href="/register">Đăng kí</NavLink>
                         </NavItem>
                     </Col>
                     <Col xs="auto">
                         <NavItem>
-                            <NavLink href="/dashboard">Dashboard</NavLink>
+                            <NavLink href="/report">Report</NavLink>
                         </NavItem>
                     </Col>
                 </Nav>

@@ -1,9 +1,9 @@
 import React from 'react'
-
+import ControllableStates from '../../components/Searchbar'
 function Report() {
     return (
         <div>
-            Report
+            <ControllableStates></ControllableStates>
         </div>
     )
 }

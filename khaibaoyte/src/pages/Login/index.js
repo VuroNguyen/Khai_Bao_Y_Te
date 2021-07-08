@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import { useHistory } from "react-router-dom";
+import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 
 function Login(navigation) {
     const [userEmail, setUserEmail] = useState();
