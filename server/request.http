@@ -1,0 +1,24 @@
+GET http://localhost:5000
+
+
+###
+
+POST http://localhost:5000/api/khaibao
+Content-Type: application/json
+
+{
+    "quest1": "Long đẹp trai hehe",
+    "quest2": "Long đẹp trai vãi lồn hehe",
+    "quest3": "Không",
+    "quest4": "Có và đã khai báo 14 ngày",
+    "quest5": "Không"
+}
+
+###
+
+POST http://localhost:5000/home
+Content-Type: application/json
+
+{
+    "email": "long@deptrai2=3.com"
+}
