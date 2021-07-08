@@ -9,6 +9,7 @@ import LoginForm from './pages/Login/LoginForm';
 import Footer from './components/Footer';
 import Navbars from './components/Navbars';
 import routeConfig from './config/Route';
+import Test from './pages/Login/LoginForm/Test';
 
 function App() {
   return (
