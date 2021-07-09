@@ -13,6 +13,6 @@ export const routeConfig = {
     },
     "report": {
         "list-url": "/report"
-    }
+    },
 }
 export default routeConfig

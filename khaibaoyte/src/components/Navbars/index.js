@@ -39,7 +39,7 @@ const Navbars = (props) => {
                     </Col>
                     <Col xs="auto">
                         <NavItem>
-                            <NavLink href="/report">Report</NavLink>
+                            <NavLink href="/report">Dashboard</NavLink> 
                         </NavItem>
                     </Col>
                 </Nav>
