@@ -20,5 +20,14 @@ POST http://localhost:5000/home
 Content-Type: application/json
 
 {
-    "email": "long@deptrai2=3.com"
+    "email": "ltv.9a2.21@gmail.com"
+}
+
+###
+
+POST http://localhost:5000/home/activation
+Content-Type: application/json
+
+{
+    "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGU4NDAxYmY0MTAyYjNjOGMyYzkwYTkiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI1ODMzNDk5LCJleHAiOjE2MjU4MzUyOTl9.d6sfMod_9pKltdVPpzuQsFQJ6Fcd8a_qyYi8_JBmFDQ"
 }
