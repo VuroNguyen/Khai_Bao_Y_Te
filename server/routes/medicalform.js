@@ -27,4 +27,19 @@ router.post('/', async(req, res) => {
     }
 });
 
+router.get('/form', async(req, res) => {
+    const id = req.params.id
+
+    MedicalForm.find()
+    .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving forms."
+        });
+      });
+});
+
 module.exports = router
