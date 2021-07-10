@@ -1,14 +1,38 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import axios from 'axios';
 
 function Login(navigation) {
-    const [userEmail, setUserEmail] = useState();
+    const [userEmail, setUserEmail] = useState('');
     const history = useHistory();
+    const data = JSON.stringify({
+        email: userEmail
+    })
+
+    const getMail = async data => {
+        try {
+            const response = await axios({
+                method: 'POST',
+                url: 'http://localhost:5000/home',
+                headers: {
+                    'Content-Type': 'application/json',
+                        },
+                data: data,
+            })
+            if (response.data.success)
+            localStorage.setItem('khaibaoyte', response.data.accessToken)
+
+            return response.data
+        } catch (e) {
+            return {success: false, message: e.message}
+        }
+    }
 
     const onSub = () => {
         alert(`User Email: ${userEmail}`);
         history.push("/form");
+        getMail(data)
     }
     return (
         <Container>
