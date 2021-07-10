@@ -13,6 +13,9 @@ export const routeConfig = {
     },
     "report": {
         "list-url": "/report"
+    },
+    "history": {
+        "list-url": "/history"
     }
 }
 export default routeConfig

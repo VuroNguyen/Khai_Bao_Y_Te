@@ -1,1 +1,0 @@
-export const beURL = "localhost:5000";

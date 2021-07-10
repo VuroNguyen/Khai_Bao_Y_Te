@@ -6,6 +6,7 @@ import Navbars from './components/Navbars';
 import routeConfig from './config/Route';
 import Login from './pages/Login';
 import LoginForm from './pages/Login/LoginForm';
+import UserHistory from './pages/Login/UserHistory';
 import Register from './pages/Register';
 import RegisterForm from './pages/Register/RegisterForm';
 import Report from './pages/Report';
@@ -20,8 +21,9 @@ function App() {
             <Switch>
               <Route path="/" exact component={Login}></Route>
               <Route path={routeConfig.login["list-url"]} component={Login} />
-              <Route path={routeConfig.register["list-url"]} component={Register} />
               <Route path={routeConfig.loginForm["list-url"]} component={LoginForm} />
+              <Route path={routeConfig.history["list-url"]} component={UserHistory} />
+              <Route path={routeConfig.register["list-url"]} component={Register} />
               <Route path={routeConfig.registerForm["list-url"]} component={RegisterForm} />
               <Route path={routeConfig.report["list-url"]} component={Report} />
             </Switch>

@@ -10,10 +10,10 @@ import {
 } from 'reactstrap';
 import axios from 'axios';
 import { Table } from 'reactstrap';
-import ControllableStates from '../../components/Searchbar';
+import ControllableStates from '../../components/Searchbar/index'
 
 
-class Report extends Component {
+class UserHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,11 +38,13 @@ class Report extends Component {
                 <Table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Tên doanh nghiệp</th>
+                            <th>Date/Time</th>
                             <th>Email</th>
-                            <th>Địa chỉ</th>
-                            <th>Mã số thuế</th>
+                            <th>Question 1</th>
+                            <th>Question 2</th>
+                            <th>Question 3</th>
+                            <th>Question 4</th>
+                            <th>Question 5</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -63,4 +65,4 @@ class Report extends Component {
     }
 }
 
-export default Report
+export default UserHistory

@@ -58,7 +58,7 @@ export default class Login extends Component {
                 <Container>
                     <p className='font-weight-bold'>Số lần khai báo trong ngày: { } </p>
                     <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
-                    <Link to='#'>
+                    <Link to='/history'>
                         <Button outline color="info">Lịch sử khai báo</Button>
                     </Link>
                 </Container>
