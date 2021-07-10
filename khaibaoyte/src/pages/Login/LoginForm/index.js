@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Container, CustomInput, Form, FormFeedback, FormGroup, Input, Label } from 'reactstrap'
+import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
 import './index.css'
 
 export default class Login extends Component {
@@ -23,7 +23,9 @@ export default class Login extends Component {
         event.preventDefault()
         const { userDepartment, userTel, userAnswer4, userAnswer5, userAnswer6, userAnswer7 } = this.state
         const data = { userDepartment, userTel, userAnswer4, userAnswer5, userAnswer6, userAnswer7 }
+        const result = JSON.stringify(data);
         console.log(this.state)
+        alert(result)
     }
 
     handleChange(event) {
@@ -49,8 +51,6 @@ export default class Login extends Component {
             userAnswer7: e.target.value
         });
     }
-
-
 
     render() {
         return (

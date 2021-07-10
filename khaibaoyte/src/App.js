@@ -1,15 +1,14 @@
-import React from 'react'
-import './App.css';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Report from './pages/Report';
-import RegisterForm from './pages/Register/RegisterForm';
-import LoginForm from './pages/Login/LoginForm';
+import './App.css';
 import Footer from './components/Footer';
 import Navbars from './components/Navbars';
 import routeConfig from './config/Route';
-import Test from './pages/Login/LoginForm/Test';
+import Login from './pages/Login';
+import LoginForm from './pages/Login/LoginForm';
+import Register from './pages/Register';
+import RegisterForm from './pages/Register/RegisterForm';
+import Report from './pages/Report';
 
 function App() {
   return (
