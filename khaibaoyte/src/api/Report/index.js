@@ -1,12 +1,12 @@
-import { APPROVED_API } from "./APIurl";
+import { GET_RESPONSE_API } from "../APIurl";
 import axiosClient from "../axiosClient";
 
 
-const ApprovedAPI = {
-    getApproved: () => {
-        const url = APPROVED_API;
+const RESPONSE_API = {
+    getResponse: () => {
+        const url = GET_RESPONSE_API;
         return axiosClient.get(url);
     }
 };
 
-export default ApprovedAPI;
+export default RESPONSE_API;
