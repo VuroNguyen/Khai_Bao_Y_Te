@@ -10,7 +10,7 @@ function Register() {
                     <Form>
                         <FormGroup>
                             <Label for="exampleEmail"><h4>Nhập Email để đăng kí</h4></Label>
-                            <Input className="w-50 mx-auto" type="email" name="email" id="exampleEmail" placeholder="ex: yourmail@gmail.com, ..." required />
+                            <Input className="w-75 mx-auto" type="email" name="email" id="exampleEmail" placeholder="ex: yourmail@gmail.com, ..." required />
                         </FormGroup>
                         <Link to='/registerform'>
                             <Button outline color="primary">Gửi</Button>

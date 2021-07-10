@@ -11,6 +11,7 @@ import {
 import axios from 'axios';
 import { Table } from 'reactstrap';
 import ControllableStates from '../../components/Searchbar/index'
+import moment from 'moment';
 
 
 class UserHistory extends Component {
@@ -32,6 +33,8 @@ class UserHistory extends Component {
 
     render() {
         const { responses } = this.state;
+        const date = responses.createdAt;
+        const dataFormat = moment(date).format('DD/MM/YYYY');
         return (
             <div>
                <ControllableStates></ControllableStates>
@@ -40,22 +43,21 @@ class UserHistory extends Component {
                         <tr>
                             <th>Date/Time</th>
                             <th>Email</th>
-                            <th>Question 1</th>
-                            <th>Question 2</th>
-                            <th>Question 3</th>
                             <th>Question 4</th>
                             <th>Question 5</th>
+                            <th>Question 6</th>
+                            <th>Question 7</th>
                         </tr>
                     </thead>
                     <tbody >
                         {responses.map(response => (
                             <tr>
-                                <th scope="row">{response.createdAt}</th>
-                                <td>{response.quest1}</td>
-                                <td>{response.quest2}</td>
-                                <td>{response.quest3}</td>
+                                <th scope="row">{dataFormat}</th>
+                                <td>{}</td>
                                 <td>{response.quest4}</td>
                                 <td>{response.quest5}</td>
+                                <td>{response.quest6}</td>
+                                <td>{response.quest7}</td>
                             </tr>
                         ))}
                     </tbody>
