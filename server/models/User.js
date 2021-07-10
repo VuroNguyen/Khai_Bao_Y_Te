@@ -8,6 +8,9 @@ const UserSchema = new Schema({
         unique: true
     },
 
+},
+{
+    timestamps: true
 })
 
 module.exports = mongoose.model('users', UserSchema)
