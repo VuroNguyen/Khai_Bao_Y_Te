@@ -27,13 +27,13 @@ const MedicalFormSchema = new Schema({
         emun: ['Không', 'Có và đã khai báo 14 ngày', 'Anh/Chị là người di chuyển/tiếp xúc', 'Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc', 'Cả hai đều là người di chuyển/tiếp xúc']
     },
 
-    createAt: {
-        type: Date,
-        defaut: Date.now,
-    },
-
     user: {
         type: Schema.Types.ObjectId,
+        ref: 'users'
+    },
+
+    email: {
+        type: String,
         ref: 'users'
     }
 }, {
