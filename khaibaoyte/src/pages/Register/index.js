@@ -17,7 +17,7 @@ function Register() {
                         </Link>
                     </Form>
                     <div style={{ paddingTop: '10px' }} />
-                    <p class="font-italic">Yêu cầu email bao gồm cả @ và tên miền phía sau</p>
+                    <p className="font-italic">Yêu cầu email bao gồm cả @ và tên miền phía sau</p>
                 </div>
                 <br /><br />
             </Container>

@@ -1,7 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
-import axios from 'axios';
 
 function Login(navigation) {
     const [userEmail, setUserEmail] = useState('');
@@ -46,7 +46,7 @@ function Login(navigation) {
                         <Button outline color="primary">Gửi</Button>
                     </Form>
                     <div style={{ paddingTop: '10px' }} />
-                    <p class="font-italic">Yêu cầu email bao gồm cả @ và tên miền phía sau</p>
+                    <p className="font-italic">Yêu cầu email bao gồm cả @ và tên miền phía sau</p>
                 </div>
                 <br /><br />
             </Container>

@@ -1,17 +1,8 @@
-import React, { Component } from 'react';
-import {
-    Card,
-    CardBody,
-    CardImg,
-    CardText,
-    CardTitle,
-    Col,
-    Row
-} from 'reactstrap';
 import axios from 'axios';
-import { Table } from 'reactstrap';
-import ControllableStates from '../../components/Searchbar/index'
 import moment from 'moment';
+import React, { Component } from 'react';
+import { Table } from 'reactstrap';
+import ControllableStates from '../../components/Searchbar/index';
 
 
 class UserHistory extends Component {
@@ -33,15 +24,14 @@ class UserHistory extends Component {
 
     render() {
         const { responses } = this.state;
-        const date = responses.createdAt;
-        const dataFormat = moment(date).format('DD/MM/YYYY');
         return (
-            <div>
+            <>
                <ControllableStates></ControllableStates>
                 <Table>
                     <thead>
                         <tr>
-                            <th>Date/Time</th>
+                            <th>Date</th>
+                            <th>Time</th>
                             <th>Email</th>
                             <th>Question 4</th>
                             <th>Question 5</th>
@@ -51,8 +41,9 @@ class UserHistory extends Component {
                     </thead>
                     <tbody >
                         {responses.map(response => (
-                            <tr>
-                                <th scope="row">{dataFormat}</th>
+                            <tr key={response._id}>
+                                <th scope="row">{moment(response.createdAt).format('DD/MM/YYYY')}</th>
+                                <td>{moment(response.createdAt).format('HH:mm:ss')}</td>
                                 <td>{}</td>
                                 <td>{response.quest4}</td>
                                 <td>{response.quest5}</td>
@@ -62,7 +53,7 @@ class UserHistory extends Component {
                         ))}
                     </tbody>
                 </Table>
-            </div>
+                </>
         )
     }
 }
