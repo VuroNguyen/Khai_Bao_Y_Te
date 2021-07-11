@@ -1,4 +1,6 @@
-import React from 'react';
+import moment from 'moment';
+import 'moment/locale/vi';
+import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Footer from './components/Footer';
@@ -11,12 +13,26 @@ import Register from './pages/Register';
 import RegisterForm from './pages/Register/RegisterForm';
 import Report from './pages/Report';
 
+moment.locale('vi');
+
 function App() {
+  const [currentTime, setCurrentTime] = useState('');
+
+  useEffect(() => {
+    let secTimer = setInterval(() => {
+      setCurrentTime(new moment().format('HH:mm:ss'))
+    }, 1000)
+
+    return () => clearInterval(secTimer);
+  }, []);
+
   return (
     <div className='page-container'>
       <div className='content-wrap'>
         <Navbars />
-        <div className='container'>
+        <div className='container bg-primary'>
+          <div style={{ paddingTop: '1em' }} />
+          <span>Thời gian hệ thống: <br />{moment().format('dddd, DD/MM/YYYY')} &nbsp; {currentTime}</span>
           <div className='padding'>
             <Switch>
               <Route path="/" exact component={Login}></Route>

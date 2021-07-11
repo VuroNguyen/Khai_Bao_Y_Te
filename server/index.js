@@ -3,7 +3,6 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
-
 const getUserMail = require('./routes/user')
 const medicalForm = require('./routes/medicalform')
 
@@ -28,7 +27,6 @@ connectDB()
 const app = express()
 
 app.use(express.json())
-app.use(cors())
 
 app.use(cors())
 

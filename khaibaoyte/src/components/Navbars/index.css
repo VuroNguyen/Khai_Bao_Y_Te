@@ -14,5 +14,5 @@
 
 .navbar .navbar-nav .nav-link:not(.disabled):hover,
 .navbar .navbar-nav .nav-link:not(.disabled):focus {
-  color: #ffffff;
+    color: #ffffff;
 }

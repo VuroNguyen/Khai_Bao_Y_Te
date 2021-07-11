@@ -1,14 +1,5 @@
-import React, { Component } from 'react';
-import {
-    Card,
-    CardBody,
-    CardImg,
-    CardText,
-    CardTitle,
-    Col,
-    Row
-} from 'reactstrap';
 import axios from 'axios';
+import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 import ControllableStates from '../../components/Searchbar';
 
@@ -47,7 +38,7 @@ class Report extends Component {
                     </thead>
                     <tbody >
                         {responses.map(response => (
-                            <tr>
+                            <tr key={response._id}>
                                 <th scope="row">{response.createdAt}</th>
                                 <td>{response.quest1}</td>
                                 <td>{response.quest2}</td>
