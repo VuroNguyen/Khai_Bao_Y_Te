@@ -1,16 +1,8 @@
-import React, { Component } from 'react';
-import {
-    Card,
-    CardBody,
-    CardImg,
-    CardText,
-    CardTitle,
-    Col,
-    Row
-} from 'reactstrap';
 import axios from 'axios';
+import moment from 'moment';
+import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import ControllableStates from '../../components/Searchbar/index'
+import ControllableStates from '../../components/Searchbar/index';
 
 
 class UserHistory extends Component {
@@ -33,34 +25,35 @@ class UserHistory extends Component {
     render() {
         const { responses } = this.state;
         return (
-            <div>
+            <>
                <ControllableStates></ControllableStates>
                 <Table>
                     <thead>
                         <tr>
-                            <th>Date/Time</th>
+                            <th>Date</th>
+                            <th>Time</th>
                             <th>Email</th>
-                            <th>Question 1</th>
-                            <th>Question 2</th>
-                            <th>Question 3</th>
                             <th>Question 4</th>
                             <th>Question 5</th>
+                            <th>Question 6</th>
+                            <th>Question 7</th>
                         </tr>
                     </thead>
                     <tbody >
                         {responses.map(response => (
-                            <tr>
-                                <th scope="row">{response.createdAt}</th>
-                                <td>{response.quest1}</td>
-                                <td>{response.quest2}</td>
-                                <td>{response.quest3}</td>
+                            <tr key={response._id}>
+                                <th scope="row">{moment(response.createdAt).format('DD/MM/YYYY')}</th>
+                                <td>{moment(response.createdAt).format('HH:mm:ss')}</td>
+                                <td>{}</td>
                                 <td>{response.quest4}</td>
                                 <td>{response.quest5}</td>
+                                <td>{response.quest6}</td>
+                                <td>{response.quest7}</td>
                             </tr>
                         ))}
                     </tbody>
                 </Table>
-            </div>
+                </>
         )
     }
 }
