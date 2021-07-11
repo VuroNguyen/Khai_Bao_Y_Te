@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
+const verifyToken = require('../middleware/auth')
 const MedicalForm = require('../models/MedicalForm')
 
-router.post('/', async(req, res) => {
+router.post('/', verifyToken, async(req, res) => {
     const {quest1, quest2, quest3, quest4, quest5} = req.body;
 
     if(!quest1)
@@ -16,6 +17,8 @@ router.post('/', async(req, res) => {
             quest3: quest3 || 'Không', 
             quest4: quest4 || 'Không', 
             quest5: quest5 || 'Không',
+            user: req.userId,
+            email: req.email
         })
 
         await newForm.save()
@@ -28,9 +31,10 @@ router.post('/', async(req, res) => {
 });
 
 router.get('/form', async(req, res) => {
-    const id = req.params.id
+    const email = req.query.email;
+    const condition = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
 
-    MedicalForm.find()
+    MedicalForm.find(condition)
     .then(data => {
         res.send(data);
       })
