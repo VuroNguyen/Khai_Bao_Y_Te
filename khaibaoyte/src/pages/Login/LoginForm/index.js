@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
 
 function Login() {
-
+    const userEmail = useLocation();
+    // usere.state;
     const [userdepartment, setUserDepartment] = useState(null);
     const [usertelephone, setUserTelephone] = useState(null);
 
@@ -70,7 +71,7 @@ function Login() {
                 <Form onSubmit={handleSubmit}>
                     <FormGroup>
                         <Label for="userEmail">1. Email</Label>
-                        <Input type="email" name="userEmail" id="userEmail" placeholder={{}} disabled />
+                        <Input type="email" name="userEmail" id="userEmail" placeholder={userEmail.state.usermail} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
