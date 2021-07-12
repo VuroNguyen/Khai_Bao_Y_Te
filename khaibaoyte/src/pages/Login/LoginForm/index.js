@@ -58,7 +58,7 @@ export default class Login extends Component {
                 <p className='font-weight-bold'>Số lần khai báo trong ngày: { } </p>
                 <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
                 <Link to='/history'>
-                    <Button outline color="info">Lịch sử khai báo</Button>
+                    <Button outline color="info">Lịch sử khaáđâsdi báo</Button>
                 </Link>
                 <div style={{ paddingTop: '2%' }} />
                 <Form onSubmit={this.handleSubmit}>
