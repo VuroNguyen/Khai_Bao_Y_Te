@@ -13,11 +13,13 @@ class Report extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:5000/api/khaibao/form/`)
+        axios.get(`http://localhost:5000/home/getAllEmail`)
             .then(res => {
                 const responses = res.data;
                 this.setState({ responses });
+                console.log(responses)
             })
+            
             .catch(error => console.log(error));
     }
 
@@ -39,9 +41,9 @@ class Report extends Component {
                     <tbody >
                         {responses.map(response => (
                             <tr key={response._id}>
-                                <th scope="row">{response.createdAt}</th>
-                                <td>{response.quest1}</td>
-                                <td>{response.quest2}</td>
+                                <th scope="row">{response._id}</th>
+                                <td>{}</td>
+                                <td>{response.email}</td>
                                 <td>{response.quest3}</td>
                                 <td>{response.quest4}</td>
                                 <td>{response.quest5}</td>

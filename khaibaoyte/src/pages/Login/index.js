@@ -34,6 +34,7 @@ function Login(navigation) {
         history.push("/form");
         getMail(data)
     }
+    
     return (
         <Container>
             <Container>
