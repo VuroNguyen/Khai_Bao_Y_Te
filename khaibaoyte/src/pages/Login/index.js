@@ -31,11 +31,8 @@ function Login(navigation) {
 
     const onSub = () => {
         alert(`User Email: ${userEmail}`);
-        history.push({
-            pathname: "/form",
-            state: {usermail: userEmail }
-        });
-        getMail(data);
+        history.push("/form");
+        getMail(data)
     }
     return (
         <Container>
