@@ -37,7 +37,6 @@ function Login(navigation) {
         });
         getMail(data);
     }
-    
     return (
         <Container>
             <Container>

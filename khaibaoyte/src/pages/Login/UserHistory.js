@@ -18,7 +18,6 @@ class UserHistory extends Component {
             .then(res => {
                 const responses = res.data;
                 this.setState({ responses });
-                console.log(responses)
             })
             .catch(error => console.log(error));
     }
@@ -27,6 +26,7 @@ class UserHistory extends Component {
         const { responses } = this.state;
         return (
             <>
+               <ControllableStates></ControllableStates>
                 <Table>
                     <thead>
                         <tr>
@@ -44,11 +44,11 @@ class UserHistory extends Component {
                             <tr key={response._id}>
                                 <th scope="row">{moment(response.createdAt).format('DD/MM/YYYY')}</th>
                                 <td>{moment(response.createdAt).format('HH:mm:ss')}</td>
-                                <td>{response.email}</td>
-                                <td>{response.quest3}</td>
+                                <td>{}</td>
                                 <td>{response.quest4}</td>
                                 <td>{response.quest5}</td>
                                 <td>{response.quest6}</td>
+                                <td>{response.quest7}</td>
                             </tr>
                         ))}
                     </tbody>

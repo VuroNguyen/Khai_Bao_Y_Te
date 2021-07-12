@@ -10,13 +10,13 @@ GET http://localhost:5000/home/getAllEmail
 
 POST http://localhost:5000/api/khaibao
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGViMmU0OWNiNDQ4NzIzYjBkZWE0NzQiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2MDI3NzYyLCJleHAiOjE2MjYwMjk1NjJ9.BEBeSH0z5oLBJory_mn-HaIpPPPOd2sQfKwF89Zlb18
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGVhZGI4ZjNiOTc0MjU1Mzg0MmEyMzEiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2MDA0MzY3LCJleHAiOjE2MjYwMDYxNjd9.6S4jQwyabVZwUuWfY0NaZ5SN5ymXagMiu7RB4yc42zo
 
 {
     "quest1": "Long đẹp trai hehe",
     "quest2": "Long đẹp trai hehe",
     "quest3": "Không",
-    "quest4": "Có và đã khai báo 14 ngày, Anh/Chị là người tiếp xúc, Hiện tại đang test functions",
+    "quest4": "Có và đã khai báo 14 ngày",
     "quest5": "Không"
 }
 
@@ -26,7 +26,7 @@ POST http://localhost:5000/home
 Content-Type: application/json
 
 {
-    "email": "nhatlam1695@gmail.com"
+    "email": "ltv.9a2.21@gmail.com"
 }
 
 ###
