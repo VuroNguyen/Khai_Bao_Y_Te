@@ -30,7 +30,7 @@ function App() {
     <div className='page-container'>
       <div className='content-wrap'>
         <Navbars />
-        <div className='container bg-primary'>
+        <div className='container'>
           <div style={{ paddingTop: '1em' }} />
           <span>Thời gian hệ thống: <br />{moment().format('dddd, DD/MM/YYYY')} &nbsp; {currentTime}</span>
           <div className='padding'>
