@@ -1,20 +1,23 @@
-GET http://localhost:5000/api/khaibao/form?email=lt
+//lấy hết tất cả form. Muốn search thì thêm ?email= (phần này là search)
+GET http://localhost:5000/api/khaibao/form
 
 
 ###
 
-GET http://localhost:5000/home/getAllEmail
+//lấy hết tất cả user mail. Muốn search thì thêm ?email= (phần này là search)
+GET http://localhost:5000/home/getAllEmail?email=lo
 
 
 ###
 
+//Add thêm form khai báo với người dùng. phải có token xài dc của ng dùng. Token dc lấy sau khi dùng api /home(line 27) hoặc /login (line 37)
 POST http://localhost:5000/api/khaibao
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGViMmU0OWNiNDQ4NzIzYjBkZWE0NzQiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2MDI3NzYyLCJleHAiOjE2MjYwMjk1NjJ9.BEBeSH0z5oLBJory_mn-HaIpPPPOd2sQfKwF89Zlb18
 
 {
-    "quest1": "Long đẹp trai hehe",
-    "quest2": "Long đẹp trai hehe",
+    "quest1": "này là SDT",
+    "quest2": "này là Address",
     "quest3": "Không",
     "quest4": "Có và đã khai báo 14 ngày, Anh/Chị là người tiếp xúc, Hiện tại đang test functions",
     "quest5": "Không"
@@ -22,6 +25,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGViM
 
 ###
 
+//Lấy mail user vào DB nếu chưa tồn tại. Sau đó gửi mail xác nhận.
 POST http://localhost:5000/home
 Content-Type: application/json
 
@@ -31,6 +35,7 @@ Content-Type: application/json
 
 ###
 
+//Nếu mail user đã tồn tại trong DB thì auto vào form khai báo, ko cần gửi mail
 POST http://localhost:5000/home/login
 Content-Type: application/json
 
@@ -40,9 +45,13 @@ Content-Type: application/json
 
 ###
 
+//check token của user. Nó sẽ trả về userId và email user
 POST http://localhost:5000/home/activation
 Content-Type: application/json
 
 {
     "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGVhY2YxNjY2NTdhMzQ2NjRjZTZkMjYiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2MDAxMTc0LCJleHAiOjE2MjYwMDI5NzR9.dcoohZVU7KPqAC5UQOK4wN2GPyDGU9Ond7Id0bxNXPA"
 }
+
+//flow line 27 và 37
+//const response =  axios.post(link line 27).then(result => if(result.message = 'Email đã tồn tại') {axios.post(line 37).then(result => return result) else return result}
