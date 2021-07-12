@@ -13,13 +13,13 @@ GET http://localhost:5000/home/getAllEmail?email=lo
 //Add thêm form khai báo với người dùng. phải có token xài dc của ng dùng. Token dc lấy sau khi dùng api /home(line 27) hoặc /login (line 37)
 POST http://localhost:5000/api/khaibao
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGVhZGI4ZjNiOTc0MjU1Mzg0MmEyMzEiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2MDIyNTI2LCJleHAiOjE2MjYwMjQzMjZ9.g2_ycO8mDS3sg2AZW4gqjMJ9KWORmGRpipEE70XMlPc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGViMmU0OWNiNDQ4NzIzYjBkZWE0NzQiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2MDI3NzYyLCJleHAiOjE2MjYwMjk1NjJ9.BEBeSH0z5oLBJory_mn-HaIpPPPOd2sQfKwF89Zlb18
 
 {
     "quest1": "này là SDT",
     "quest2": "này là Address",
     "quest3": "Không",
-    "quest4": "Có và đã khai báo 14 ngày",
+    "quest4": "Có và đã khai báo 14 ngày, Anh/Chị là người tiếp xúc, Hiện tại đang test functions",
     "quest5": "Không"
 }
 
@@ -30,7 +30,7 @@ POST http://localhost:5000/home
 Content-Type: application/json
 
 {
-    "email": "ltv.9a2.21@gmail.com"
+    "email": "nhatlam1695@gmail.com"
 }
 
 ###

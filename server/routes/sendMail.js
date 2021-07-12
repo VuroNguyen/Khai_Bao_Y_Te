@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
-const {google} = require('googleapis')
-const {OAuth2} = google.auth
+const { google } = require('googleapis')
+const { OAuth2 } = google.auth
 const OAUTH_PLAYGROUND = 'https://developers.google.com/oauthplayground'
 
 const {
@@ -27,7 +27,7 @@ const sendMail = (to, url) => {
     const accessToken = oauth2Client.getAccessToken()
     const smtpTransport = nodemailer.createTransport({
         service: 'gmail',
-        auth:{
+        auth: {
             type: 'OAuth2',
             user: SENDER_EMAIL_ADDRESS,
             clientId: MAILING_SERVICE_CLIENT_ID,
@@ -42,13 +42,19 @@ const sendMail = (to, url) => {
         to: to,
         subject: 'XÁC THỰC EMAIL QUA KHAI BÁO Y TẾ',
         html: `
-            <h2>Nhấn vào link dưới để xác thực</h2>
-            <div>${url}</div>
+            <h2>Xin chào ${user}, </h2>
+            <h4>Đây là thư tự động của hệ thống Khai báo y tế - FIS</h4>
+            <p>Bạn vui lòng nhấp vào đường link bên dưới để kích hoạt email và bắt đầu khai báo</p>
+            <a href="${url}"><input style="border-radius: 5%;
+            font-size: 18px;
+            width: 30%;
+            background-color: #008CBA;
+            color: white;" type="button" value="Verify Email" /></a>
         `
     }
 
     smtpTransport.sendMail(mailOptions, (error, info) => {
-        if(error) return error;
+        if (error) return error;
         return info
     })
 }
