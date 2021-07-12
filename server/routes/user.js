@@ -4,9 +4,10 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/User')
+const Enterprise = require('../models/Enterprise')
 const sendMail = require('./sendMail')
 
-router.post('/', async(req, res) => {
+router.post('/register', async(req, res) => {
     const {email} = req.body;
 
     if(!email)
@@ -20,14 +21,15 @@ router.post('/', async(req, res) => {
 
     try {
         const newUser = new User({
-            email
+            email,
+            status: false,
         })
 
         await newUser.save()
 
         const accessToken = jwt.sign({userId: newUser._id, email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
 
-        const url = `${process.env.CLIENT_URL}/home/activate/${accessToken}`
+        const url = `http://localhost:3000/form/`
 
         sendMail(email, url)
 
@@ -58,13 +60,21 @@ router.post('/login', async(req, res) => {
 
     try {
         const user = await User.findOne({email})
+        const enterprise = await Enterprise.findOne({email})
 
-        if(!user)
+        if(!enterprise && !user)
         return res.status(400).json({success: false, message: 'Incorrect Email'})
+    
+        if(enterprise) {
+            const enterpriseAccessToken = jwt.sign({enterpriseId: enterprise._id, email, name: enterprise.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
+            
 
-        const accessToken = jwt.sign({userId: user._id, email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
+        res.json({success: true, message: 'Login Mail thành công', enterpriseAccessToken, enterprise: enterprise})
+        } else if(user) {
+            const accessToken = jwt.sign({userId: user._id, email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
 
-        res.json({success: true, message: 'Login Mail thành công', accessToken, user: user})
+            res.json({success: true, message: 'Login Mail thành công', accessToken, user: user})
+        }
 
     } catch (error) {
         console.log(error)
@@ -74,9 +84,12 @@ router.post('/login', async(req, res) => {
 
 router.get('/getAllEmail', async(req, res) => {
     const email = req.query.email;
-    const condition = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
+    const emailQuery = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
 
-    User.find(condition)
+    const enterpriseName = req.query.enterpriseName;
+    const nameQuery = enterpriseName ? { enterpriseName: { $regex: new RegExp(enterpriseName), $options: "i" } } : {};
+
+    User.find(email ? emailQuery : enterpriseName ? nameQuery : {})
     .then(data => {
         res.send(data);
       })

@@ -8,6 +8,20 @@ const UserSchema = new Schema({
         unique: true
     },
 
+    status: {
+        type: Boolean,
+        required: true,
+    },
+
+    enterpriseId: {
+        type: Schema.Types.ObjectId,
+        ref: 'enterprise'
+    },
+
+    enterpriseName: { 
+        type: String,
+        ref: 'enterprise'
+    }
 },
 {
     timestamps: true

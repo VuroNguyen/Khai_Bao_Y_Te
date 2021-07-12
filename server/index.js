@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const getUserMail = require('./routes/user')
 const medicalForm = require('./routes/medicalform')
+const Enterprise = require('./routes/enterprise')
 
 const connectDB = async () => {
     try {
@@ -32,6 +33,7 @@ app.use(cors())
 
 app.use('/home', getUserMail)
 app.use('/api/khaibao', medicalForm)
+app.use('/enterprise', Enterprise)
 
 app.get('/', (req,res) => res.send('Hello anh em!!'))
 

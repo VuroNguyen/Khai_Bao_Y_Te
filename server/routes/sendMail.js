@@ -42,7 +42,7 @@ const sendMail = (to, url) => {
         to: to,
         subject: 'XÁC THỰC EMAIL QUA KHAI BÁO Y TẾ',
         html: `
-            <h2>Xin chào ${user}, </h2>
+            <h2>Xin chào bạn, </h2>
             <h4>Đây là thư tự động của hệ thống Khai báo y tế - FIS</h4>
             <p>Bạn vui lòng nhấp vào đường link bên dưới để kích hoạt email và bắt đầu khai báo</p>
             <a href="${url}"><input style="border-radius: 5%;
