@@ -2,9 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const MedicalFormSchema = new Schema({
-    quest1: {
+
+    email: {
         type: String,
-        required: true
+        ref: 'users'
     },
 
     quest2: {
@@ -14,28 +15,32 @@ const MedicalFormSchema = new Schema({
 
     quest3: {
         type: String,
-        enum: ['Không', 'Có và đã khai báo 14 ngày', 'Anh/Chị là người di chuyển', 'Người thân tiếp xúc gần của Anh/Chị là người di chuyển', 'Cả hai đều là người di chuyển']
+        required: true
     },
 
     quest4: {
         type: String,
-        emun: ['Không', 'Có và đã khai báo 14 ngày', 'Anh/Chị là người tiếp xúc', 'Người thân tiếp xúc gần của Anh/Chị là người tiếp xúc', 'Cả hai đều là người tiếp xúc']
     },
 
     quest5: {
         type: String,
-        emun: ['Không', 'Có và đã khai báo 14 ngày', 'Anh/Chị là người di chuyển/tiếp xúc', 'Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc', 'Cả hai đều là người di chuyển/tiếp xúc']
+        enum: ['Không', 'Có và đã khai báo 14 ngày', 'Anh/Chị là người tiếp xúc', 'Người thân tiếp xúc gần của Anh/Chị là người tiếp xúc', 'Cả hai đều là người tiếp xúc']
     },
 
-    user: {
+    quest6: {
+        type: String,
+        enum: ['Không', 'Có và đã khai báo 14 ngày', 'Anh/Chị là người di chuyển', 'Người thân tiếp xúc gần của Anh/Chị là người di chuyển', 'Cả hai đều là người di chuyển']
+    },
+
+    quest7: {
+        type: String,
+        enum: ['Không', 'Có và đã khai báo 14 ngày', 'Anh/Chị là người di chuyển/tiếp xúc', 'Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc', 'Cả hai đều là người di chuyển/tiếp xúc']
+    },
+
+    userId: {
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
-
-    email: {
-        type: String,
-        ref: 'users'
-    }
 }, {
     timestamps: true
 })
