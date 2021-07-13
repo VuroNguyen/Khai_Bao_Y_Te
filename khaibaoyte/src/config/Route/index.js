@@ -2,10 +2,10 @@ export const routeConfig = {
     "login": {
         "list-url": "/login"
     },
-    "register":{
+    "register": {
         "list-url": "/register"
     },
-    "registerForm":{
+    "registerForm": {
         "list-url": "/registerform"
     },
     "loginForm": {
@@ -16,6 +16,9 @@ export const routeConfig = {
     },
     "history": {
         "list-url": "/history"
+    },
+    "adminDashboard": {
+        "list-url": "/admindashboard"
     }
 }
 export default routeConfig

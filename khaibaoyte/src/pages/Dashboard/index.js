@@ -1,10 +1,10 @@
 import axios from 'axios';
-import moment from 'moment';
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
+import ControllableStates from '../../components/Searchbar';
 
 
-class UserHistory extends Component {
+class AdminDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,48 +13,47 @@ class UserHistory extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:5000/api/khaibao/form/`)
+        axios.get(`http://localhost:5000/home/getAllEmail`)
             .then(res => {
                 const responses = res.data;
                 this.setState({ responses });
                 console.log(responses)
             })
+            
             .catch(error => console.log(error));
     }
 
     render() {
         const { responses } = this.state;
         return (
-            <>
+            <div>
+               <ControllableStates></ControllableStates>
                 <Table>
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Time</th>
+                            <th>ID</th>
+                            <th>Tên doanh nghiệp</th>
                             <th>Email</th>
-                            <th>Question 4</th>
-                            <th>Question 5</th>
-                            <th>Question 6</th>
-                            <th>Question 7</th>
+                            <th>Địa chỉ</th>
+                            <th>Mã số thuế</th>
                         </tr>
                     </thead>
                     <tbody >
                         {responses.map(response => (
                             <tr key={response._id}>
-                                <th scope="row">{moment(response.createdAt).format('DD/MM/YYYY')}</th>
-                                <td>{moment(response.createdAt).format('HH:mm:ss')}</td>
+                                <th scope="row">{response._id}</th>
+                                <td>{}</td>
                                 <td>{response.email}</td>
                                 <td>{response.quest3}</td>
                                 <td>{response.quest4}</td>
                                 <td>{response.quest5}</td>
-                                <td>{response.quest6}</td>
                             </tr>
                         ))}
                     </tbody>
                 </Table>
-                </>
+            </div>
         )
     }
 }
 
-export default UserHistory
+export default AdminDashboard

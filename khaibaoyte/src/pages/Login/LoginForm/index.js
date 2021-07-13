@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
 import './index.css'
 
-export default class Login extends Component {
+export default class LoginForm extends Component {
     constructor(props) {
         super(props)
         this.state = { userDepartment: '', userTel: '', userAnswer4: [], userAnswer5: '', userAnswer6: '', userAnswer7: '' }

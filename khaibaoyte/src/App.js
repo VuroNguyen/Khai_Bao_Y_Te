@@ -6,6 +6,7 @@ import './App.css';
 import Footer from './components/Footer';
 import Navbars from './components/Navbars';
 import routeConfig from './config/Route';
+import AdminDashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import LoginForm from './pages/Login/LoginForm';
 import UserHistory from './pages/Login/UserHistory';
@@ -42,6 +43,7 @@ function App() {
               <Route path={routeConfig.register["list-url"]} component={Register} />
               <Route path={routeConfig.registerForm["list-url"]} component={RegisterForm} />
               <Route path={routeConfig.report["list-url"]} component={Report} />
+              <Route path={routeConfig.adminDashboard["list-url"]} component={AdminDashboard} />
             </Switch>
           </div>
         </div>

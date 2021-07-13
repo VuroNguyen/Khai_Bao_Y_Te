@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap'
 import './index.css'
 
-export default class a extends Component {
+export default class RegisterForm extends Component {
     constructor(props) {
         super(props)
         this.state = {

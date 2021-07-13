@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 
-function Login(navigation) {
+function Login() {
     const [userEmail, setUserEmail] = useState('');
     const history = useHistory();
     const data = JSON.stringify({
@@ -59,8 +59,8 @@ function Login(navigation) {
                 <p>_ Đăng nhập email và nhấn vào link xác nhận</p>
                 <p className='text-info'>2. Đối với người dùng đã xác nhận email: </p>
                 <p>_ Nhập email vào ô bên trên và nhấn gửi sẽ tiến hành khai báo</p>
-                <p className='text-info'>3. Đối với người dùng muốn đăng kí doanh nghiệp: </p>
-                <p>_ Nhấp vào link <a href="/register">Đăng Kí</a></p>
+                <p className='text-info'>3. Đối với người dùng muốn Đăng ký doanh nghiệp: </p>
+                <p>_ Nhấp vào link <a href="/register">Đăng ký</a></p>
                 <br />
                 <p className='text-primary font-italic'>Mọi thắc mắc xin vui lòng liên lạc để được <a href="tel:123-456-7890">hỗ trợ</a></p>
                 <div style={{ paddingBottom: '20px' }} />
