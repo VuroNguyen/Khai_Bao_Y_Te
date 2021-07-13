@@ -48,4 +48,21 @@ router.get('/form', async(req, res) => {
       });
 });
 
+router.get('/form/count', async(req, res) => {
+    const email = req.query.email;
+    const condition = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
+
+    MedicalForm.find(condition).countDocuments()
+    .then(data => {
+        res.json({ success: true, count: data})
+      })
+      .catch(err => {
+        res.status(500).send({
+            success: false,
+          message:
+            err.message || "Some error occurred while retrieving forms."
+        });
+      });
+})
+
 module.exports = router
