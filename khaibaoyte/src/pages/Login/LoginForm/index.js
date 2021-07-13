@@ -189,6 +189,10 @@ function LoginForm() {
     return (
         <Container>
             <Container>
+                <div className='text-center'>
+                <h3 style={{color: '#55befc'}}>Khai báo</h3>
+                    <div style={{ paddingTop: '1em' }} />
+                </div>
                 <p className='font-weight-bold'>Số lần khai báo trong ngày: { } </p>
                 <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
                 <Link to='/history'>

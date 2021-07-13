@@ -26,6 +26,10 @@ class UserHistory extends Component {
         const { responses } = this.state;
         return (
             <>
+                <div className='text-center'>
+                    <h3 style={{ color: '#55befc' }}>Lịch sử khai báo</h3>
+                    <div style={{ paddingTop: '1em' }} />
+                </div>
                 <Table>
                     <thead>
                         <tr>
@@ -52,7 +56,7 @@ class UserHistory extends Component {
                         ))}
                     </tbody>
                 </Table>
-                </>
+            </>
         )
     }
 }

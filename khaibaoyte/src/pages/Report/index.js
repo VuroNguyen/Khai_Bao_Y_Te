@@ -19,7 +19,7 @@ class Report extends Component {
                 this.setState({ responses });
                 console.log(responses)
             })
-            
+
             .catch(error => console.log(error));
     }
 
@@ -27,7 +27,11 @@ class Report extends Component {
         const { responses } = this.state;
         return (
             <div>
-               <ControllableStates></ControllableStates>
+                <div className='text-center'>
+                    <h3 style={{ color: '#55befc' }}>Báo cáo</h3>
+                    <div style={{ paddingTop: '1em' }} />
+                </div>
+                <ControllableStates></ControllableStates>
                 <Table>
                     <thead>
                         <tr>
@@ -42,7 +46,7 @@ class Report extends Component {
                         {responses.map(response => (
                             <tr key={response._id}>
                                 <th scope="row">{response._id}</th>
-                                <td>{}</td>
+                                <td>{ }</td>
                                 <td>{response.email}</td>
                                 <td>{response.quest3}</td>
                                 <td>{response.quest4}</td>

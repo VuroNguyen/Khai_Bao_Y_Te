@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Table } from 'reactstrap';
+import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
 import ControllableStates from '../../components/Searchbar';
 
 
@@ -8,8 +8,18 @@ class AdminDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            responses: []
+            responses: [],
+            modal: false,
         }
+        this.toggle = this.toggle.bind(this);
+    }
+
+    toggle() {
+        console.log("hello");
+        this.setState({
+            modal: !this.state.modal
+        });
+        console.log('after setState: ', this.state);
     }
 
     componentDidMount() {
@@ -19,7 +29,7 @@ class AdminDashboard extends Component {
                 this.setState({ responses });
                 console.log(responses)
             })
-            
+
             .catch(error => console.log(error));
     }
 
@@ -27,30 +37,37 @@ class AdminDashboard extends Component {
         const { responses } = this.state;
         return (
             <div>
-               <ControllableStates></ControllableStates>
+                <div className='text-center'>
+                    <h3 style={{ color: '#55befc' }}>Quản lý nhân viên</h3>
+                    <div style={{ paddingTop: '1em' }} />
+                </div>
+                <ControllableStates></ControllableStates>
                 <Table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Tên doanh nghiệp</th>
-                            <th>Email</th>
-                            <th>Địa chỉ</th>
-                            <th>Mã số thuế</th>
+                            <th>Email nhân viên</th>
+                            <th>Tình trạng</th>
                         </tr>
                     </thead>
                     <tbody >
                         {responses.map(response => (
                             <tr key={response._id}>
-                                <th scope="row">{response._id}</th>
-                                <td>{}</td>
                                 <td>{response.email}</td>
-                                <td>{response.quest3}</td>
-                                <td>{response.quest4}</td>
-                                <td>{response.quest5}</td>
+                                <td>{response.status}</td>
                             </tr>
                         ))}
                     </tbody>
                 </Table>
+                <div style={{ paddingTop: '2em' }} />
+                <Button outline color="info" onClick={this.toggle} >Thêm tài khoản nhân viên</Button>
+                <Modal isOpen={this.state.modal} fade={this.state.fade} toggle={this.toggle}>
+                    <ModalHeader toggle={this.toggle}>Đăng ký email nhân viên</ModalHeader>
+                    <Input type="text" placeholder="Nhập email nhân viên" ></Input>
+                    <ModalFooter>
+                        <Button onClick={this.toggle} outline color="info">OK</Button>{' '}
+                        <Button onClick={this.toggle} outline color="info">Cancel</Button>
+                    </ModalFooter>
+                </Modal>
             </div>
         )
     }

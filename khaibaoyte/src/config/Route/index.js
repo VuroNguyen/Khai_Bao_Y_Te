@@ -1,4 +1,4 @@
-export const routeConfig = {
+const routeConfig = {
     "login": {
         "list-url": "/login"
     },

@@ -87,7 +87,7 @@ function Login() {
         try {
             const response = await axios({
                 method: 'POST',
-                url: 'http://localhost:5000/home',
+                url: 'http://localhost:5000/home/login',
                 headers: {
                     'Content-Type': 'application/json',
                         },
@@ -115,6 +115,8 @@ function Login() {
         <Container>
             <Container>
                 <div className='text-center'>
+                    <h3 style={{color: '#55befc'}}>Đăng nhập tài khoản</h3>
+                    <div style={{ paddingTop:'1em'}} />
                     <Form onSubmit={onSub}>
                         <FormGroup>
                             <Label for="userEmail"><h4>Nhập Email để đăng nhập</h4></Label>
