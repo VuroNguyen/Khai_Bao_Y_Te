@@ -1,4 +1,4 @@
-const routeConfig = {
+export const routeConfig = {
     "login": {
         "list-url": "/login"
     },
@@ -19,6 +19,9 @@ const routeConfig = {
     },
     "adminDashboard": {
         "list-url": "/admindashboard"
+    },
+    "error": {
+        "list-url": "/error"
     }
 }
 export default routeConfig

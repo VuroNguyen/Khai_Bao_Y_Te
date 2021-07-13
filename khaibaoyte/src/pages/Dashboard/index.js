@@ -40,8 +40,7 @@ class AdminDashboard extends Component {
                 <div className='text-center'>
                     <h3 style={{ color: '#55befc' }}>Quản lý nhân viên</h3>
                     <div style={{ paddingTop: '1em' }} />
-                </div>
-                <ControllableStates></ControllableStates>
+                </div>  
                 <Table>
                     <thead>
                         <tr>
@@ -53,7 +52,7 @@ class AdminDashboard extends Component {
                         {responses.map(response => (
                             <tr key={response._id}>
                                 <td>{response.email}</td>
-                                <td>{response.status}</td>
+                                <td>{response.status===false?"Chưa kích hoạt":"Đã kích hoạt"}</td>
                             </tr>
                         ))}
                     </tbody>

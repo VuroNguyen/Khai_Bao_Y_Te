@@ -31,26 +31,25 @@ class Report extends Component {
                     <h3 style={{ color: '#55befc' }}>Báo cáo</h3>
                     <div style={{ paddingTop: '1em' }} />
                 </div>
-                <ControllableStates></ControllableStates>
                 <Table>
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Tên doanh nghiệp</th>
                             <th>Email</th>
+                            <th>Tên doanh nghiệp</th>
                             <th>Địa chỉ</th>
                             <th>Mã số thuế</th>
+                            <th>Tài liệu</th>
                         </tr>
                     </thead>
                     <tbody >
                         {responses.map(response => (
                             <tr key={response._id}>
-                                <th scope="row">{response._id}</th>
-                                <td>{ }</td>
                                 <td>{response.email}</td>
+                                <td>{response.enterpriseName}</td>
+                                <td>{response.address}</td>
                                 <td>{response.quest3}</td>
                                 <td>{response.quest4}</td>
-                                <td>{response.quest5}</td>
+                                <td>{response.docs}</td>
                             </tr>
                         ))}
                     </tbody>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
 
@@ -75,6 +75,21 @@ function LoginForm() {
         });
     }
 
+    const [data, setData] = useState([]);
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const result = await axios(
+    //             `http://localhost:5000/api/khaibao/form/count?email=${userEmail.state.usermail}`,
+    //         );
+
+    //         setData(result.data);
+    //         console.log(result.data);
+    //     };
+
+    //     fetchData();
+    // }, []);
+
     return (
         <Container>
             <Container>
@@ -83,7 +98,7 @@ function LoginForm() {
                         <h3 style={{ color: '#55befc' }}>Khai báo</h3>
                         <div style={{ paddingTop: '1em' }} />
                     </div>
-                    <p className='font-weight-bold'>Số lần khai báo trong ngày: { } </p>
+                    <p className='font-weight-bold'>Số lần khai báo trong ngày: {data.count} </p>
                     <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
                     <Button outline color="info">Lịch sử khai báo</Button>
                 </Form>
