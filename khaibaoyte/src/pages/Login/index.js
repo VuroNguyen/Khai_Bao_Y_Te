@@ -17,15 +17,15 @@ function Login() {
                 url: 'http://localhost:5000/home/login',
                 headers: {
                     'Content-Type': 'application/json',
-                        },
+                },
                 data: data,
             })
             if (response.data.success)
-            localStorage.setItem('khaibaoyte', response.data.accessToken)
+                localStorage.setItem('khaibaoyte', response.data.accessToken)
 
             return response.data
         } catch (e) {
-            return {success: false, message: e.message}
+            return { success: false, message: e.message }
         }
     }
 
@@ -33,21 +33,21 @@ function Login() {
         alert(`User Email: ${userEmail}`);
         history.push({
             pathname: "/form",
-            state: {usermail: userEmail }
+            state: { usermail: userEmail }
         });
         getMail(data);
     }
-    
+
     return (
         <Container>
             <Container>
                 <div className='text-center'>
-                    <h3 style={{color: '#55befc'}}>Đăng nhập tài khoản</h3>
-                    <div style={{ paddingTop:'1em'}} />
+                    <h3 style={{ color: '#55befc' }}>Đăng nhập tài khoản</h3>
+                    <div style={{ paddingTop: '1em' }} />
                     <Form onSubmit={onSub}>
                         <FormGroup>
                             <Label for="userEmail"><h4>Nhập Email để đăng nhập</h4></Label>
-                            <Input className="w-75 mx-auto" type="email" name="userEmail" id="userEmail" placeholder="ex: yourmail@gmail.com, ..." required value={userEmail} onChange={ event => setUserEmail(event.target.value) } />
+                            <Input className="w-75 mx-auto" type="email" name="userEmail" id="userEmail" placeholder="ex: yourmail@gmail.com, ..." required value={userEmail} onChange={event => setUserEmail(event.target.value)} />
                         </FormGroup>
                         <Button outline color="primary">Gửi</Button>
                     </Form>
