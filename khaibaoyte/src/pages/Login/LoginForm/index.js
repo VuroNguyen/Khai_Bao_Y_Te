@@ -4,35 +4,81 @@ import { Link, useLocation } from 'react-router-dom'
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
 
 function LoginForm() {
-    const postReport = async (data) => {
-        try {
-            const res = await axios({
-                method: 'POST',
-                url: 'http://localhost:5000/'
-            })
-        } catch (e) {
-            return {}
-        }
-    }
-
+    // set location for react-router to parse email to
     const userEmail = useLocation();
+    // states of values
     const [userdepartment, setUserDepartment] = useState(null);
     const [usertelephone, setUserTelephone] = useState(null);
 
     const [answer4, setAnswer4] = useState([]);
+    // answer4 options
+    const [ans4Opt1, setAns4Opt1] = useState(false);
+    const [ans4Opt2, setAns4Opt2] = useState(false);
+    const [ans4Opt3, setAns4Opt3] = useState(false);
+    const [ans4Opt4, setAns4Opt4] = useState(false);
+    const [ans4Opt5, setAns4Opt5] = useState(false);
 
     const [answer5, setAnswer5] = useState("");
     const [answer6, setAnswer6] = useState("");
     const [answer7, setAnswer7] = useState("");
 
+    // setting Answer4 into an array
     const chcklist = (e) => {
-        let tempArr = [...answer4, e.target.value];
-        if (answer4.includes(e.target.value)) {
-            tempArr = tempArr.filter(opt => opt !== e.target.value);
+
+        switch (e.target.id) {
+            case 'dauhieu1':
+                {
+                    setAns4Opt1(!ans4Opt1);
+                    setAns4Opt5(false);
+                    console.log(ans4Opt1);
+                    break;
+                }
+            case 'dauhieu2':
+                {
+                    setAns4Opt2(!ans4Opt2);
+                    setAns4Opt5(false);
+                    console.log(ans4Opt2);
+                    break;
+                }
+            case 'dauhieu3':
+                {
+                    setAns4Opt3(!ans4Opt3);
+                    setAns4Opt5(false);
+                    console.log(ans4Opt3);
+                    break;
+                }
+            case 'dauhieu4':
+                {
+                    setAns4Opt4(!ans4Opt4);
+                    setAns4Opt5(false);
+                    console.log(ans4Opt4);
+                    break;
+                }
+            case 'none4':
+                {
+                    setAns4Opt1(false);
+                    setAns4Opt2(false);
+                    setAns4Opt3(false);
+                    setAns4Opt4(false);
+                    setAns4Opt5(!ans4Opt5);
+                    console.log(ans4Opt5);
+                    break;
+                }
         }
+
+        // create an array to 'spread' every checked value to answer 4
+        let tempArr = [...answer4, e.target.value];
+        // check the answer 4 current value whether it includes any value equals to the value clicked
+        if (answer4.includes(e.target.value)) {
+            // filter those values <=> remove it from the temp array
+            tempArr = tempArr.filter(opt => opt !== e.target.value);
+            
+        }
+        // set the array to the answer4 value
         setAnswer4(tempArr);
     }
 
+    // set values on click/inputs
     const handleuserDepartment = (e) => {
         setUserDepartment(e.target.value);
     }
@@ -53,12 +99,44 @@ function LoginForm() {
 
     }
 
+    // create an answer JSON file to save in the server
+    let answer = JSON.stringify({
+        department: userdepartment,
+        telephone: usertelephone,
+        answer4: answer4.join(', ').toString(),
+        answer5: answer5,
+        answer6: answer6,
+        answer7: answer7,
+    })
+
+    // POST method to the backend
+    const postReport = async (data) => {
+        try {
+            // 
+            const res = await axios({
+                method: 'POST',
+                url: 'http://localhost:5000/api/khaibao',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: data,
+            })
+            // localStorage.setItem('khaibaoyte', res.data.accessToken);
+            console.log(res.data.success);
+            return res.data;
+        } catch (e) {
+            console.log(e.message);
+            return { success: false, message: e.message };
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         let validated = true;
         if (answer4.length !== 0) {
             alert('deparment ' + userdepartment + ' tel ' + usertelephone + ' ans4 ' + JSON.stringify(answer4) + ' ans5 ' + answer5 + ' ans6 ' + answer6 + ' ans7 ' + answer7);
             validated = true;
+            postReport(answer);
             window.location.reload();
         }
         else {
@@ -107,11 +185,11 @@ function LoginForm() {
                     <FormGroup>
                         <Label for="question4">4. Anh/Chị có dấu hiệu lâm sàng nào dưới đây? <span className='text-danger'>*</span></Label>
                         <div>
-                            <CustomInput type="checkbox" id="dauhieu1" label="Ho khan hoặc đau họng" value="Ho khan hoặc đau họng" onChange={chcklist} />
-                            <CustomInput type="checkbox" id="dauhieu2" label="Đau ngực hoặc khó thở" value="Đau ngực hoặc khó thở" onChange={chcklist} />
-                            <CustomInput type="checkbox" id="dauhieu3" label="Sốt cao (trên 38 độ C)" value="Sốt cao (trên 38 độ C)" onChange={chcklist} />
-                            <CustomInput type="checkbox" id="dauhieu4" label="Chảy nước mũi khó chịu" value="Chảy nước mũi khó chịu" onChange={chcklist} />
-                            <CustomInput type="checkbox" id="none4" label="Không có tất cả dấu hiệu trên" value="Không có tất cả dấu hiệu trên" onChange={chcklist} />
+                            <CustomInput type="checkbox" id="dauhieu1" label="Ho khan hoặc đau họng" value="Ho khan hoặc đau họng" onChange={chcklist} checked={ans4Opt1}/>
+                            <CustomInput type="checkbox" id="dauhieu2" label="Đau ngực hoặc khó thở" value="Đau ngực hoặc khó thở" onChange={chcklist} checked={ans4Opt2}/>
+                            <CustomInput type="checkbox" id="dauhieu3" label="Sốt cao (trên 38 độ C)" value="Sốt cao (trên 38 độ C)" onChange={chcklist} checked={ans4Opt3}/>
+                            <CustomInput type="checkbox" id="dauhieu4" label="Chảy nước mũi khó chịu" value="Chảy nước mũi khó chịu" onChange={chcklist} checked={ans4Opt4}/>
+                            <CustomInput type="checkbox" id="none4" label="Không có tất cả dấu hiệu trên" value="Không có tất cả dấu hiệu trên" onChange={chcklist} checked={ans4Opt5}/>
                         </div>
                     </FormGroup>
                     <FormGroup name='question5'>
