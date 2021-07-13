@@ -17,7 +17,7 @@ router.post('/register', async(req, res) => {
 
     if(!validateEmail(email))
     return res.status(400).json({success: false, message: 'Xin hãy nhập mail khác'})
-
+    
     const enterprise = await Enterprise.findOne({email})
     if(enterprise) return res.status(400).json({success: false, message: 'Email đã tồn tại'})
 
@@ -32,7 +32,7 @@ router.post('/register', async(req, res) => {
 
         await newEnterprise.save()
 
-        const accessToken = jwt.sign({enterpriseId: newEnterprise._id, name, email: newEnterprise.email, address, MaSoThue: newEnterprise.MST, document}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
+        const accessToken = jwt.sign({enterpriseId: newEnterprise._id, name, email: newEnterprise.email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
 
         const url = `http://localhost:3000/report`
 
@@ -79,6 +79,22 @@ router.post('/add', verifyEnterpriseToken, async(req, res) => {
         console.log(error)
         res.status(500).json({success: false, message: 'Có gì đó không ổn'})
     }
+})
+
+router.get('/getAllEnterprise', async(req, res) => {
+    const email = req.query.email;
+    const emailQuery = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
+
+    Enterprise.find(emailQuery)
+    .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving forms."
+        });
+      });
 })
 
 function validateEmail(email) {
