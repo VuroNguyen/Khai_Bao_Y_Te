@@ -45,10 +45,16 @@ function Login() {
 
     const login = async event => {
         event.preventDefault()
-        alert(`User Email: ${data}`);
+
 
         try {
             const loginData = await loginUser(data)
+            if (loginData.enterprise) {
+                alert('Đăng nhập với mail doanh nghiệp')
+            }
+            if (loginData.user) {
+                alert('Đăng nhập với mail nhân viên')
+            }
             if (loginData.success) {
                 history.push({
                     pathname: "/form",
@@ -58,15 +64,19 @@ function Login() {
         } catch (error) {
             console.log(error)
         }
-        
+
 
         try {
             const createData = await registerUser(data);
+            if (createData.success) {
+                alert(`Email xác thực đã được gửi vui lòng xác nhận`);
+            }
             if (createData.success) {
                 history.push({
                     pathname: "/form",
                 })
             }
+
             console.log(createData)
         } catch (error) {
             console.log(error)
