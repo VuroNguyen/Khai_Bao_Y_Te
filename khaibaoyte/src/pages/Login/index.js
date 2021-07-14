@@ -14,7 +14,7 @@ function Login() {
         try {
             const response = await axios({
                 method: 'POST',
-                url: 'http://localhost:5000/home/login',
+                url: 'http://localhost:5000/home/register',
                 headers: {
                     'Content-Type': 'application/json',
                 },
