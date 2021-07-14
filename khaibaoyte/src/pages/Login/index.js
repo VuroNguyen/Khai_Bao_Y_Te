@@ -46,7 +46,7 @@ function Login() {
                     <div style={{ paddingTop: '1em' }} />
                     <Form onSubmit={onSub}>
                         <FormGroup>
-                            <Label for="userEmail"><h4>Nhập Email để đăng nhập</h4></Label>
+                            <Label for="userEmail"><h4>Nhập Email để khai báo y tế</h4></Label>
                             <Input className="w-75 mx-auto" type="email" name="userEmail" id="userEmail" placeholder="ex: yourmail@gmail.com, ..." required value={userEmail} onChange={event => setUserEmail(event.target.value)} />
                         </FormGroup>
                         <Button outline color="primary">Gửi</Button>

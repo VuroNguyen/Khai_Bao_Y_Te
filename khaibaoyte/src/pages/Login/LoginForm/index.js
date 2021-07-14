@@ -1,7 +1,7 @@
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import { Link, useLocation, useHistory } from 'react-router-dom'
-import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
+import axios from 'axios';
+import React, { useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap';
 
 function LoginForm() {
     // set location for react-router to parse email to
@@ -66,6 +66,8 @@ function LoginForm() {
                     console.log(ans4Opt5);
                     break;
                 }
+            default:
+                return true;
         }
 
         // create an array to 'spread' every checked value to answer 4
@@ -207,23 +209,11 @@ function LoginForm() {
                     </FormGroup>
                     <FormGroup>
                         <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
-                        <CustomInput
-                            type="select"
-                            id="userDepartment"
-                            name="userDepartment"
-                            required
-                            onChange={handleuserDepartment}>
-                            <option value="">Vui lòng chọn phòng ban</option>
-                            <option value='HR'>Nhân sự</option>
-                            <option value='IT'>IT</option>
-                            <option value='Marketing'>Marketing</option>
-                            <option value='Manager'>Quản lí</option>
-                            <option value='Accounting'>Kế toán</option>
-                        </CustomInput>
+                        <Input type="text" name="userDepartment" id="userDepartment" placeholder={{}} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="userTel">3. Số điện thoại <span className='text-danger'>*</span></Label>
-                        <Input className="without_number" type="number" name="userTel" id="userTel" placeholder="ex: 0845372112" onChange={handleuserTelephone} required />
+                        <Input type="text" name="userTel" id="userTel" placeholder={{}} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="question4">4. Anh/Chị có dấu hiệu lâm sàng nào dưới đây? <span className='text-danger'>*</span></Label>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Col, Container, Form, FormGroup, Input, Label, Row, CustomInput } from 'reactstrap'
+import { Button, Col, Container, CustomInput, Form, FormGroup, Input, Label, Row } from 'reactstrap'
 import './index.css'
 
 export default class RegisterForm extends Component {
@@ -17,9 +17,6 @@ export default class RegisterForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault()
-        const { businessName, businessEmail, businessAddress, businessTaxNumber } = this.state
-        const data = { businessName, businessEmail, businessAddress, businessTaxNumber }
-        const result = JSON.stringify(data);
         console.log(this.state)
         alert(this.state)
     }

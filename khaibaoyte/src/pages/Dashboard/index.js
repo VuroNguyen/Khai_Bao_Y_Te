@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup, CustomInput } from 'reactstrap';
-import ControllableStates from '../../components/Searchbar';
-import './index.css'
+import { Button, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Table } from 'reactstrap';
+import './index.css';
 
 
 class AdminDashboard extends Component {

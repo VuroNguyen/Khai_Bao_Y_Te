@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
-import { useHistory } from "react-router-dom";
 import axios from 'axios';
+import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
+import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 
 function Register() {
     const [businessEmail, setBusinessEmail] = useState('');
@@ -41,11 +40,11 @@ function Register() {
         <Container>
             <Container>
                 <div className='text-center'>
-                    <h3 style={{ color: '#55befc' }}>Đăng ký tài khoản</h3>
+                    <h3 style={{ color: '#55befc' }}>Tài khoản doanh nghiệp</h3>
                     <div style={{ paddingTop: '1em' }} />
                     <Form onSubmit={OnSub}>
                         <FormGroup>
-                            <Label for="userEmail"><h4>Nhập Email để đăng ký</h4></Label>
+                            <Label for="userEmail"><h4>Nhập Email để điền thông tin</h4></Label>
                             <Input className="w-75 mx-auto" type="email" name="userEmail" id="userEmail" placeholder="ex: yourmail@gmail.com, ..." required value={businessEmail} onChange={event => setBusinessEmail(event.target.value)} />
                         </FormGroup>
                         <Button outline color="primary">Gửi</Button>

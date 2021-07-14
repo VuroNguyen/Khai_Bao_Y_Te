@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { useLocation } from "react-router-dom";
-import axios from 'axios'
+import axios from 'axios';
 import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from "react-router-dom";
 import { Table } from 'reactstrap';
 
 const UserHistory = (props) => {
@@ -17,7 +17,6 @@ const UserHistory = (props) => {
             const response = await axios(
                 `http://localhost:5000/api/khaibao/form/count?email=${email.state.mail}`,
             );
-            console.log(email.state.usermail)
 
             setData(result.data);
             setResponse(response.data);

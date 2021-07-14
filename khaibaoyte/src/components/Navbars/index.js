@@ -20,7 +20,7 @@ const Navbars = (props) => {
                             src={addImage}
                             alt='icon' />
                     </div>
-                    Khai Báo Y Tế
+                    Khai Báo Y Tế Doanh Nghiệp
                 </div>
             </NavbarBrand>
             <NavbarToggler onClick={toggle} />

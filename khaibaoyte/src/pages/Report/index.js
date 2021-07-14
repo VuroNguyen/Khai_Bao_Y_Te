@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import ControllableStates from '../../components/Searchbar';
 
 
 class Report extends Component {
