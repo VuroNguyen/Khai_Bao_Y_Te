@@ -47,10 +47,10 @@ router.post('/register', async(req, res) => {
 })
 
 router.post('/add', verifyEnterpriseToken, async(req, res) => {
-    const {email} = req.body
+    const {email, department, phone} = req.body
 
-    if(!email)
-    return res.status(400).json({success: false, message: 'Please input an email address'})
+    if(!email || !department || !phone)
+    return res.status(400).json({success: false, message: 'Please input all fields'})
 
     if(!validateEmail(email))
     return res.status(400).json({success: false, message: 'Please input another email address'})
@@ -64,6 +64,8 @@ router.post('/add', verifyEnterpriseToken, async(req, res) => {
         const addStaff = new User({
             email,
             status: false,
+            department,
+            phone,
             enterpriseId : req.enterpriseId,
             enterpriseName : req.name,
         })
