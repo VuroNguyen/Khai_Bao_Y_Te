@@ -12,7 +12,6 @@ function LoginForm() {
     // states of values
     const [userdepartment, setUserDepartment] = useState(null);
     const [usertelephone, setUserTelephone] = useState(null);
-    const history = useHistory();
     const [answer4, setAnswer4] = useState([]);
     // answer4 options
     const [ans4Opt1, setAns4Opt1] = useState(false);

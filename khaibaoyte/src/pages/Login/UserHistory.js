@@ -19,10 +19,10 @@ const UserHistory = (props) => {
             );
             console.log(email.state.usermail)
 
-        setData(result.data);
-        setResponse(response.data);
-        console.log(result.data);
-    };
+            setData(result.data);
+            setResponse(response.data);
+            console.log(result.data);
+        };
 
         fetchData();
     }, []);
@@ -33,8 +33,7 @@ const UserHistory = (props) => {
                 <h3 style={{ color: '#55befc' }}>Lịch sử khai báo</h3>
                 <div style={{ paddingTop: '1em' }} />
             </div>
-            <p className='font-weight-bold'>Tổng số khai báo:
-                {count ? " " + count : 0}
+            <p className='font-weight-bold'>Tổng số khai báo: {response.count}
             </p>
             <br />
             <Table>
