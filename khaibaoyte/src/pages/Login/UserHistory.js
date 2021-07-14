@@ -6,6 +6,7 @@ import { Table } from 'reactstrap';
 
 const UserHistory = (props) => {
     const [data, setData] = useState([]);
+    const [response, setResponse] = useState('');
     const email = useLocation();
 
     useEffect(() => {
@@ -19,6 +20,7 @@ const UserHistory = (props) => {
         console.log(email.state.usermail)
 
         setData(result.data);
+        setResponse(response.data);
         console.log(result.data);
     };
 
