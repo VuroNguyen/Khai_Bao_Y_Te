@@ -13,6 +13,14 @@ const UserSchema = new Schema({
         required: true,
     },
 
+    department: {
+        type: String,
+    },
+
+    phone: {
+        type: Number,
+    },
+
     enterpriseId: {
         type: Schema.Types.ObjectId,
         ref: 'enterprise'
