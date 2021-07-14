@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const path = require('path')
 
 const getUserMail = require('./routes/user')
 const medicalForm = require('./routes/medicalform')
@@ -30,6 +31,11 @@ const app = express()
 app.use(express.json())
 
 app.use(cors())
+
+// const dirname = path.resolve();
+// app.use('/uploads', express.static(path.join(dirname, '/uploads')));
+// app.use(express.static(path.join(dirname, '/khaibaoyte')));
+// app.get('*', (req, res) => res.sendFile(path.join(dirname, '/frontend/build/index.html')))
 
 app.use('/home', getUserMail)
 app.use('/api/khaibao', medicalForm)
