@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Button, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Table } from 'reactstrap';
-import './index.css';
+import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup, CustomInput } from 'reactstrap';
+import ControllableStates from '../../components/Searchbar';
+import './index.css'
 
 
 class AdminDashboard extends Component {
@@ -73,7 +74,7 @@ class AdminDashboard extends Component {
                                 <td>
                                     <Button outline color="info" onClick={this.toggleFormEdit}>Edit</Button>
                                     <Modal isOpen={this.state.modalFormEdit} toggle={this.toggleFormEdit}>
-                                        <ModalHeader toggle={this.toggleFormEdit}>Đăng ký email nhân viên</ModalHeader>
+                                        <ModalHeader toggle={this.toggleFormEdit}>Sửa thông tin nhân viên</ModalHeader>
                                         <ModalBody>
                                             <Form>
                                                 <FormGroup>

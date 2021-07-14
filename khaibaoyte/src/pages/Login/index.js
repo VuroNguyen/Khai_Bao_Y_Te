@@ -42,7 +42,7 @@ function Login() {
         <Container>
             <Container>
                 <div className='text-center'>
-                    <h3 style={{ color: '#55befc' }}>Đăng nhập tài khoản</h3>
+                    <h3 style={{ color: '#55befc' }}>Khai báo y tế nhân viên/cá nhân</h3>
                     <div style={{ paddingTop: '1em' }} />
                     <Form onSubmit={onSub}>
                         <FormGroup>
