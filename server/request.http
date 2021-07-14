@@ -1,36 +1,51 @@
-GET http://localhost:5000/api/khaibao/form?email=lt
+GET http://localhost:5000/api/khaibao/form
 
 
 ###
 
+//chọn user theo mail hoặc doanh nghiệp
 GET http://localhost:5000/home/getAllEmail
+
+
+###
+
+//chọn enterprise theo mail
+GET http://localhost:5000/enterprise/getAllEnterprise?email=longnh20072000@gmail.com
+
+
+###
+
+//đếm form dựa vào mail
+GET http://localhost:5000/api/khaibao/form/count?email=nhatlam1695@gmail.com
 
 
 ###
 
 POST http://localhost:5000/api/khaibao
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGViMmU0OWNiNDQ4NzIzYjBkZWE0NzQiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2MDI3NzYyLCJleHAiOjE2MjYwMjk1NjJ9.BEBeSH0z5oLBJory_mn-HaIpPPPOd2sQfKwF89Zlb18
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGVjMjk2OTQ3MzliNDRiYTAzODJmODAiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2MDkyNjA0LCJleHAiOjE2MjYwOTQ0MDR9.ygbf5CEjE8nfUfw3KVw34576ki1b92JKSieKpjc3IaU
 
 {
-    "quest1": "Long đẹp trai hehe",
     "quest2": "Long đẹp trai hehe",
     "quest3": "Không",
-    "quest4": "Có và đã khai báo 14 ngày, Anh/Chị là người tiếp xúc, Hiện tại đang test functions",
-    "quest5": "Không"
+    "quest4": "Ho khan hoặc đau họng, Đau ngực hoặc khó thở",
+    "quest5": "Không",
+    "quest6": "Không",
+    "quest7": "Không"
 }
 
 ###
 
-POST http://localhost:5000/home
+POST http://localhost:5000/home/register
 Content-Type: application/json
 
 {
-    "email": "nhatlam1695@gmail.com"
+    "email": "ltv.9a2.21@gmail.com"
 }
 
 ###
 
+//login để khai báo đối với user thường và để coi report đối với enterprise
 POST http://localhost:5000/home/login
 Content-Type: application/json
 
@@ -40,9 +55,34 @@ Content-Type: application/json
 
 ###
 
+//Add staff into DB with enterprise ID + name
+POST http://localhost:5000/enterprise/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVjM2RhNGM4NjQ3NTA1ODQ1YmJmY2IiLCJlbWFpbCI6ImxvbmduaDIwMDcyMDAwQGdtYWlsLmNvbSIsIm5hbWUiOiJU4bqtcCDEkW_DoG4gxJDhuqFpIGdpYSIsImlhdCI6MTYyNjExNjAwMCwiZXhwIjoxNjI2MTE3ODAwfQ.-UIgtgqRfSEOxfIWSDrIGXZa4Mj--F_JUVsRIZ9AwFc
+
+{
+    "email": "hnka301220@gmail.com"
+}
+
+###
+
+//enterprise register
+POST http://localhost:5000/enterprise/register
+Content-Type: application/json
+
+{
+    "name": "FPT Software",
+    "email": "longnh20072000@gmail.com",
+    "address": "100 Nguyễn Huệ, Q1, TP.HCM",
+    "MST": "234567890",
+    "document": "Chưa"
+}
+
+###
+
 POST http://localhost:5000/home/activation
 Content-Type: application/json
 
 {
-    "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGVhY2YxNjY2NTdhMzQ2NjRjZTZkMjYiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2MDAxMTc0LCJleHAiOjE2MjYwMDI5NzR9.dcoohZVU7KPqAC5UQOK4wN2GPyDGU9Ond7Id0bxNXPA"
+    "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVjM2RhNGM4NjQ3NTA1ODQ1YmJmY2IiLCJlbWFpbCI6ImxvbmduaDIwMDcyMDAwQGdtYWlsLmNvbSIsImlhdCI6MTYyNjExNDczMCwiZXhwIjoxNjI2MTE2NTMwfQ.an3ttkYQ3940ZCaCZG3fsFjU7796R_W1B5FNw-INENI"
 }

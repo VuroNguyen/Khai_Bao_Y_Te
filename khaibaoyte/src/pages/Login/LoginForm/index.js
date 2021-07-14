@@ -1,6 +1,6 @@
 import axios from 'axios'
-import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation, useHistory } from 'react-router-dom'
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
 
 function LoginForm() {
@@ -140,20 +140,46 @@ function LoginForm() {
             window.location.reload();
         }
         else {
-            alert(' answer 4 is empty. Please fill in the answer');
+            alert('Vui lòng chọn câu trả lời số 4');
             validated = false;
         }
         return validated;
     }
 
+    const handleHistory = e => {
+        history.push({
+            pathname: "/history",
+            state: { mail: userEmail.state.usermail }
+        });
+    }
+
+    const [data, setData] = useState([]);
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const result = await axios(
+    //             `http://localhost:5000/api/khaibao/form/count?email=${userEmail.state.usermail}`,
+    //         );
+
+    //         setData(result.data);
+    //         console.log(result.data);
+    //     };
+
+    //     fetchData();
+    // }, []);
+
     return (
         <Container>
             <Container>
-                <p className='font-weight-bold'>Số lần khai báo trong ngày: { } </p>
-                <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
-                <Link to='/history'>
+                <Form onSubmit={handleHistory}>
+                    <div className='text-center'>
+                        <h3 style={{ color: '#55befc' }}>Khai báo</h3>
+                        <div style={{ paddingTop: '1em' }} />
+                    </div>
+                    <p className='font-weight-bold'>Số lần khai báo trong ngày: {data.count} </p>
+                    <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
                     <Button outline color="info">Lịch sử khai báo</Button>
-                </Link>
+                </Form>
             </Container>
             <div style={{ paddingTop: '2%' }} />
             <Container>

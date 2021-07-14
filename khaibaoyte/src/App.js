@@ -6,12 +6,14 @@ import './App.css';
 import Footer from './components/Footer';
 import Navbars from './components/Navbars';
 import routeConfig from './config/Route';
+import AdminDashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import LoginForm from './pages/Login/LoginForm';
 import UserHistory from './pages/Login/UserHistory';
 import Register from './pages/Register';
 import RegisterForm from './pages/Register/RegisterForm';
 import Report from './pages/Report';
+import Error from './pages/Error';
 
 moment.locale('vi');
 
@@ -42,6 +44,8 @@ function App() {
               <Route path={routeConfig.register["list-url"]} component={Register} />
               <Route path={routeConfig.registerForm["list-url"]} component={RegisterForm} />
               <Route path={routeConfig.report["list-url"]} component={Report} />
+              <Route path={routeConfig.adminDashboard["list-url"]} component={AdminDashboard} />
+              <Route path={routeConfig.error["list-url"]} component={Error} />
             </Switch>
           </div>
         </div>

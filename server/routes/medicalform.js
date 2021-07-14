@@ -5,20 +5,22 @@ const verifyToken = require('../middleware/auth')
 const MedicalForm = require('../models/MedicalForm')
 
 router.post('/', verifyToken, async(req, res) => {
-    const {quest1, quest2, quest3, quest4, quest5} = req.body;
+    const {quest2, quest3, quest4, quest5, quest6, quest7} = req.body;
 
-    if(!quest1)
-    return res.status(400).json({success: false, message: 'Câu 1 không được để trống'})
+    if(!quest2)
+    return res.status(400).json({success: false, message: 'Câu 2 không được để trống'})
 
     try {
         const newForm = new MedicalForm({
-            quest1, 
+            email: req.email,
             quest2, 
-            quest3: quest3 || 'Không', 
-            quest4: quest4 || 'Không', 
-            quest5: quest5 || 'Không',
-            user: req.userId,
-            email: req.email
+            quest3,
+            quest4,
+            quest5: quest5 || 'Không', 
+            quest6: quest6 || 'Không', 
+            quest7: quest7 || 'Không',
+            userId: req.userId,
+
         })
 
         await newForm.save()
@@ -45,5 +47,22 @@ router.get('/form', async(req, res) => {
         });
       });
 });
+
+router.get('/form/count', async(req, res) => {
+    const email = req.query.email;
+    const condition = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
+
+    MedicalForm.find(condition).countDocuments()
+    .then(data => {
+        res.json({ success: true, count: data})
+      })
+      .catch(err => {
+        res.status(500).send({
+            success: false,
+          message:
+            err.message || "Some error occurred while retrieving forms."
+        });
+      });
+})
 
 module.exports = router
