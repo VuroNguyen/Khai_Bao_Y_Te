@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import { AuthContext } from '../../components/contexts/AuthContext'
 
 function Login() {
     const [userEmail, setUserEmail] = useState('');
@@ -10,32 +11,66 @@ function Login() {
         email: userEmail
     })
 
-    const getMail = async data => {
+    // const getMail = async data => {
+    //     try {
+    //         const response = await axios({
+    //             method: 'POST',
+    //             url: 'http://localhost:5000/home/login',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             data: data,
+    //         })
+    //         if (response.data.success)
+    //             localStorage.setItem('khaibaoyte', response.data.accessToken)
+
+    //         return response.data
+    //     } catch (e) {
+    //         return { success: false, message: e.message }
+    //     }
+    // }
+
+    // const onSub = () => {
+    //     alert(`User Email: ${userEmail}`);
+    //     history.push({
+    //         pathname: "/form",
+    //         state: { usermail: userEmail }
+    //     });
+    //     getMail(data);
+    // }
+
+    const { loginUser, registerUser } = useContext(AuthContext)
+
+    const onSubmitChange = event => setUserEmail(event.target.value)
+
+    const login = async event => {
+        event.preventDefault()
+        alert(`User Email: ${data}`);
+
         try {
-            const response = await axios({
-                method: 'POST',
-                url: 'http://localhost:5000/home/register',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                data: data,
-            })
-            if (response.data.success)
-                localStorage.setItem('khaibaoyte', response.data.accessToken)
-
-            return response.data
-        } catch (e) {
-            return { success: false, message: e.message }
+            const loginData = await loginUser(data)
+            if (loginData.success) {
+                history.push({
+                    pathname: "/form",
+                })
+            }
+            console.log(loginData)
+        } catch (error) {
+            console.log(error)
         }
-    }
+        
 
-    const onSub = () => {
-        alert(`User Email: ${userEmail}`);
-        history.push({
-            pathname: "/form",
-            state: { usermail: userEmail }
-        });
-        getMail(data);
+        try {
+            const createData = await registerUser(data);
+            if (createData.success) {
+                history.push({
+                    pathname: "/form",
+                })
+            }
+            console.log(createData)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -44,10 +79,17 @@ function Login() {
                 <div className='text-center'>
                     <h3 style={{ color: '#55befc' }}>Khai báo y tế nhân viên/cá nhân</h3>
                     <div style={{ paddingTop: '1em' }} />
-                    <Form onSubmit={onSub}>
+                    <Form onSubmit={login}>
                         <FormGroup>
-                            <Label for="userEmail"><h4>Nhập Email để khai báo y tế</h4></Label>
-                            <Input className="w-75 mx-auto" type="email" name="userEmail" id="userEmail" placeholder="ex: yourmail@gmail.com, ..." required value={userEmail} onChange={event => setUserEmail(event.target.value)} />
+                            <Label for="userEmail"><h4>Nhập Email để đăng nhập</h4></Label>
+                            <Input className="w-75 mx-auto"
+                                type="email"
+                                name="userEmail"
+                                id="userEmail"
+                                placeholder="ex: yourmail@gmail.com, ..."
+                                required
+                                value={userEmail}
+                                onChange={onSubmitChange} />
                         </FormGroup>
                         <Button outline color="primary">Gửi</Button>
                     </Form>
