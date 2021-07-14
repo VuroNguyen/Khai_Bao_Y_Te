@@ -9,7 +9,7 @@ function LoginForm() {
     // states of values
     const [userdepartment, setUserDepartment] = useState(null);
     const [usertelephone, setUserTelephone] = useState(null);
-
+    const history = useHistory();
     const [answer4, setAnswer4] = useState([]);
     // answer4 options
     const [ans4Opt1, setAns4Opt1] = useState(false);
@@ -190,7 +190,7 @@ function LoginForm() {
                     </FormGroup>
                     <FormGroup>
                         <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
-                        <Input
+                        <CustomInput
                             type="select"
                             id="userDepartment"
                             name="userDepartment"
@@ -202,7 +202,7 @@ function LoginForm() {
                             <option value='Marketing'>Marketing</option>
                             <option value='Manager'>Quản lí</option>
                             <option value='Accounting'>Kế toán</option>
-                        </Input>
+                        </CustomInput>
                     </FormGroup>
                     <FormGroup>
                         <Label for="userTel">3. Số điện thoại <span className='text-danger'>*</span></Label>
