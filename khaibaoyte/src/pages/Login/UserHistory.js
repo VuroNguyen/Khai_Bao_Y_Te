@@ -6,7 +6,7 @@ import { Table } from 'reactstrap';
 
 const UserHistory = (props) => {
     const [data, setData] = useState([]);
-    const [count, setCount] = useState();
+    const [response, setResponse] = useState('');
     const email = useLocation();
 
     useEffect(() => {
@@ -19,11 +19,10 @@ const UserHistory = (props) => {
             );
             console.log(email.state.usermail)
 
-            setData(result.data);
-            setCount(response.data.count);
-            console.log(result.data);
-            console.log(response.data.count);
-        };
+        setData(result.data);
+        setResponse(response.data);
+        console.log(result.data);
+    };
 
         fetchData();
     }, []);
