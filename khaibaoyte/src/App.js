@@ -14,6 +14,8 @@ import Register from './pages/Register';
 import RegisterForm from './pages/Register/RegisterForm';
 import Report from './pages/Report';
 import Error from './pages/Error';
+import AuthContextProvider from './components/contexts/AuthContext'
+import Auth from './views/Auth'
 
 moment.locale('vi');
 
@@ -36,17 +38,43 @@ function App() {
           <div style={{ paddingTop: '1em' }} />
           <span>Thời gian hệ thống: <br />{moment().format('dddd, DD/MM/YYYY')} &nbsp; {currentTime}</span>
           <div className='padding'>
-            <Switch>
-              <Route path="/" exact component={Login}></Route>
-              <Route path={routeConfig.login["list-url"]} component={Login} />
-              <Route path={routeConfig.loginForm["list-url"]} component={LoginForm} />
-              <Route path={routeConfig.history["list-url"]} component={UserHistory} />
-              <Route path={routeConfig.register["list-url"]} component={Register} />
-              <Route path={routeConfig.registerForm["list-url"]} component={RegisterForm} />
-              <Route path={routeConfig.report["list-url"]} component={Report} />
-              <Route path={routeConfig.adminDashboard["list-url"]} component={AdminDashboard} />
-              <Route path={routeConfig.error["list-url"]} component={Error} />
-            </Switch>
+            <AuthContextProvider>
+              <Switch>
+                <Route path="/" exact component={Login}></Route>
+                <Route
+                  path={routeConfig.login["list-url"]}
+                  exact
+                  render={props => <Auth {...props} authRoute='login' />} />
+                <Route
+                  path={routeConfig.loginForm["list-url"]}
+                  exact
+                  component={LoginForm} />
+                <Route
+                  path={routeConfig.history["list-url"]}
+                  exact
+                  component={UserHistory} />
+                <Route
+                  path={routeConfig.register["list-url"]}
+                  exact
+                  component={Register} />
+                <Route
+                  path={routeConfig.registerForm["list-url"]}
+                  exact
+                  component={RegisterForm} />
+                <Route
+                  path={routeConfig.report["list-url"]}
+                  exact
+                  component={Report} />
+                <Route
+                  path={routeConfig.adminDashboard["list-url"]}
+                  exact
+                  component={AdminDashboard} />
+                <Route
+                  path={routeConfig.error["list-url"]}
+                  exact
+                  component={Error} />
+              </Switch>
+            </AuthContextProvider>
           </div>
         </div>
       </div>
