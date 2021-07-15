@@ -50,7 +50,7 @@ POST http://localhost:5000/home/login
 Content-Type: application/json
 
 {
-    "email": "ltv.9a2.21@gmail.com"
+    "email": "loonatanic159@gmail.com"
 }
 
 ###
