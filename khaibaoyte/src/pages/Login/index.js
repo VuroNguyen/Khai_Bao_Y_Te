@@ -11,34 +11,6 @@ function Login() {
         email: userEmail
     })
 
-    // const getMail = async data => {
-    //     try {
-    //         const response = await axios({
-    //             method: 'POST',
-    //             url: 'http://localhost:5000/home/login',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             data: data,
-    //         })
-    //         if (response.data.success)
-    //             localStorage.setItem('khaibaoyte', response.data.accessToken)
-
-    //         return response.data
-    //     } catch (e) {
-    //         return { success: false, message: e.message }
-    //     }
-    // }
-
-    // const onSub = () => {
-    //     alert(`User Email: ${userEmail}`);
-    //     history.push({
-    //         pathname: "/form",
-    //         state: { usermail: userEmail }
-    //     });
-    //     getMail(data);
-    // }
-
     const { loginUser, registerUser } = useContext(AuthContext)
 
     const onSubmitChange = event => setUserEmail(event.target.value)
