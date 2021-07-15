@@ -4,13 +4,17 @@ import { Link, useLocation, useHistory } from 'react-router-dom'
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
 
 function LoginForm() {
-    // set location for react-router to parse email to
-    const userEmail = useLocation();
+    // set location for react-router to parse data to
+    const userData = useLocation();
+    // useHistory
     const history = useHistory();
+    // data for "Số lần khai báo trong ngày"
+    const [data, setData] = useState([]);
+
+
     // states of values
     const [userdepartment, setUserDepartment] = useState(null);
     const [usertelephone, setUserTelephone] = useState(null);
-
     const [answer4, setAnswer4] = useState([]);
     // answer4 options
     const [ans4Opt1, setAns4Opt1] = useState(false);
@@ -73,7 +77,7 @@ function LoginForm() {
         if (answer4.includes(e.target.value)) {
             // filter those values <=> remove it from the temp array
             tempArr = tempArr.filter(opt => opt !== e.target.value);
-            
+
         }
         // set the array to the answer4 value
         setAnswer4(tempArr);
@@ -102,12 +106,13 @@ function LoginForm() {
 
     // create an answer JSON file to save in the server
     let answer = JSON.stringify({
-        department: userdepartment,
-        telephone: usertelephone,
-        answer4: answer4.join(', ').toString(),
-        answer5: answer5,
-        answer6: answer6,
-        answer7: answer7,
+        email: userData.state.Authtoken.user.email,
+        quest2: userdepartment,
+        quest3: usertelephone,
+        quest4: answer4.join(', ').toString(),
+        quest5: answer5,
+        quest6: answer6,
+        quest7: answer7,
     })
 
     // POST method to the backend
@@ -119,11 +124,17 @@ function LoginForm() {
                 url: 'http://localhost:5000/api/khaibao',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userData.state.Authtoken.accessToken}`
                 },
                 data: data,
             })
-            // localStorage.setItem('khaibaoyte', res.data.accessToken);
-            console.log(res.data.success);
+            console.log(res.data);
+
+            history.push({
+                pathname: "/history",
+                state: { mail: userData.state.Authtoken.user.email }
+            });
+
             return res.data;
         } catch (e) {
             console.log(e.message);
@@ -133,12 +144,11 @@ function LoginForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let validated = true;
+        let validated = false;
         if (answer4.length !== 0) {
             alert('deparment ' + userdepartment + ' tel ' + usertelephone + ' ans4 ' + JSON.stringify(answer4) + ' ans5 ' + answer5 + ' ans6 ' + answer6 + ' ans7 ' + answer7);
             validated = true;
             postReport(answer);
-            window.location.reload();
         }
         else {
             alert('Vui lòng chọn câu trả lời số 4');
@@ -150,27 +160,23 @@ function LoginForm() {
     const handleHistory = e => {
         history.push({
             pathname: "/history",
-            state: { mail: userEmail.state.usermail }
+            state: { mail: "userEmail.state.usermail" }
         });
     }
 
-    const [data, setData] = useState([]);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const result = await axios(
-    //             `http://localhost:5000/api/khaibao/form/count?email=${userEmail.state.usermail}`,
-    //         );
-
-    //         setData(result.data);
-    //         console.log(result.data);
-    //     };
-
-    //     fetchData();
-    // }, []);
+    const checkuserAuth = (e) => {
+        if (userData.state == null) {
+            history.push({
+                pathname: "/",
+            });
+            alert('no Auth here, get back and login')
+        }
+    }
 
     return (
         <Container>
+            {window.addEventListener('load', checkuserAuth)}
             <Container>
                 <Form onSubmit={handleHistory}>
                     <div className='text-center'>
@@ -187,11 +193,11 @@ function LoginForm() {
                 <Form onSubmit={handleSubmit}>
                     <FormGroup>
                         <Label for="userEmail">1. Email</Label>
-                        <Input type="email" name="userEmail" id="userEmail" placeholder={'userEmail.state.usermail'} disabled />
+                        <Input type="email" name="userEmail" id="userEmail" placeholder={userData.state.Authtoken.user.email} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
-                        <Input
+                        <CustomInput
                             type="select"
                             id="userDepartment"
                             name="userDepartment"
@@ -203,7 +209,7 @@ function LoginForm() {
                             <option value='Marketing'>Marketing</option>
                             <option value='Manager'>Quản lí</option>
                             <option value='Accounting'>Kế toán</option>
-                        </Input>
+                        </CustomInput>
                     </FormGroup>
                     <FormGroup>
                         <Label for="userTel">3. Số điện thoại <span className='text-danger'>*</span></Label>
@@ -212,11 +218,11 @@ function LoginForm() {
                     <FormGroup>
                         <Label for="question4">4. Anh/Chị có dấu hiệu lâm sàng nào dưới đây? <span className='text-danger'>*</span></Label>
                         <div>
-                            <CustomInput type="checkbox" id="dauhieu1" label="Ho khan hoặc đau họng" value="Ho khan hoặc đau họng" onChange={chcklist} checked={ans4Opt1}/>
-                            <CustomInput type="checkbox" id="dauhieu2" label="Đau ngực hoặc khó thở" value="Đau ngực hoặc khó thở" onChange={chcklist} checked={ans4Opt2}/>
-                            <CustomInput type="checkbox" id="dauhieu3" label="Sốt cao (trên 38 độ C)" value="Sốt cao (trên 38 độ C)" onChange={chcklist} checked={ans4Opt3}/>
-                            <CustomInput type="checkbox" id="dauhieu4" label="Chảy nước mũi khó chịu" value="Chảy nước mũi khó chịu" onChange={chcklist} checked={ans4Opt4}/>
-                            <CustomInput type="checkbox" id="none4" label="Không có tất cả dấu hiệu trên" value="Không có tất cả dấu hiệu trên" onChange={chcklist} checked={ans4Opt5}/>
+                            <CustomInput type="checkbox" id="dauhieu1" label="Ho khan hoặc đau họng" value="Ho khan hoặc đau họng" onChange={chcklist} checked={ans4Opt1} />
+                            <CustomInput type="checkbox" id="dauhieu2" label="Đau ngực hoặc khó thở" value="Đau ngực hoặc khó thở" onChange={chcklist} checked={ans4Opt2} />
+                            <CustomInput type="checkbox" id="dauhieu3" label="Sốt cao (trên 38 độ C)" value="Sốt cao (trên 38 độ C)" onChange={chcklist} checked={ans4Opt3} />
+                            <CustomInput type="checkbox" id="dauhieu4" label="Chảy nước mũi khó chịu" value="Chảy nước mũi khó chịu" onChange={chcklist} checked={ans4Opt4} />
+                            <CustomInput type="checkbox" id="none4" label="Không có tất cả dấu hiệu trên" value="Không có tất cả dấu hiệu trên" onChange={chcklist} checked={ans4Opt5} />
                         </div>
                     </FormGroup>
                     <FormGroup name='question5'>
