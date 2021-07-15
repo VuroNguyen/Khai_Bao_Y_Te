@@ -87,8 +87,31 @@ const AuthContextProvider = ({ children }) => {
         }
     }
 
+    const registerEnterprise = async data => {
+        try {
+            const response = await axios({
+                method: 'POST',
+                url: 'http://localhost:5000/enterprise/register',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: data
+            })
+            if (response.data.success) {
+                localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.accessToken);
+            }
+
+            await loadUser()
+
+            return response.data
+        }
+        catch (e) {
+            return { success: false, message: e.message }
+        }
+    }
+
     //ContextData
-    const authContextData = { loginUser, registerUser, authState }
+    const authContextData = { loginUser, registerUser, registerEnterprise, authState }
 
     //Return provider
     return (

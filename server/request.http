@@ -71,11 +71,11 @@ POST http://localhost:5000/enterprise/register
 Content-Type: application/json
 
 {
-    "name": "FPT Software",
-    "email": "longnh20072000@gmail.com",
+    "name": "Cong ty 1 TV",
+    "email": "nmman06@gmail.com",
     "address": "100 Nguyễn Huệ, Q1, TP.HCM",
-    "MST": "234567890",
-    "document": "Chưa"
+    "MST": "123123124",
+    "document": ""
 }
 
 ###

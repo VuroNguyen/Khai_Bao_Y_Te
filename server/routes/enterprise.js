@@ -21,9 +21,9 @@ const storage = multer.diskStorage({
     }
 });
 
-router.post('/register', multer({ storage: storage}).single('document'), async (req, res) => {
+router.post('/register', multer({ storage: storage }).single('document'), async (req, res) => {
 
-    const { name, email, address, MST } = req.body
+    const { name, email, address, MST, document } = req.body
 
     if (!name || !email || !address || !MST)
         return res.status(400).json({ success: false, message: 'Có ô chưa nhập' })
@@ -40,7 +40,7 @@ router.post('/register', multer({ storage: storage}).single('document'), async (
             email,
             address,
             MST,
-            document: req.file.path,
+            document: document ? document : req.file.path
         })
 
         await newEnterprise.save()
