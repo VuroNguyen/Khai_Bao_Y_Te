@@ -50,12 +50,13 @@ function Login() {
         try {
             const loginData = await loginUser(data)
             if (loginData.enterprise) {
-                alert('Đăng nhập với mail doanh nghiệp')
+                alert('Đăng nhập với mail doanh nghiệp');
+                history.push({
+                    pathname: "/admindashboard",
+                })
             }
             if (loginData.user) {
-                alert('Đăng nhập với mail nhân viên')
-            }
-            if (loginData.success) {
+                alert('Đăng nhập với mail nhân viên');
                 history.push({
                     pathname: "/form",
                 })
