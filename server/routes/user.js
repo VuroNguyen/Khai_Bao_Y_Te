@@ -70,7 +70,7 @@ router.post('/login', async (req, res) => {
             const enterpriseAccessToken = jwt.sign({ enterpriseId: enterprise._id, email, name: enterprise.name }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' })
 
 
-            res.json({ success: true, message: 'Login Mail thành công', enterpriseAccessToken, enterprise: enterprise })
+            res.json({ success: true, message: 'Login Mail thành công', accessToken: enterpriseAccessToken, enterprise: enterprise })
         } else if (user) {
             const accessToken = jwt.sign({ userId: user._id, email, enterpriseName: user.enterpriseName, department: user.department, phone: user.phone }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' })
 
