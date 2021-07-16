@@ -20,7 +20,7 @@ const Navbars = (props) => {
                             src={addImage}
                             alt='icon' />
                     </div>
-                    Khai Báo Y Tế
+                    Khai Báo Y Tế Doanh Nghiệp
                 </div>
             </NavbarBrand>
             <NavbarToggler onClick={toggle} />
@@ -28,12 +28,7 @@ const Navbars = (props) => {
                 <Nav className="ml-auto" navbar>
                     <Col xs="auto">
                         <NavItem>
-                            <NavLink href="/register">Đăng kí</NavLink>
-                        </NavItem>
-                    </Col>
-                    <Col xs="auto">
-                        <NavItem>
-                            <NavLink href="/report">Report</NavLink>
+                            <NavLink href="/register">Dành cho chủ doanh nghiệp</NavLink>
                         </NavItem>
                     </Col>
                 </Nav>
