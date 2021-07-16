@@ -11,42 +11,19 @@ function Login() {
         email: userEmail
     })
 
-    // const getMail = async data => {
-    //     try {
-    //         const response = await axios({
-    //             method: 'POST',
-    //             url: 'http://localhost:5000/home/login',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             data: data,
-    //         })
-    //         if (response.data.success)
-    //             localStorage.setItem('khaibaoyte', response.data.accessToken)
-
-    //         return response.data
-    //     } catch (e) {
-    //         return { success: false, message: e.message }
-    //     }
-    // }
-
-    // const onSub = () => {
-    //     alert(`User Email: ${userEmail}`);
-    //     history.push({
-    //         pathname: "/form",
-    //         state: { usermail: userEmail }
-    //     });
-    //     getMail(data);
-    // }
-
     const { loginUser, registerUser } = useContext(AuthContext)
 
     const onSubmitChange = event => setUserEmail(event.target.value)
 
     const login = async event => {
+        // double try catch for both scenario whether
+        // the email is registered or not
         event.preventDefault()
+        // add variable to check if its registered
+        let isRegistered = true;
 
-
+        // run 1st
+        // login try catch for registered emails
         try {
             const loginData = await loginUser(data)
             if (loginData.enterprise) {
@@ -59,29 +36,38 @@ function Login() {
                 alert('Đăng nhập với mail nhân viên');
                 history.push({
                     pathname: "/form",
+                    state: { Authtoken: loginData }
                 })
             }
-            console.log(loginData)
+            // if login failed == no email in db
+            if (!loginData.success) {
+                isRegistered = false;
+            }
+            console.log(loginData);
         } catch (error) {
             console.log(error)
         }
 
-
-        try {
-            const createData = await registerUser(data);
-            if (createData.success) {
-                alert(`Email xác thực đã được gửi vui lòng xác nhận`);
+        // if there is no email in the db
+        // login try catch for unregistered emails
+        if (!isRegistered) {
+            try {
+                const createData = await registerUser(data);
+                if (createData.success) {
+                    alert(`Email xác thực đã được gửi vui lòng xác nhận`);
+                }
+                if (createData.success) {
+                    history.push({
+                        pathname: "/form",
+                        state: { Authtoken: createData }
+                    })
+                }
+                console.log(createData);
+            } catch (error) {
+                console.log(error)
             }
-            if (createData.success) {
-                history.push({
-                    pathname: "/form",
-                })
-            }
-
-            console.log(createData)
-        } catch (error) {
-            console.log(error)
         }
+
     }
 
     return (
