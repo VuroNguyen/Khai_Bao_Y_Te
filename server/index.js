@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const path = require('path')
 
-const getUserMail = require('./routes/user')
+const User = require('./routes/user')
 const medicalForm = require('./routes/medicalform')
 const Enterprise = require('./routes/enterprise')
 
@@ -37,7 +37,7 @@ app.use(cors())
 // app.use(express.static(path.join(dirname, '/khaibaoyte')));
 // app.get('*', (req, res) => res.sendFile(path.join(dirname, '/frontend/build/index.html')))
 
-app.use('/home', getUserMail)
+app.use('/home', User)
 app.use('/api/khaibao', medicalForm)
 app.use('/enterprise', Enterprise)
 
