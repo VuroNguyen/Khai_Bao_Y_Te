@@ -196,24 +196,12 @@ function LoginForm() {
                         <Input type="email" name="userEmail" id="userEmail" placeholder={userData.state.Authtoken.user.email} disabled />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
-                        <CustomInput
-                            type="select"
-                            id="userDepartment"
-                            name="userDepartment"
-                            required
-                            onChange={handleuserDepartment}>
-                            <option value="">Vui lòng chọn phòng ban</option>
-                            <option value='HR'>Nhân sự</option>
-                            <option value='IT'>IT</option>
-                            <option value='Marketing'>Marketing</option>
-                            <option value='Manager'>Quản lí</option>
-                            <option value='Accounting'>Kế toán</option>
-                        </CustomInput>
+                        <Label for="userDepartment">2. Phòng ban</Label>
+                        <Input type="email" name="userDepartment" id="userDepartment" placeholder={{}} disabled />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="userTel">3. Số điện thoại <span className='text-danger'>*</span></Label>
-                        <Input className="without_number" type="number" name="userTel" id="userTel" placeholder="ex: 0845372112" onChange={handleuserTelephone} required />
+                        <Label for="userTel">3. Số điện thoại</Label>
+                        <Input type="email" name="userTel" id="userTel" placeholder={{}} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="question4">4. Anh/Chị có dấu hiệu lâm sàng nào dưới đây? <span className='text-danger'>*</span></Label>

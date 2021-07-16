@@ -3,24 +3,32 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 import { Table } from 'reactstrap';
+//decode
+import jwt_decode from 'jwt-decode';
 
 const UserHistory = (props) => {
     const [data, setData] = useState([]);
-    const [response, setResponse] = useState('');
-    const email = useLocation();
+    const [count, setCount] = useState('');
+
+    //Khai bao
+    const token = localStorage.getItem('khaibaoyte');
+    //Decode
+    const decoded = jwt_decode(token);
 
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-                `http://localhost:5000/api/khaibao/form?email=${email.state.mail}`,
+                `http://localhost:5000/api/khaibao/form?email=${decoded.email}`,
             );
             const response = await axios(
-                `http://localhost:5000/api/khaibao/form/count?email=${email.state.mail}`,
+                `http://localhost:5000/api/khaibao/form/count?email=${decoded.email}`,
             );
 
             setData(result.data);
-            setResponse(response.data);
+            setCount(response.data);
             console.log(result.data);
+            //In ra check
+            console.log(decoded);
         };
 
         fetchData();
@@ -32,7 +40,7 @@ const UserHistory = (props) => {
                 <h3 style={{ color: '#55befc' }}>Lịch sử khai báo</h3>
                 <div style={{ paddingTop: '1em' }} />
             </div>
-            <p className='font-weight-bold'>Tổng số khai báo: {response.count}
+            <p className='font-weight-bold'>Tổng số khai báo: {count.count}
             </p>
             <br />
             <Table>
