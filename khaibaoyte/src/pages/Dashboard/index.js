@@ -238,106 +238,109 @@ export default function AdminDashboard() {
             {window.addEventListener('load', loadEmail)}
             <div className='text-center'>
                 <h3 style={{ color: '#55befc' }}>Quản lý nhân viên</h3>
-                <div style={{ paddingTop: '1em' }} />
             </div>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Email nhân viên</th>
-                        <th>Tình trạng</th>
-                        <th>Phòng ban</th>
-                        <th>SĐT</th>
-                        <th>Edit</th>
-                        <th>Lịch sử khai báo</th>
-                    </tr>
-                </thead>
-                <tbody >
-                    {responses.map(response => (
-                        <tr key={response._id}>
-                            <td>{response.email}</td>
-                            <td>{response.status === false ? "Chưa xác nhận" : "Đã xác nhận"}</td>
-                            <td>{response.department}</td>
-                            <td>{response.phone}</td>
-                            <td>
-                                {/* Pass data onClick */}
-                                <Button outline color="info" onClick={() => parseFormEdit(response.email, response.deparment, response.phone)}>Edit</Button>
+            <div style={{ paddingTop: '2vh' }}>
+                {/* Pass data onClick */}
+                <Button className="float-right" outline color="info" onClick={toggleFormAdd} >Thêm tài khoản nhân viên</Button>
 
-                                <Modal isOpen={modalFormEdit} toggle={toggleFormEdit}>
-                                    <ModalHeader toggle={toggleFormEdit}>Sửa thông tin nhân viên</ModalHeader>
-                                    <ModalBody>
-                                        <Form>
-                                            <FormGroup>
-                                                <Label for="userEmail">1. Email nhân viên <span className='text-danger'>*</span></Label>
-                                                <Input type="text" name="userEmail" id="userEmail" placeholder="ex: 0845372112" required value={editEmail} />
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
-                                                <CustomInput
-                                                    type="select"
-                                                    id="userDepartment"
-                                                    name="userDepartment"
-                                                    required>
-                                                    <option value="">Vui lòng chọn phòng ban</option>
-                                                    <option value='HR'>Nhân sự</option>
-                                                    <option value='IT'>IT</option>
-                                                    <option value='Marketing'>Marketing</option>
-                                                    <option value='Manager'>Quản lí</option>
-                                                    <option value='Accounting'>Kế toán</option>
-                                                </CustomInput>
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <Label for="userPhone">3. Số điện thoại nhân viên <span className='text-danger'>*</span></Label>
-                                                <Input className="without_number" type="number" name="userPhone" id="userPhone" placeholder="ex: 0845372112" required value={editTel} />
-                                            </FormGroup>
-                                        </Form>
-                                    </ModalBody>
-                                    <ModalFooter>
-                                        <Button onClick={toggleFormEdit} type="submit" outline color="info">OK</Button>{' '}
-                                    </ModalFooter>
-                                </Modal>
-                            </td>
-                            <td><Button outline color="info" onClick={() => toHistoryClick(response.email)} >Tới lịch sử </Button></td>
+                <Modal isOpen={modalFormAdd} toggle={toggleFormAdd}>
+                    <ModalHeader toggle={toggleFormAdd}>Đăng ký email nhân viên</ModalHeader>
+                    <ModalBody>
+                        <Form>
+                            <FormGroup>
+                                <Label for="userEmail">1. Email nhân viên <span className='text-danger'>*</span></Label>
+                                <Input type="text" name="userEmail" id="userEmail" placeholder="ex: 0845372112" required />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
+                                <CustomInput
+                                    type="select"
+                                    id="userDepartment"
+                                    name="userDepartment"
+                                    required>
+                                    <option value="">Vui lòng chọn phòng ban</option>
+                                    <option value='HR'>Nhân sự</option>
+                                    <option value='IT'>IT</option>
+                                    <option value='Marketing'>Marketing</option>
+                                    <option value='Manager'>Quản lí</option>
+                                    <option value='Accounting'>Kế toán</option>
+                                </CustomInput>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="userPhone">3. Số điện thoại nhân viên <span className='text-danger'>*</span></Label>
+                                <Input className="without_number" type="number" name="userPhone" id="userPhone" placeholder="ex: 0845372112" required />
+                            </FormGroup>
+                        </Form>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button onClick={toggleFormAdd} type='submit' outline color="info">OK</Button>{' '}
+                    </ModalFooter>
+                </Modal>
+            </div>
+            <br /><br />
+            <div>
+                <Table hover responsive>
+                    <thead>
+                        <tr>
+                            <th>Email nhân viên</th>
+                            <th>Tình trạng</th>
+                            <th>Phòng ban</th>
+                            <th>SĐT</th>
+                            <th className="text-center">Sửa thông tin</th>
+                            <th className="text-center">Lịch sử khai báo</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
-            <div style={{ paddingTop: '2em' }} />
-            {/* Pass data onClick */}
-            <Button outline color="info" onClick={toggleFormAdd} >Thêm tài khoản nhân viên</Button>
+                    </thead>
+                    <tbody >
+                        {responses.map(response => (
+                            <tr key={response._id}>
+                                <td col='w-50'>{response.email}</td>
+                                <td>{response.status === false ? "Chưa xác nhận" : "Đã xác nhận"}</td>
+                                <td>{response.department}</td>
+                                <td>{response.phone}</td>
+                                <td className="text-center">
+                                    {/* Pass data onClick */}
+                                    <Button outline color="info" onClick={() => parseFormEdit(response.email, response.deparment, response.phone)}>Edit</Button>
 
-            <Modal isOpen={modalFormAdd} toggle={toggleFormAdd}>
-                <ModalHeader toggle={toggleFormAdd}>Đăng ký email nhân viên</ModalHeader>
-                <ModalBody>
-                    <Form>
-                        <FormGroup>
-                            <Label for="userEmail">1. Email nhân viên <span className='text-danger'>*</span></Label>
-                            <Input type="text" name="userEmail" id="userEmail" placeholder="ex: 0845372112" required />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
-                            <CustomInput
-                                type="select"
-                                id="userDepartment"
-                                name="userDepartment"
-                                required>
-                                <option value="">Vui lòng chọn phòng ban</option>
-                                <option value='HR'>Nhân sự</option>
-                                <option value='IT'>IT</option>
-                                <option value='Marketing'>Marketing</option>
-                                <option value='Manager'>Quản lí</option>
-                                <option value='Accounting'>Kế toán</option>
-                            </CustomInput>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="userPhone">3. Số điện thoại nhân viên <span className='text-danger'>*</span></Label>
-                            <Input className="without_number" type="number" name="userPhone" id="userPhone" placeholder="ex: 0845372112" required />
-                        </FormGroup>
-                    </Form>
-                </ModalBody>
-                <ModalFooter>
-                    <Button onClick={toggleFormAdd} type='submit' outline color="info">OK</Button>{' '}
-                </ModalFooter>
-            </Modal>
+                                    <Modal isOpen={modalFormEdit} toggle={toggleFormEdit}>
+                                        <ModalHeader toggle={toggleFormEdit}>Sửa thông tin nhân viên</ModalHeader>
+                                        <ModalBody>
+                                            <Form>
+                                                <FormGroup>
+                                                    <Label for="userEmail">1. Email nhân viên <span className='text-danger'>*</span></Label>
+                                                    <Input type="text" name="userEmail" id="userEmail" placeholder="ex: 0845372112" required value={editEmail} />
+                                                </FormGroup>
+                                                <FormGroup>
+                                                    <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
+                                                    <CustomInput
+                                                        type="select"
+                                                        id="userDepartment"
+                                                        name="userDepartment"
+                                                        required>
+                                                        <option value="">Vui lòng chọn phòng ban</option>
+                                                        <option value='HR'>Nhân sự</option>
+                                                        <option value='IT'>IT</option>
+                                                        <option value='Marketing'>Marketing</option>
+                                                        <option value='Manager'>Quản lí</option>
+                                                        <option value='Accounting'>Kế toán</option>
+                                                    </CustomInput>
+                                                </FormGroup>
+                                                <FormGroup>
+                                                    <Label for="userPhone">3. Số điện thoại nhân viên <span className='text-danger'>*</span></Label>
+                                                    <Input className="without_number" type="number" name="userPhone" id="userPhone" placeholder="ex: 0845372112" required value={editTel} />
+                                                </FormGroup>
+                                            </Form>
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <Button onClick={toggleFormEdit} type="submit" outline color="info">OK</Button>{' '}
+                                        </ModalFooter>
+                                    </Modal>
+                                </td>
+                                <td className="text-center"><Button outline color="info" onClick={() => toHistoryClick(response.email)} >Tới lịch sử </Button></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </div>
         </div>
     )
 }

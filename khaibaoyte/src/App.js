@@ -19,6 +19,10 @@ import Auth from './views/Auth'
 
 moment.locale('vi');
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function App() {
   const [currentTime, setCurrentTime] = useState('');
 
@@ -36,7 +40,7 @@ function App() {
         <Navbars />
         <div className='container'>
           <div style={{ paddingTop: '1em' }} />
-          <span>Thời gian hệ thống: <br />{moment().format('dddd, DD/MM/YYYY')} &nbsp; {currentTime}</span>
+          {capitalizeFirstLetter(moment().format(`dddd, DD/MM/YYYY ㅤHH:mm:ss`))}
           <div className='padding'>
             <AuthContextProvider>
               <Switch>
