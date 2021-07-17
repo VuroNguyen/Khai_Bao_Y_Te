@@ -45,14 +45,14 @@ function LoginForm() {
 
 
             // set DD/MM/YY format
-            const CreatedAtdate = new Date(lastest.data.data[0].createdAt);
+            const CreatedAtdate = new Date(lastest.data[0].createdAt);
             const getCreatedAtday = getDay(CreatedAtdate.getDay());
             const getCreatedAtdate = `${getCreatedAtday}, ${CreatedAtdate.getDate()}/${CreatedAtdate.getMonth() + 1}/${CreatedAtdate.getFullYear()}`;
 
-            setUserInfoTotal(total.data.data);
+            setUserInfoTotal(total.data);
             setUserInfoLastest(getCreatedAtdate);
-            console.log('Lastest: ', lastest.data.data[0]);
-            console.log('Total: ', total.data.data);
+            console.log('Lastest: ', lastest.data[0]);
+            console.log('Total: ', total.data);
             //In ra check
             // console.log(useremail);
             // console.log('Decoded: ', decoded);
