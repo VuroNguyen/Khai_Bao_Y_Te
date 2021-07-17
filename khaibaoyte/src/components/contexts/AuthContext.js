@@ -14,31 +14,6 @@ const AuthContextProvider = ({ children }) => {
         user: null
     })
 
-    // Authenticate user
-    const loadUser = async () => {
-        if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
-            setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME])
-        }
-        try {
-            const response = await axios.get(`http://localhost:5000/home/`)
-            if (response.data.success) {
-                dispatch({
-                    type: 'SET_AUTH',
-                    payload: { isAuthenticated: true, user: response.data.user }
-                })
-            }
-        } catch (error) {
-            localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME)
-            setAuthToken(null)
-            dispatch({
-                type: 'SET_AUTH',
-                payload: { isAuthenticated: false, user: null }
-            })
-        }
-    }
-
-    useEffect(() => loadUser(), [])
-
     //Login
     const loginUser = async data => {
 
@@ -105,7 +80,7 @@ const AuthContextProvider = ({ children }) => {
     }
 
     //ContextData
-    const authContextData = { loginUser, registerUser, authState }
+    const authContextData = { loginUser, registerUser, registerEnterprise, authState }
 
     //Return provider
     return (

@@ -23,6 +23,7 @@ const storage = multer.diskStorage({
     }
 });
 
+
 router.post('/pre-register', async (req, res) => {
     const {email} = req.body
 
@@ -48,7 +49,7 @@ router.post('/pre-register', async (req, res) => {
 
 router.post('/register', multer({ storage: storage}).single('document'), async (req, res) => {
 
-    const { name, email, address, MST } = req.body
+    const { name, email, address, MST, document } = req.body
 
     const validName = await Enterprise.findOne({name})
     if(validName) return res.status(400).json({ success: false, message: 'Tên Doanh Nghiệp Đã Tồn Tại' })
