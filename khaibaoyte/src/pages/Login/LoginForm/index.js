@@ -23,6 +23,8 @@ function LoginForm() {
     const decoded = jwt_decode(usertoken);
     const useremail = decoded.email;
 
+    const [length, setLength] = useState('');
+
     const checkuserAuth = (e) => {
         if (localStorage.getItem('khaibaoyte') == null) {
             history.push({
@@ -30,7 +32,7 @@ function LoginForm() {
             });
             alert('no Auth here, get back and login')
             return false;
-        }else return true;
+        } else return true;
     }
 
     //useEffect để a show 2 cái API số lần khai báo trong ngày, lần khai báo cuối lúc
@@ -43,16 +45,12 @@ function LoginForm() {
                 `http://localhost:5000/api/khaibao/form/lastform?email=${useremail}`,
             );
 
-
-            // set DD/MM/YY format
-            const CreatedAtdate = new Date(lastest.data[0].createdAt);
-            const getCreatedAtday = getDay(CreatedAtdate.getDay());
-            const getCreatedAtdate = `${getCreatedAtday}, ${CreatedAtdate.getDate()}/${CreatedAtdate.getMonth() + 1}/${CreatedAtdate.getFullYear()}`;
-
             setUserInfoTotal(total.data);
-            setUserInfoLastest(getCreatedAtdate);
-            console.log('Lastest: ', lastest.data[0]);
-            console.log('Total: ', total.data);
+            // setUserInfoLastest(lastest.data === null ? 'Chua' : lastest.data[0].createdAt);
+            setLength(lastest.data.length);
+            // console.log('Lastest: ', lastest.data);
+            // console.log('Total: ', total.data);
+            // console.log(lastest.data[0].createdAt);
             //In ra check
             // console.log(useremail);
             // console.log('Decoded: ', decoded);
@@ -225,7 +223,7 @@ function LoginForm() {
                     </div>
                     <p className='font-weight-bold'>Số lần khai báo trong ngày: {userInfoTotal.length} </p>
                     {/* Xong */}
-                    <p className='font-italic'>Khai báo lần cuối lúc: {userInfoLastest ? userInfoLastest : 'Chưa có khai báo'}</p>
+                    <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
                     <Button outline color="info" type="submit">Lịch sử khai báo</Button>
                 </Form>
             </Container>
