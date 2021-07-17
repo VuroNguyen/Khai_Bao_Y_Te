@@ -13,11 +13,13 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import AlertMessage from "../../components/AlertMessage/AlertMessage";
 
 function Register() {
   const [businessForm, setBusinessForm] = useState({
     email: "",
   });
+  const [alert, setAlert] = useState(null);
 
   // const [businessForm, setBusinessForm] = useState({
   //     emailBusiness: '',
@@ -59,22 +61,46 @@ function Register() {
 
   // const onChangeConfirm = event => setBusinessEmail(event.target.value)
 
-  const { registerEnterprise } = useContext(AuthContext);
+  const { registerEnterprise, loginUser } = useContext(AuthContext);
 
   const register = async (event) => {
     event.preventDefault();
 
+    let isRegistered = true;
+
     try {
-      const registerData = await registerEnterprise(data);
-      console.log(registerData.accessToken);
-      if (registerData.success) {
-        history.push({
-          pathname: "/admindashboard",
+      const loginData = await loginUser(data);
+      if (loginData.enterprise) {
+        setAlert({
+          type: "danger",
+          message: "vui lòng kiểm tra email xác thực để đăng nhập",
         });
+        setTimeout(() => setAlert(null), 5000);
       }
-      console.log(registerData);
+      // if login failed == no email in db
+      if (!loginData.success) {
+        isRegistered = false;
+      }
+      console.log("login", loginData);
     } catch (error) {
       console.log(error);
+    }
+
+    if (isRegistered === false) {
+      try {
+        const createData = await registerEnterprise(data);
+        if (createData.success) {
+          setAlert({
+            type: "danger",
+            message:
+              "Email xác thực đăng ký đã được gửi. Vui lòng truy cập email để điền thông tin và xác nhận",
+          });
+          setTimeout(() => setAlert(null), 5000);
+        }
+        console.log("createData", createData);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -118,9 +144,7 @@ function Register() {
           </Form>
           <br />
           {/* Mẫn */}
-          <p className="text-danger font-italic">
-            Lỗi báo chỗ này, thêm if các thứ để hiển thị
-          </p>
+          <AlertMessage info={alert} />
           <br />
           <br />
         </div>

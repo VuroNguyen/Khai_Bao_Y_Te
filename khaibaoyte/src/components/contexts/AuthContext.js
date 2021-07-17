@@ -62,7 +62,7 @@ const AuthContextProvider = ({ children }) => {
         try {
             const response = await axios({
                 method: 'POST',
-                url: 'http://localhost:5000/enterprise/register',
+                url: 'http://localhost:5000/enterprise/pre-register',
                 headers: {
                     'Content-Type': 'application/json',
                 },
