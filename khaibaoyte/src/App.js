@@ -16,6 +16,7 @@ import Report from './pages/Report';
 import Error from './pages/Error';
 import AuthContextProvider from './components/contexts/AuthContext'
 import Auth from './views/Auth'
+import PrivateRoutes from './components/utils/privateroutes';
 
 moment.locale('vi');
 
@@ -49,11 +50,14 @@ function App() {
                   path={routeConfig.login["list-url"]}
                   exact
                   render={props => <Auth {...props} authRoute='login' />} />
-                <Route
+
+                {/* add privateRoutes for user w tokens */}
+                <PrivateRoutes
                   path={routeConfig.loginForm["list-url"]}
                   exact
                   component={LoginForm} />
-                <Route
+
+                <PrivateRoutes
                   path={routeConfig.history["list-url"]}
                   exact
                   component={UserHistory} />
@@ -61,15 +65,15 @@ function App() {
                   path={routeConfig.register["list-url"]}
                   exact
                   component={Register} />
-                <Route
+                <PrivateRoutes
                   path={routeConfig.registerForm["list-url"]}
                   exact
                   component={RegisterForm} />
-                <Route
+                <PrivateRoutes
                   path={routeConfig.report["list-url"]}
                   exact
                   component={Report} />
-                <Route
+                <PrivateRoutes
                   path={routeConfig.adminDashboard["list-url"]}
                   exact
                   component={AdminDashboard} />

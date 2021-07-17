@@ -4,43 +4,59 @@ import { Link, useLocation, useHistory } from 'react-router-dom'
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
 //nhớ cài npm i mới nhất lại nha
 import jwt_decode from 'jwt-decode';
+import { getDay } from '../../../components/utils/getday';
 
 function LoginForm() {
     // set location for react-router to parse data to
     const userData = useLocation();
     // useHistory
     const history = useHistory();
-    // data for "Số lần khai báo trong ngày"
-    const [data, setData] = useState([]);
-
 
     //Get data số lần khai báo trong ngày với lần khai báo gần nhất
     const [userInfoTotal, setUserInfoTotal] = useState('');
-    const [userInfoLastest, setUserInfoLastest] = useState(null);
+    const [userInfoLastest, setUserInfoLastest] = useState('');
 
-    // Anh Lam làm thêm cái local, QA xem coi code cũ của em có gì dư thì bỏ đi nha, mấy cái push
+    // Anh Lam làm thêm cái local
     //get token from localStorage
-    const token = localStorage.getItem('khaibaoyte');
-    //Decode token, anh có in trong console log để em check coi . gì gọi ra từng thành phần nha
-    const decoded = jwt_decode(token);
-    const email = decoded.email;
+    const usertoken = localStorage.getItem('khaibaoyte');
+    //Decode token
+    const decoded = jwt_decode(usertoken);
+    const useremail = decoded.email;
+
+    const checkuserAuth = (e) => {
+        if (localStorage.getItem('khaibaoyte') == null) {
+            history.push({
+                pathname: "/",
+            });
+            alert('no Auth here, get back and login')
+            return false;
+        }else return true;
+    }
 
     //useEffect để a show 2 cái API số lần khai báo trong ngày, lần khai báo cuối lúc
     useEffect(() => {
         const fetchData = async () => {
             const total = await axios(
-                `http://localhost:5000/api/khaibao/form/getAllFormToday?email=${email}`,
+                `http://localhost:5000/api/khaibao/form/getAllFormToday?email=${useremail}`,
             );
             const lastest = await axios(
-                `http://localhost:5000/api/khaibao/form/lastform?email=${email}`,
+                `http://localhost:5000/api/khaibao/form/lastform?email=${useremail}`,
             );
+
+
+            // set DD/MM/YY format
+            const CreatedAtdate = new Date(lastest.data.data[0].createdAt);
+            const getCreatedAtday = getDay(CreatedAtdate.getDay());
+            const getCreatedAtdate = `${getCreatedAtday}, ${CreatedAtdate.getDate()}/${CreatedAtdate.getMonth() + 1}/${CreatedAtdate.getFullYear()}`;
+
             setUserInfoTotal(total.data.data);
-            setUserInfoLastest(lastest.data.data);
-            console.log('Lastest: ', lastest.data.data);
+            setUserInfoLastest(getCreatedAtdate);
+            console.log('Lastest: ', lastest.data.data[0]);
             console.log('Total: ', total.data.data);
             //In ra check
-            console.log(email);
-            console.log('Decoded: ', decoded);
+            // console.log(useremail);
+            // console.log('Decoded: ', decoded);
+            // console.log('lần cuối lúc: ', getCreatedAtdate);
         };
         fetchData();
     }, [])
@@ -116,13 +132,13 @@ function LoginForm() {
         setAnswer4(tempArr);
     }
 
-    // set values on click/inputs
-    const handleuserDepartment = (e) => {
-        setUserDepartment(e.target.value);
-    }
-    const handleuserTelephone = (e) => {
-        setUserTelephone(e.target.value);
-    }
+    // // set values on click/inputs
+    // const handleuserDepartment = (e) => {
+    //     setUserDepartment(e.target.value);
+    // }
+    // const handleuserTelephone = (e) => {
+    //     setUserTelephone(e.target.value);
+    // }
 
     const onValueChange = (e) => {
         if (e.target.name === "question5") {
@@ -139,9 +155,9 @@ function LoginForm() {
 
     // create an answer JSON file to save in the server
     let answer = JSON.stringify({
-        email: userData.state.Authtoken.user.email,
-        quest2: userdepartment,
-        quest3: usertelephone,
+        email: useremail,
+        quest2: decoded.department ? decoded.department : 'Không có',
+        quest3: decoded.phone ? decoded.phone : '0',
         quest4: answer4.join(', ').toString(),
         quest5: answer5,
         quest6: answer6,
@@ -151,13 +167,12 @@ function LoginForm() {
     // POST method to the backend
     const postReport = async (data) => {
         try {
-            // 
             const res = await axios({
                 method: 'POST',
                 url: 'http://localhost:5000/api/khaibao',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${userData.state.Authtoken.accessToken}`
+                    'Authorization': `Bearer ${usertoken}`
                 },
                 data: data,
             })
@@ -165,12 +180,12 @@ function LoginForm() {
 
             history.push({
                 pathname: "/history",
-                state: { mail: userData.state.Authtoken.user.email }
+                state: { mail: useremail }
             });
 
             return res.data;
         } catch (e) {
-            console.log(e.message);
+            alert(e.message);
             return { success: false, message: e.message };
         }
     }
@@ -179,6 +194,8 @@ function LoginForm() {
         e.preventDefault();
         let validated = false;
         if (answer4.length !== 0) {
+            setUserDepartment(decoded.department ? decoded.department : 'Không có');
+            setUserTelephone(decoded.phone ? decoded.phone : '0');
             alert('deparment ' + userdepartment + ' tel ' + usertelephone + ' ans4 ' + JSON.stringify(answer4) + ' ans5 ' + answer5 + ' ans6 ' + answer6 + ' ans7 ' + answer7);
             validated = true;
             postReport(answer);
@@ -193,23 +210,13 @@ function LoginForm() {
     const handleHistory = e => {
         history.push({
             pathname: "/history",
-            state: { mail: "userEmail.state.usermail" }
+            state: { mail: useremail }
         });
-    }
-
-
-    const checkuserAuth = (e) => {
-        if (userData.state == null) {
-            history.push({
-                pathname: "/",
-            });
-            alert('no Auth here, get back and login')
-        }
     }
 
     return (
         <Container>
-            {window.addEventListener('load', checkuserAuth)}
+            {window.onloadstart = checkuserAuth()}
             <Container>
                 <Form onSubmit={handleHistory}>
                     <div className='text-center'>
@@ -217,9 +224,9 @@ function LoginForm() {
                         <div style={{ paddingTop: '1em' }} />
                     </div>
                     <p className='font-weight-bold'>Số lần khai báo trong ngày: {userInfoTotal.length} </p>
-                    {/* QA check khúc này coi kêu ra sao nha em, anh làm không ra */}
-                    <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
-                    <Button outline color="info">Lịch sử khai báo</Button>
+                    {/* Xong */}
+                    <p className='font-italic'>Khai báo lần cuối lúc: {userInfoLastest ? userInfoLastest : 'Chưa có khai báo'}</p>
+                    <Button outline color="info" type="submit">Lịch sử khai báo</Button>
                 </Form>
             </Container>
             <div style={{ paddingTop: '2%' }} />
@@ -231,11 +238,11 @@ function LoginForm() {
                     </FormGroup>
                     <FormGroup>
                         <Label for="userDepartment">2. Phòng ban</Label>
-                        <Input type="email" name="userDepartment" id="userDepartment" placeholder={decoded.department} disabled />
+                        <Input type="email" name="userDepartment" id="userDepartment" placeholder={decoded.department ? decoded.department : 'Không có'} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="userTel">3. Số điện thoại</Label>
-                        <Input type="email" name="userTel" id="userTel" placeholder={decoded.phone} disabled />
+                        <Input type="email" name="userTel" id="userTel" placeholder={decoded.phone ? decoded.phone : 'Không có'} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="question4">4. Anh/Chị có dấu hiệu lâm sàng nào dưới đây? <span className='text-danger'>*</span></Label>
