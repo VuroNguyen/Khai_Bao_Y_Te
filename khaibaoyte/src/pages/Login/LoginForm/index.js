@@ -2,6 +2,8 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
+//nhớ cài npm i mới nhất lại nha
+import jwt_decode from 'jwt-decode';
 
 function LoginForm() {
     // set location for react-router to parse data to
@@ -11,6 +13,37 @@ function LoginForm() {
     // data for "Số lần khai báo trong ngày"
     const [data, setData] = useState([]);
 
+
+    //Get data số lần khai báo trong ngày với lần khai báo gần nhất
+    const [userInfoTotal, setUserInfoTotal] = useState('');
+    const [userInfoLastest, setUserInfoLastest] = useState(null);
+
+    // Anh Lam làm thêm cái local, QA xem coi code cũ của em có gì dư thì bỏ đi nha, mấy cái push
+    //get token from localStorage
+    const token = localStorage.getItem('khaibaoyte');
+    //Decode token, anh có in trong console log để em check coi . gì gọi ra từng thành phần nha
+    const decoded = jwt_decode(token);
+    const email = decoded.email;
+
+    //useEffect để a show 2 cái API số lần khai báo trong ngày, lần khai báo cuối lúc
+    useEffect(() => {
+        const fetchData = async () => {
+            const total = await axios(
+                `http://localhost:5000/api/khaibao/form/getAllFormToday?email=${email}`,
+            );
+            const lastest = await axios(
+                `http://localhost:5000/api/khaibao/form/lastform?email=${email}`,
+            );
+            setUserInfoTotal(total.data.data);
+            setUserInfoLastest(lastest.data.data);
+            console.log('Lastest: ', lastest.data.data);
+            console.log('Total: ', total.data.data);
+            //In ra check
+            console.log(email);
+            console.log('Decoded: ', decoded);
+        };
+        fetchData();
+    }, [])
 
     // states of values
     const [userdepartment, setUserDepartment] = useState(null);
@@ -183,7 +216,8 @@ function LoginForm() {
                         <h3 style={{ color: '#55befc' }}>Khai báo</h3>
                         <div style={{ paddingTop: '1em' }} />
                     </div>
-                    <p className='font-weight-bold'>Số lần khai báo trong ngày: {data.count} </p>
+                    <p className='font-weight-bold'>Số lần khai báo trong ngày: {userInfoTotal.length} </p>
+                    {/* QA check khúc này coi kêu ra sao nha em, anh làm không ra */}
                     <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
                     <Button outline color="info">Lịch sử khai báo</Button>
                 </Form>
@@ -193,15 +227,15 @@ function LoginForm() {
                 <Form onSubmit={handleSubmit}>
                     <FormGroup>
                         <Label for="userEmail">1. Email</Label>
-                        <Input type="email" name="userEmail" id="userEmail" placeholder={userData.state.Authtoken.user.email} disabled />
+                        <Input type="email" name="userEmail" id="userEmail" placeholder={decoded.email} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="userDepartment">2. Phòng ban</Label>
-                        <Input type="email" name="userDepartment" id="userDepartment" placeholder={{}} disabled />
+                        <Input type="email" name="userDepartment" id="userDepartment" placeholder={decoded.department} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="userTel">3. Số điện thoại</Label>
-                        <Input type="email" name="userTel" id="userTel" placeholder={{}} disabled />
+                        <Input type="email" name="userTel" id="userTel" placeholder={decoded.phone} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="question4">4. Anh/Chị có dấu hiệu lâm sàng nào dưới đây? <span className='text-danger'>*</span></Label>

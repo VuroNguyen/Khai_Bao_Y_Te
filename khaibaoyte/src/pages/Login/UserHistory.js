@@ -23,10 +23,10 @@ const UserHistory = (props) => {
             const response = await axios(
                 `http://localhost:5000/api/khaibao/form/count?email=${decoded.email}`,
             );
-
             setData(result.data);
             setCount(response.data);
-            console.log(result.data);
+            console.log(data);
+            console.log(count);
             //In ra check
             console.log(decoded);
         };

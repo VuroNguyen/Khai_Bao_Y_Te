@@ -4,7 +4,7 @@ GET http://localhost:5000/api/khaibao/form
 ###
 
 //chọn user theo mail hoặc doanh nghiệp. filter => ?email=tên, ?enterpriseName=tên
-GET http://localhost:5000/home/getAllEmail
+GET http://localhost:5000/home/getAllEmail?enterpriseName=CÔNG TY TNHH HỆ THỐNG THÔNG TIN FPT
 
 
 ###
@@ -41,23 +41,23 @@ GET http://localhost:5000/api/khaibao/form/lastform?email=nhatlam1695@gmail.com
 ###
 
 //lấy tất cả form trong ngày. có thể sort theo mail => ?email=mail
-GET http://localhost:5000/api/khaibao/form/getAllFormToday?email=ltv.9a2.21@gmail.com
+GET http://localhost:5000/api/khaibao/form/getAllFormToday?email=sept9th2015@gmail.com
 
 
 ###
 
 POST http://localhost:5000/api/khaibao
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVkNWI0YzdkOGU0ODI0MGM2NWY4Y2QiLCJlbWFpbCI6Im5oYXRsYW0xNjk1QGdtYWlsLmNvbSIsIm5hbWUiOiJGUFQgU29mdHdhcmUiLCJpYXQiOjE2MjY0NjQzNjcsImV4cCI6MTYyNjQ2NjE2N30.P4hBZbEbn5pPST47nhhiccBm7qrKuz7uj81YOIXdOEU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGYyNDI1NTZmOWViNTNmMmM5ZDAyNGUiLCJlbWFpbCI6Ijk5MTVsbjAwMkBnbWFpbC5jb20iLCJlbnRlcnByaXNlTmFtZSI6IkPDlE5HIFRZIFROSEggSOG7hiBUSOG7kE5HIFRIw5RORyBUSU4gRlBUIiwiZGVwYXJ0bWVudCI6Ik5ow6JuIHPhu7EiLCJwaG9uZSI6Mzg0NTY3ODkxLCJpYXQiOjE2MjY0OTAwMzgsImV4cCI6MTYyNjQ5MTgzOH0.xxw3oPoZNn3xB-PVJMmEVK6drEEL_DugIrtRhZOS2Ng
 
 
 {
-    "quest2": "abc",
+    "quest2": "Không",
     "quest3": "Không",
-    "quest4": "Ho khan hoặc đau họng, Đau ngực hoặc khó thở",
-    "quest5": "Test",
-    "quest6": "Không",
-    "quest7": "Không"
+    "quest4": "Sốt cao (trên 38 độ C)",
+    "quest5": "Người thân tiếp xúc gần của Anh/Chị là người di chuyển",
+    "quest6": "Anh/Chị là người tiếp xúc",
+    "quest7": "Cả hai đều là người di chuyển/tiếp xúc"
 }
 
 ###
@@ -76,7 +76,7 @@ POST http://localhost:5000/home/login
 Content-Type: application/json
 
 {
-    "email": "nhatlam1695@gmail.com"
+    "email": "9915ln002@gmail.com"
 }
 
 ###
@@ -86,7 +86,7 @@ POST http://localhost:5000/enterprise/pre-register
 Content-Type: application/json
 
 {
-    "email": "nmman06@gmail.com"
+    "email": "9915ln002@gmail.com"
 }
 
 ###
@@ -94,12 +94,12 @@ Content-Type: application/json
 //Add staff into DB with enterprise ID + name
 POST http://localhost:5000/enterprise/add
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVkNWI2YzdkOGU0ODI0MGM2NWY4ZDAiLCJlbWFpbCI6ImxvbmduaDIwMDcyMDAwQGdtYWlsLmNvbSIsIm5hbWUiOiJGUFQgU29mdHdhcmUiLCJpYXQiOjE2MjYyNTM1NDAsImV4cCI6MTYyNjI1NTM0MH0.hbvIrVKN1ab-ZOTF4OpWNuejqH2iDPCimZBAMZ_rYtw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGYyNDNiNDZmOWViNTNmMmM5ZDAyNWQiLCJuYW1lIjoiRlBUIFNvZnR3YXJlIEFjYWRlbXkiLCJlbWFpbCI6IndoaXNwZXI0c2hvdDFraWxsQGdtYWlsLmNvbSIsImlhdCI6MTYyNjQ4OTc4MCwiZXhwIjoxNjI2NDkxNTgwfQ.pIW8QNtUVe3kE68t3c_BPIgosd14Pc431vE9lM0iwdc
 
 {
-    "email": "hnka301220@gmail.com",
-    "department": "CEO",
-    "phone": "0123456789"
+    "email": "pynecollection@gmail.com",
+    "department": "IT",
+    "phone": "0904573821"
 }
 
 ###
@@ -109,10 +109,10 @@ POST http://localhost:5000/enterprise/register
 Content-Type: application/json
 
 {
-    "name": "Cty TNHH LHL",
-    "email": "longnh20072000@gmail.com",
-    "address": "100 Nguyễn Huệ, Q1, TP.HCM",
-    "MST": "234567890",
+    "name": "FPT Software Academy",
+    "email": "whisper4shot1kill@gmail.com",
+    "address": "Tòa nhà FPT, 17 Duy Tân, Quận Cầu Giấy, Hà Nội",
+    "MST": "3456789012",
     "document": ""
 }
 
@@ -122,5 +122,5 @@ POST http://localhost:5000/home/activation
 Content-Type: application/json
 
 {
-    "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVkNWI2YzdkOGU0ODI0MGM2NWY4ZDAiLCJlbWFpbCI6ImxvbmduaDIwMDcyMDAwQGdtYWlsLmNvbSIsIm5hbWUiOiJGUFQgU29mdHdhcmUiLCJpYXQiOjE2MjYzNzY0MjYsImV4cCI6MTYyNjM3ODIyNn0.NAm2zOsb9MMPdeGR7L9AOysTCqJdK_Pr-CexO1Eo-io"
+    "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGFmZklkIjoiNjBmMjQyNTU2ZjllYjUzZjJjOWQwMjRlIiwiZGVwYXJ0bWVudCI6Ik5ow6JuIHPhu7EiLCJwaG9uZSI6IjAzODQ1Njc4OTEiLCJlbWFpbCI6Ijk5MTVsbjAwMkBnbWFpbC5jb20iLCJpYXQiOjE2MjY0ODk0Mjl9.lTrxHdfkN0arfGFV4ge-vuW4oGWErUZyKmw2wqQ2jDg"
 }
