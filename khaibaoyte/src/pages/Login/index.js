@@ -35,14 +35,14 @@ function Login() {
           type: "danger",
           message: "vui lòng kiểm tra email xác thực để đăng nhập",
         });
-        history.push({});
+        setTimeout(() => setAlert(null), 5000);
       }
       if (loginData.user) {
         setAlert({
           type: "danger",
           message: "vui lòng kiểm tra email xác thực để đăng nhập",
         });
-        history.push({});
+        setTimeout(() => setAlert(null), 5000);
       }
       // if login failed == no email in db
       if (!loginData.success) {
@@ -64,6 +64,7 @@ function Login() {
             message:
               "Email xác thực đã được gửi. Vui lòng truy cập email để xác nhận",
           });
+          setTimeout(() => setAlert(null), 5000);
         }
         if (createData.success) {
           history.push({});

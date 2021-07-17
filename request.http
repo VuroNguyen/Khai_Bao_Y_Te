@@ -118,10 +118,10 @@ POST http://localhost:5000/enterprise/register
 Content-Type: application/json
 
 {
-    "name": "Cty TNHH LHL",
-    "email": "longnh20072000@gmail.com",
-    "address": "100 Nguyễn Huệ, Q1, TP.HCM",
-    "MST": "234567890",
+    "name": "Công Ty SUPA",
+    "email": "nmman06@gmail.com",
+    "address": "302 Dĩ An, Bình DƯơng, TP.HCM",
+    "MST": "201258232",
     "document": ""
 }
 
