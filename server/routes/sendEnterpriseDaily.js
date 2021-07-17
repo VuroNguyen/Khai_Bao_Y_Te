@@ -42,16 +42,18 @@ const sendEnterpriseDaily = (to, url) => {
     const mailOptions = {
         from: SENDER_EMAIL_ADDRESS,
         to: to,
-        subject: 'XÁC THỰC EMAIL QUA KHAI BÁO Y TẾ',
+        subject: 'Yêu cầu xác thực email',
         html: `
-            <h2>Xin chào ${to}, </h2>
-            <h4>Đây là Enterprise Daily thư tự động của hệ thống Khai báo y tế - FIS từ </h4>
-            <p>bạn vui lòng xác nhận mail để khai báo </p>
-            <a href="${url}"><input style="border-radius: 5%;
-            font-size: 18px;
-            width: 30%;
-            background-color: #008CBA;
-            color: white;" type="button" value="Verify Email" /></a>
+        <p>Xin chào <strong>${enterpriseName}</strong>,</p>
+        <p>Cảm ơn bạn đã truy cập <strong>Hệ thống Khai báo y tế dành cho Doanh nghiệp</strong></p>
+        <p>Bạn vui lòng chọn <strong>Xác Nhận</strong> để bắt đầu quản lý nhân viên</p>
+        <p>&nbsp;</p>
+        <p><a href="${url}"><input style="border-radius: 5%; font-size: 18px; width: 30%; height: 55px; background-color: #008cba; color: white;" type="button" value="Xác nhận" /></a></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p><span style="color: #999999;">Nếu bạn không thuộc doanh nghiệp này, vui lòng bỏ qua email</span></p>
         `
     }
 

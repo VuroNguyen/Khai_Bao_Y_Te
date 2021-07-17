@@ -42,16 +42,18 @@ const sendStaffVerification = (to, url, enterpriseName) => {
     const mailOptions = {
         from: SENDER_EMAIL_ADDRESS,
         to: to,
-        subject: 'XÁC THỰC EMAIL QUA KHAI BÁO Y TẾ',
+        subject: 'Xác minh khai báo doanh nghiệp',
         html: `
-            <h2>Xin chào ${to}, </h2>
-            <h4>Đây là staff verify thư tự động của hệ thống Khai báo y tế - FIS từ ${enterpriseName}</h4>
-            <p>bạn vui lòng xác nhận mail để khai báo </p>
-            <a href="${url}"><input style="border-radius: 5%;
-            font-size: 18px;
-            width: 30%;
-            background-color: #008CBA;
-            color: white;" type="button" value="Verify Email" /></a>
+            <p><strong>Hệ thống Khai báo y tế dành cho Doanh nghiệp thông báo,</strong></p>
+            <p><strong>${enterpriseName}</strong> đã thêm <strong>${to}</strong> vào danh sách nhân viên.</p>
+            <p>Để xác thực tài khoản và thêm vào thành viên công ty trong hệ thống, vui lòng chọn <strong>Xác nhận.</strong></p>
+            <p>&nbsp;</p>
+            <p><a href="${url}"><input style="border-radius: 5%; font-size: 18px; width: 30%; height: 55px; background-color: #008cba; color: white;" type="button" value="Xác nhận" /></a></p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p><span style="color: #999999;">Nếu bạn không thuộc doanh nghiệp này, vui lòng bỏ qua email</span></p>
         `
     }
 
