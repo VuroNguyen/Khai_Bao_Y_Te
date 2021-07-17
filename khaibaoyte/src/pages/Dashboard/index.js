@@ -1,8 +1,11 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, CustomInput, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Table } from 'reactstrap';
 import './index.css';
+
+//decode
+import jwt_decode from 'jwt-decode';
 
 
 // class AdminDashboard extends Component {
@@ -170,6 +173,24 @@ export default function AdminDashboard() {
     const [modalFormEdit, setModalFormEdit] = useState(false);
     const history = useHistory();
 
+    const usertoken = localStorage.getItem('khaibaoyte');
+    //Decode token
+    const decoded = jwt_decode(usertoken);
+    const useremail = decoded.email;
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await axios(
+                `http://localhost:5000/home/getAllEmail?enterpriseName=${decoded.name}`,
+            );
+
+            setResponses(res.data);
+            console.log(res.data)
+            console.log(decoded)
+        };
+        fetchData();
+    }, [])
+
     const toHistoryClick = (useremail) => {
         history.push({
             pathname: "/history",
@@ -191,8 +212,6 @@ export default function AdminDashboard() {
         // on submit success clear the form
         // then toggle the form
     }
-
-
 
     const toggleFormEdit = () => {
         console.log("edit");
@@ -222,20 +241,8 @@ export default function AdminDashboard() {
     // refresh the table with new data
     // WTF nhân viên méo ai có sdt vs phòng ban bro ???
 
-    const loadEmail = (e) => {
-        axios.get(`http://localhost:5000/home/getAllEmail`)
-            .then(res => {
-                const responses = res.data;
-                setResponses(responses);
-                console.log(responses)
-            })
-
-            .catch(error => console.log(error));
-    }
-
     return (
         <div>
-            {window.addEventListener('load', loadEmail)}
             <div className='text-center'>
                 <h3 style={{ color: '#55befc' }}>Quản lý nhân viên</h3>
             </div>
