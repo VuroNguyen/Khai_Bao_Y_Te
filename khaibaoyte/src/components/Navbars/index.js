@@ -28,12 +28,7 @@ const Navbars = (props) => {
                 <Nav className="ml-auto" navbar>
                     <Col xs="auto">
                         <NavItem>
-                            <NavLink href="/register">Đăng ký</NavLink>
-                        </NavItem>
-                    </Col>
-                    <Col xs="auto">
-                        <NavItem>
-                            <NavLink href="/report">Report</NavLink>
+                            <NavLink href="/register">Dành cho chủ doanh nghiệp</NavLink>
                         </NavItem>
                     </Col>
                 </Nav>

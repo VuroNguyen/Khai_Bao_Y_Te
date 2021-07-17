@@ -8,6 +8,8 @@ const verifyEnterpriseToken = require('../middleware/enterpriseAuth')
 const Enterprise = require('../models/Enterprise')
 const User = require('../models/User')
 const sendMail = require('./sendMail')
+const sendEnterpriseVeriMail = require('./sendEnterpriseVeriMail')
+const sendStaffVerification = require('./sendStaffVerification')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -21,18 +23,48 @@ const storage = multer.diskStorage({
     }
 });
 
-router.post('/register', multer({ storage: storage }).single('document'), async (req, res) => {
+
+router.post('/pre-register', async (req, res) => {
+    const {email} = req.body
+
+    if(!email) return res.status(400).json({ success: false, message: 'Xin hãy nhập mail'})
+    
+    if (!validateEmail(email))
+        return res.status(400).json({ success: false, message: 'Mail không tồn tại' })
+
+    const enterprise = await Enterprise.findOne({ email })
+    if (enterprise) return res.status(400).json({ success: false, message: 'Email đã tồn tại' })
+
+    const isUser = await User.findOne({ email })
+    if (isUser) return res.status(400).json({ success: false, message: 'Email này đã được đăng kí dưới dạng email nhân viên' })
+
+    const accessToken = jwt.sign({ email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' })
+
+    const url = `http://localhost:3000/registerform`
+
+    sendEnterpriseVeriMail(email, url)
+
+    res.json({ success: true, message: 'Nhận email thành công', accessToken, email})
+})
+
+router.post('/register', multer({ storage: storage}).single('document'), async (req, res) => {
 
     const { name, email, address, MST, document } = req.body
+
+    const validName = await Enterprise.findOne({name})
+    if(validName) return res.status(400).json({ success: false, message: 'Tên Doanh Nghiệp Đã Tồn Tại' })
 
     if (!name || !email || !address || !MST)
         return res.status(400).json({ success: false, message: 'Có ô chưa nhập' })
 
-    // if (!validateEmail(email))
-    //     return res.status(400).json({ success: false, message: 'Xin hãy nhập mail khác' })
+    if (!validateEmail(email))
+        return res.status(400).json({ success: false, message: 'Xin hãy nhập mail khác' })
 
     const enterprise = await Enterprise.findOne({ email })
     if (enterprise) return res.status(400).json({ success: false, message: 'Email đã tồn tại' })
+
+    const isUser = await User.findOne({ email })
+    if (isUser) return res.status(400).json({ success: false, message: 'Email này đã được đăng kí dưới dạng email nhân viên' })
 
     try {
         const newEnterprise = new Enterprise({
@@ -40,16 +72,12 @@ router.post('/register', multer({ storage: storage }).single('document'), async 
             email,
             address,
             MST,
-            document: document ? document : req.file.path
+            document: req.file ? req.file.path : 'Không',
         })
 
         await newEnterprise.save()
 
         const accessToken = jwt.sign({ enterpriseId: newEnterprise._id, name, email: newEnterprise.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' })
-
-        const url = `http://localhost:3000/report`
-
-        sendMail(email, url)
 
         res.json({ success: true, message: 'Nhận email thành công', accessToken, enterpriseInfo: newEnterprise })
     } catch (error) {
@@ -68,6 +96,9 @@ router.post('/add', verifyEnterpriseToken, async (req, res) => {
     if (!validateEmail(email))
         return res.status(400).json({ success: false, message: 'Please input another email address' })
 
+    const isEnterprise = await Enterprise.findOne({ email })
+    if (isEnterprise) return res.status(400).json({ success: false, message: 'Email đã tồn tại dưới dạng đăng kí doanh nghiệp' })
+
     const staff = await User.findOne({ email })
 
     if (staff)
@@ -85,11 +116,13 @@ router.post('/add', verifyEnterpriseToken, async (req, res) => {
 
         await addStaff.save()
 
+        const accessToken = jwt.sign({ staffId: addStaff._id, department, phone, email }, process.env.ACCESS_TOKEN_SECRET)
+
         const url = `http://localhost:3000/form/`
 
-        sendMail(email, url)
+        sendStaffVerification(email, url, req.name)
 
-        res.json({ success: true, message: 'Nhận email thành công', staffInfo: addStaff })
+        res.json({ success: true, message: 'Nhận email thành công', accessToken, staffInfo: addStaff })
     } catch (error) {
         console.log(error)
         res.status(500).json({ success: false, message: 'Có gì đó không ổn' })
@@ -109,6 +142,30 @@ router.get('/getAllEnterprise', async (req, res) => {
                 message:
                     err.message || "Some error occurred while retrieving forms."
             });
+        });
+})
+
+router.put('/editstaff/:id', async (req, res) => {
+    if (!req.body) {
+        return res.status(400).send({
+          message: "Data to update can not be empty!"
+        });
+      }
+    
+      const id = req.params.id;
+    
+      User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+        .then(data => {
+          if (!data) {
+            res.status(404).send({
+              message: `Cannot update staff information with id=${id}. Maybe Staff was not found!`
+            });
+          } else res.send({ message: "Staff information was updated successfully." });
+        })
+        .catch(err => {
+          res.status(500).send({
+            message: "Error updating Staff information with id=" + id
+          });
         });
 })
 

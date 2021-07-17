@@ -91,75 +91,19 @@ function Register() {
                     <div style={{ paddingTop: '1em' }} />
                     <Form onSubmit={register}>
                         <FormGroup>
-                            <Label for="userEmail"><h4>Nhập Email để điền thông tin</h4></Label>
-                            <Input
-                                className="w-75 mx-auto"
-                                type="email"
-                                name="email"
-                                id="userEmail"
-                                placeholder="ex: yourmail@gmail.com, ..."
-                                required
-                                value={email}
-                                onChange={onChangeBusinessForm} />
+                            <Label for="userEmail"><h4>Nhập email để điền thông tin</h4></Label>
+                            <Input className="w-75 mx-auto" type="email" name="userEmail" id="userEmail" placeholder="Ví dụ: emailcuaban@fpt.com.vn" required value={businessEmail} onChange={event => setBusinessEmail(event.target.value)} />
                         </FormGroup>
-
-                        <FormGroup>
-                            <Label for="businessName">1. Tên doanh nghiệp <span className='text-danger'>*</span></Label>
-                            <Input
-                                type="text"
-                                name="name"
-                                id="businessName"
-                                placeholder='ex: FPT Information System'
-                                required
-                                value={name}
-                                onChange={onChangeBusinessForm} />
-                        </FormGroup>
-                        <Row form>
-                            <Col md={8}>
-                                <FormGroup>
-                                    <Label for="businessAddress">4. Địa chỉ <span className='text-danger'>*</span></Label>
-                                    <Input
-                                        type="text"
-                                        name="address"
-                                        id="businessAddress"
-                                        required
-                                        value={address}
-                                        onChange={onChangeBusinessForm} />
-                                </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Label for="businessTaxNumber">5. Mã số thuế <span className='text-danger'>*</span></Label>
-                                    <Input
-                                        className="without_number"
-                                        type="number"
-                                        name="MST"
-                                        id="businessTaxNumber"
-                                        required
-                                        value={MST}
-                                        onChange={onChangeBusinessForm} />
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <FormGroup>
-                            <Label for="file">6. Tài liệu</Label>
-                            <CustomInput
-                                type="file"
-                                id="businessDocument"
-                                name="document"
-                                label="Upload tài liệu ở đây"
-                            />
-                        </FormGroup>
-
-                        <Button outline color="primary">Gửi</Button>
+                        <Button style={{ height: '5vh', width: '15vh' }} outline color="primary">Gửi email</Button>
                     </Form>
-                    <div style={{ paddingTop: '10px' }} />
-                    <p className="font-italic">Yêu cầu email bao gồm cả @ và tên miền phía sau</p>
+                    <br />
+                    {/* Mẫn */}
+                    <p className="text-danger font-italic">Lỗi báo chỗ này, thêm if các thứ để hiển thị</p>
+                    <br /><br />
                 </div>
-                <br /><br />
             </Container>
-            <Container className="text-center"><h4 className='text-danger font-weight-bold'>LƯU Ý</h4></Container>
-            <Container style={{ border: '1px solid' }}>
+            <Container className="text-center"><h4 className='text-danger font-weight-bold'>HƯỚNG DẪN SỬ DỤNG</h4></Container>
+            <Container>
                 <div style={{ paddingTop: '30px' }} />
                 <p className='text-info'>1. Đối với doanh nghiệp Đăng ký mới: </p>
                 <p>_ Nhập email vào ô bên trên và nhấn gửi</p>

@@ -2,15 +2,68 @@ import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation, useHistory } from 'react-router-dom'
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap'
+//nhớ cài npm i mới nhất lại nha
+import jwt_decode from 'jwt-decode';
+import { getDay } from '../../../components/utils/getday';
 
 function LoginForm() {
-    // set location for react-router to parse email to
-    const userEmail = useLocation();
+    // set location for react-router to parse data to
+    const userData = useLocation();
+    // useHistory
     const history = useHistory();
+
+    //Get data số lần khai báo trong ngày với lần khai báo gần nhất
+    const [userInfoTotal, setUserInfoTotal] = useState('');
+    const [userInfoLastest, setUserInfoLastest] = useState('');
+
+    // Anh Lam làm thêm cái local
+    //get token from localStorage
+    const usertoken = localStorage.getItem('khaibaoyte');
+    //Decode token
+    const decoded = jwt_decode(usertoken);
+    const useremail = decoded.email;
+
+    const checkuserAuth = (e) => {
+        if (localStorage.getItem('khaibaoyte') == null) {
+            history.push({
+                pathname: "/",
+            });
+            alert('no Auth here, get back and login')
+            return false;
+        }else return true;
+    }
+
+    //useEffect để a show 2 cái API số lần khai báo trong ngày, lần khai báo cuối lúc
+    useEffect(() => {
+        const fetchData = async () => {
+            const total = await axios(
+                `http://localhost:5000/api/khaibao/form/getAllFormToday?email=${useremail}`,
+            );
+            const lastest = await axios(
+                `http://localhost:5000/api/khaibao/form/lastform?email=${useremail}`,
+            );
+
+
+            // set DD/MM/YY format
+            const CreatedAtdate = new Date(lastest.data[0].createdAt);
+            const getCreatedAtday = getDay(CreatedAtdate.getDay());
+            const getCreatedAtdate = `${getCreatedAtday}, ${CreatedAtdate.getDate()}/${CreatedAtdate.getMonth() + 1}/${CreatedAtdate.getFullYear()}`;
+
+            setUserInfoTotal(total.data);
+            setUserInfoLastest(getCreatedAtdate);
+            console.log('Lastest: ', lastest.data[0]);
+            console.log('Total: ', total.data);
+            //In ra check
+            // console.log(useremail);
+            // console.log('Decoded: ', decoded);
+            // console.log('lần cuối lúc: ', getCreatedAtdate);
+        };
+        fetchData();
+    }, [])
+
     // states of values
     const [userdepartment, setUserDepartment] = useState(null);
     const [usertelephone, setUserTelephone] = useState(null);
-
     const [answer4, setAnswer4] = useState([]);
     // answer4 options
     const [ans4Opt1, setAns4Opt1] = useState(false);
@@ -73,19 +126,19 @@ function LoginForm() {
         if (answer4.includes(e.target.value)) {
             // filter those values <=> remove it from the temp array
             tempArr = tempArr.filter(opt => opt !== e.target.value);
-            
+
         }
         // set the array to the answer4 value
         setAnswer4(tempArr);
     }
 
-    // set values on click/inputs
-    const handleuserDepartment = (e) => {
-        setUserDepartment(e.target.value);
-    }
-    const handleuserTelephone = (e) => {
-        setUserTelephone(e.target.value);
-    }
+    // // set values on click/inputs
+    // const handleuserDepartment = (e) => {
+    //     setUserDepartment(e.target.value);
+    // }
+    // const handleuserTelephone = (e) => {
+    //     setUserTelephone(e.target.value);
+    // }
 
     const onValueChange = (e) => {
         if (e.target.name === "question5") {
@@ -102,43 +155,50 @@ function LoginForm() {
 
     // create an answer JSON file to save in the server
     let answer = JSON.stringify({
-        department: userdepartment,
-        telephone: usertelephone,
-        answer4: answer4.join(', ').toString(),
-        answer5: answer5,
-        answer6: answer6,
-        answer7: answer7,
+        email: useremail,
+        quest2: decoded.department ? decoded.department : 'Không có',
+        quest3: decoded.phone ? decoded.phone : '0',
+        quest4: answer4.join(', ').toString(),
+        quest5: answer5,
+        quest6: answer6,
+        quest7: answer7,
     })
 
     // POST method to the backend
     const postReport = async (data) => {
         try {
-            // 
             const res = await axios({
                 method: 'POST',
                 url: 'http://localhost:5000/api/khaibao',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${usertoken}`
                 },
                 data: data,
             })
-            // localStorage.setItem('khaibaoyte', res.data.accessToken);
-            console.log(res.data.success);
+            console.log(res.data);
+
+            history.push({
+                pathname: "/history",
+                state: { mail: useremail }
+            });
+
             return res.data;
         } catch (e) {
-            console.log(e.message);
+            alert(e.message);
             return { success: false, message: e.message };
         }
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let validated = true;
+        let validated = false;
         if (answer4.length !== 0) {
+            setUserDepartment(decoded.department ? decoded.department : 'Không có');
+            setUserTelephone(decoded.phone ? decoded.phone : '0');
             alert('deparment ' + userdepartment + ' tel ' + usertelephone + ' ans4 ' + JSON.stringify(answer4) + ' ans5 ' + answer5 + ' ans6 ' + answer6 + ' ans7 ' + answer7);
             validated = true;
             postReport(answer);
-            window.location.reload();
         }
         else {
             alert('Vui lòng chọn câu trả lời số 4');
@@ -150,36 +210,23 @@ function LoginForm() {
     const handleHistory = e => {
         history.push({
             pathname: "/history",
-            state: { mail: userEmail.state.usermail }
+            state: { mail: useremail }
         });
     }
 
-    const [data, setData] = useState([]);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const result = await axios(
-    //             `http://localhost:5000/api/khaibao/form/count?email=${userEmail.state.usermail}`,
-    //         );
-
-    //         setData(result.data);
-    //         console.log(result.data);
-    //     };
-
-    //     fetchData();
-    // }, []);
-
     return (
         <Container>
+            {window.onloadstart = checkuserAuth()}
             <Container>
                 <Form onSubmit={handleHistory}>
                     <div className='text-center'>
                         <h3 style={{ color: '#55befc' }}>Khai báo</h3>
                         <div style={{ paddingTop: '1em' }} />
                     </div>
-                    <p className='font-weight-bold'>Số lần khai báo trong ngày: {data.count} </p>
-                    <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
-                    <Button outline color="info">Lịch sử khai báo</Button>
+                    <p className='font-weight-bold'>Số lần khai báo trong ngày: {userInfoTotal.length} </p>
+                    {/* Xong */}
+                    <p className='font-italic'>Khai báo lần cuối lúc: {userInfoLastest ? userInfoLastest : 'Chưa có khai báo'}</p>
+                    <Button outline color="info" type="submit">Lịch sử khai báo</Button>
                 </Form>
             </Container>
             <div style={{ paddingTop: '2%' }} />
@@ -187,36 +234,24 @@ function LoginForm() {
                 <Form onSubmit={handleSubmit}>
                     <FormGroup>
                         <Label for="userEmail">1. Email</Label>
-                        <Input type="email" name="userEmail" id="userEmail" placeholder={'userEmail.state.usermail'} disabled />
+                        <Input type="email" name="userEmail" id="userEmail" placeholder={decoded.email} disabled />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
-                        <Input
-                            type="select"
-                            id="userDepartment"
-                            name="userDepartment"
-                            required
-                            onChange={handleuserDepartment}>
-                            <option value="">Vui lòng chọn phòng ban</option>
-                            <option value='HR'>Nhân sự</option>
-                            <option value='IT'>IT</option>
-                            <option value='Marketing'>Marketing</option>
-                            <option value='Manager'>Quản lí</option>
-                            <option value='Accounting'>Kế toán</option>
-                        </Input>
+                        <Label for="userDepartment">2. Phòng ban</Label>
+                        <Input type="email" name="userDepartment" id="userDepartment" placeholder={decoded.department ? decoded.department : 'Không có'} disabled />
                     </FormGroup>
                     <FormGroup>
-                        <Label for="userTel">3. Số điện thoại <span className='text-danger'>*</span></Label>
-                        <Input className="without_number" type="number" name="userTel" id="userTel" placeholder="ex: 0845372112" onChange={handleuserTelephone} required />
+                        <Label for="userTel">3. Số điện thoại</Label>
+                        <Input type="email" name="userTel" id="userTel" placeholder={decoded.phone ? decoded.phone : 'Không có'} disabled />
                     </FormGroup>
                     <FormGroup>
                         <Label for="question4">4. Anh/Chị có dấu hiệu lâm sàng nào dưới đây? <span className='text-danger'>*</span></Label>
                         <div>
-                            <CustomInput type="checkbox" id="dauhieu1" label="Ho khan hoặc đau họng" value="Ho khan hoặc đau họng" onChange={chcklist} checked={ans4Opt1}/>
-                            <CustomInput type="checkbox" id="dauhieu2" label="Đau ngực hoặc khó thở" value="Đau ngực hoặc khó thở" onChange={chcklist} checked={ans4Opt2}/>
-                            <CustomInput type="checkbox" id="dauhieu3" label="Sốt cao (trên 38 độ C)" value="Sốt cao (trên 38 độ C)" onChange={chcklist} checked={ans4Opt3}/>
-                            <CustomInput type="checkbox" id="dauhieu4" label="Chảy nước mũi khó chịu" value="Chảy nước mũi khó chịu" onChange={chcklist} checked={ans4Opt4}/>
-                            <CustomInput type="checkbox" id="none4" label="Không có tất cả dấu hiệu trên" value="Không có tất cả dấu hiệu trên" onChange={chcklist} checked={ans4Opt5}/>
+                            <CustomInput type="checkbox" id="dauhieu1" label="Ho khan hoặc đau họng" value="Ho khan hoặc đau họng" onChange={chcklist} checked={ans4Opt1} />
+                            <CustomInput type="checkbox" id="dauhieu2" label="Đau ngực hoặc khó thở" value="Đau ngực hoặc khó thở" onChange={chcklist} checked={ans4Opt2} />
+                            <CustomInput type="checkbox" id="dauhieu3" label="Sốt cao (trên 38 độ C)" value="Sốt cao (trên 38 độ C)" onChange={chcklist} checked={ans4Opt3} />
+                            <CustomInput type="checkbox" id="dauhieu4" label="Chảy nước mũi khó chịu" value="Chảy nước mũi khó chịu" onChange={chcklist} checked={ans4Opt4} />
+                            <CustomInput type="checkbox" id="none4" label="Không có tất cả dấu hiệu trên" value="Không có tất cả dấu hiệu trên" onChange={chcklist} checked={ans4Opt5} />
                         </div>
                     </FormGroup>
                     <FormGroup name='question5'>

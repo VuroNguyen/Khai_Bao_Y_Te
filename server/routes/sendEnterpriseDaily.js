@@ -3,6 +3,8 @@ const { google } = require('googleapis')
 const { OAuth2 } = google.auth
 const OAUTH_PLAYGROUND = 'https://developers.google.com/oauthplayground'
 
+//send mail to enterpise everytime they log in
+
 const {
     MAILING_SERVICE_CLIENT_ID,
     MAILING_SERVICE_CLIENT_SECRET,
@@ -19,7 +21,7 @@ const oauth2Client = new OAuth2(
     OAUTH_PLAYGROUND
 )
 
-const sendMail = (to, url) => {
+const sendEnterpriseDaily = (to, url) => {
     oauth2Client.setCredentials({
         refresh_token: MAILING_SERVICE_REFESH_TOKEN
     })
@@ -42,9 +44,9 @@ const sendMail = (to, url) => {
         to: to,
         subject: 'XÁC THỰC EMAIL QUA KHAI BÁO Y TẾ',
         html: `
-            <h2>Xin chào bạn ${to}, </h2>
-            <h4>Đây là user verify thư tự động của hệ thống Khai báo y tế - FIS</h4>
-            <p>Bạn vui lòng nhấp vào đường link bên dưới để kích hoạt email và bắt đầu khai báo</p>
+            <h2>Xin chào ${to}, </h2>
+            <h4>Đây là Enterprise Daily thư tự động của hệ thống Khai báo y tế - FIS từ </h4>
+            <p>bạn vui lòng xác nhận mail để khai báo </p>
             <a href="${url}"><input style="border-radius: 5%;
             font-size: 18px;
             width: 30%;
@@ -59,4 +61,4 @@ const sendMail = (to, url) => {
     })
 }
 
-module.exports = sendMail
+module.exports = sendEnterpriseDaily
