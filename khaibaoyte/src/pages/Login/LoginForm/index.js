@@ -30,7 +30,7 @@ function LoginForm() {
             history.push({
                 pathname: "/",
             });
-            alert('no Auth here, get back and login')
+            alert('Không có xác thực, vui lòng quay lại trang chủ')
             return false;
         } else return true;
     }
@@ -194,7 +194,8 @@ function LoginForm() {
         if (answer4.length !== 0) {
             setUserDepartment(decoded.department ? decoded.department : 'Không có');
             setUserTelephone(decoded.phone ? decoded.phone : '0');
-            alert('deparment ' + userdepartment + ' tel ' + usertelephone + ' ans4 ' + JSON.stringify(answer4) + ' ans5 ' + answer5 + ' ans6 ' + answer6 + ' ans7 ' + answer7);
+            // alert('deparment ' + userdepartment + ' tel ' + usertelephone + ' ans4 ' + JSON.stringify(answer4) + ' ans5 ' + answer5 + ' ans6 ' + answer6 + ' ans7 ' + answer7);
+            alert('Bạn đã khai báo thành công, bạn có thể xem lại lịch sử khai báo sau đây')
             validated = true;
             postReport(answer);
         }

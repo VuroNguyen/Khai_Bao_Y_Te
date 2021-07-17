@@ -72,8 +72,8 @@ function Register() {
       const loginData = await loginUser(data);
       if (loginData.enterprise) {
         setAlert({
-          type: "danger",
-          message: "vui lòng kiểm tra email xác thực để đăng nhập",
+          type: "success",
+          message: "Vui lòng kiểm tra email xác thực để quản lí doanh nghiệp",
         });
         setTimeout(() => setAlert(null), 5000);
       }
@@ -91,9 +91,9 @@ function Register() {
         const createData = await registerEnterprise(data);
         if (createData.success) {
           setAlert({
-            type: "danger",
+            type: "success",
             message:
-              "Email xác thực đăng ký đã được gửi. Vui lòng truy cập email để điền thông tin và xác nhận",
+              "Email xác thực đăng ký đã được gửi. Vui lòng truy cập email xác nhận và bắt đầu",
           });
           setTimeout(() => setAlert(null), 5000);
         }
@@ -150,29 +150,32 @@ function Register() {
         </div>
       </Container>
       <Container className="text-center">
-        <h4 className="text-danger font-weight-bold">HƯỚNG DẪN SỬ DỤNG</h4>
+        <h4 className="text-danger font-weight-bold">THÔNG TIN CHUNG</h4>
       </Container>
       <Container>
         <div style={{ paddingTop: "30px" }} />
-        <p className="text-info">1. Đối với doanh nghiệp Đăng ký mới: </p>
-        <p>_ Nhập email vào ô bên trên và nhấn gửi</p>
-        <p>_ Đăng nhập email và nhấn vào link xác nhận</p>
-        <p>_ Điền các thông tin có liên quan trên đơn Đăng ký</p>
-        <p>_ Bấm gửi và hệ thống sẽ trả về kết quả</p>
-        <p>
-          _ Nhập email nhân viên bằng dấu + và thông báo xác nhận sẽ được gửi
-          tới từng người
-        </p>
-        <p>
-          _ Nếu đã có tài khoản mời quay lại trang{" "}
-          <a href="/login">Đăng Nhập</a>
-        </p>
+        {/* <h4>Thông tin chung</h4> */}
+        <p>Hệ thống khai báo y tế là công cụ hỗ trợ các doanh nghiệp ghi nhận và tổng hợp các khai báo y tế của nhân viên. Với các chức năng khai báo, quản lý nhân viên, và các công cụ báo cáo, tổng hợp tờ khai, hệ thống sẽ đưa đến cho doanh nghiệp một góc nhìn tổng quan và trực diện hơn về tình hình dịch bệnh COVID19. Từ đó, hỗ trợ thúc đẩy các hoạt động sản xuất, kinh doanh trong bối cảnh dịch bệnh như hiện nay.</p>
+        <p>Nhân viên trong doanh nghiệp, tổ chức thực hiện khai báo y tế qua hệ thống hằng ngày để báo cáo tình trạng sức khỏe, lịch trình di chuyển và lịch sử tiếp xúc với các trường hợp được cho là liên quan đến các trường hợp nhiễm bệnh COVID19. Các chủ doanh nghiệp có thể theo dõi các tờ khai được khai báo bởi nhân viên để theo dõi tình hình diễn biến của dịch bệnh và tạo ra các thống kê, báo cáo về các tình trạng của nhân viên trong doanh nghiệp.</p>
+        <strong><ol><li>Đối với doanh nghiệp đã đăng ký</li></ol></strong>
+        <ul>
+          <li>Nhập email vào ô bên trên và nhấn gửi.</li>
+          <li>Hệ thống sẽ gửi email để xác thực người dùng.</li>
+          <li>Truy cập email và chọn xác nhận để truy cập hệ thống quản lý Khai báo y tế Doanh nghiệp</li>
+        </ul>
+        <strong><ol start='2'><li><strong></strong>Đối với doanh nghiệp mới</li></ol></strong>
+        <ul>
+          <li>Nhập email vào ô bên trên và nhấn gửi.</li>
+          <li>Hệ thống sẽ gửi email để xác thực người dùng.</li>
+          <li>Truy cập email và chọn xác nhận để tiến hành đăng ký thông tin doanh nghiệp.</li>
+          <li>Nhập thông tin doanh nghiệp để đăng ký và truy cập hệ thống.</li>
+          <li>Bổ sung danh sách nhân viên thông qua email để tổng hợp khai báo y tế.</li>
+        </ul>
         <br />
         <p className="text-primary font-italic">
           Mọi thắc mắc xin vui lòng liên lạc để được{" "}
           <a href="tel:123-456-7890">hỗ trợ</a>
         </p>
-        <div style={{ paddingBottom: "20px" }} />
       </Container>
     </Container>
   );
