@@ -45,8 +45,7 @@ GET http://localhost:5000/api/khaibao/form/count?email=nhatlam1695@gmail.com
 ###
 
 //lấy form cuối cùng. ?email để lấy form cuối theo email
-GET http://localhost:5000/api/khaibao/form/lastform?email=nhatlam1695@gmail.com
-
+GET http://localhost:5000/api/khaibao/form/lastform
 
 ###
 
