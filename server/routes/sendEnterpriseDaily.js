@@ -44,7 +44,7 @@ const sendEnterpriseDaily = (to, url) => {
         to: to,
         subject: 'Yêu cầu xác thực email',
         html: `
-        <p>Xin chào <strong>${enterpriseName}</strong>,</p>
+        <p>Xin chào <strong>${to}</strong>,</p>
         <p>Cảm ơn bạn đã truy cập <strong>Hệ thống Khai báo y tế dành cho Doanh nghiệp</strong></p>
         <p>Bạn vui lòng chọn <strong>Xác Nhận</strong> để bắt đầu quản lý nhân viên</p>
         <p>&nbsp;</p>

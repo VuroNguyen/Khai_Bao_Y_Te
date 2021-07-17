@@ -1,0 +1,136 @@
+GET http://localhost:5000/api/khaibao/form
+
+
+###
+
+//chọn user theo mail hoặc doanh nghiệp. filter => ?email=tên, ?enterpriseName=tên
+GET http://localhost:5000/home/getAllEmail
+
+
+###
+
+//chọn enterprise theo mail. filter => ?email=tên
+GET http://localhost:5000/enterprise/getAllEnterprise
+
+
+###
+
+//Update nhân viên theo id, ko dc để miền status 1 mình, nếu ko ếu chạy
+PUT  http://localhost:5000/enterprise/editstaff/60eea912c96a4a15ac7f3df5
+Content-Type: application/json
+
+{
+    "status": true,
+    "department": "Chủ tịch",
+    "phone": "65413215"
+}
+
+###
+
+//Verify user theo id. phải có miền email, nếu ko éo chạy
+PUT http://localhost:5000/home/verification/60f1cfbc92660542241977a3
+Content-Type: application/json
+
+{
+    "status": true,
+    "email": "sept9th2015@gmail.com"
+}
+
+###
+
+//đếm form dựa vào mail
+GET http://localhost:5000/api/khaibao/form/count?email=nhatlam1695@gmail.com
+
+
+###
+
+//lấy form cuối cùng. ?email để lấy form cuối theo email
+GET http://localhost:5000/api/khaibao/form/lastform?email=nhatlam1695@gmail.com
+
+
+###
+
+//lấy tất cả form trong ngày. có thể sort theo mail => ?email=mail
+GET http://localhost:5000/api/khaibao/form/getAllFormToday?email=ltv.9a2.21@gmail.com
+
+
+###
+
+POST http://localhost:5000/api/khaibao
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVkNWI0YzdkOGU0ODI0MGM2NWY4Y2QiLCJlbWFpbCI6Im5oYXRsYW0xNjk1QGdtYWlsLmNvbSIsIm5hbWUiOiJGUFQgU29mdHdhcmUiLCJpYXQiOjE2MjY0NjQzNjcsImV4cCI6MTYyNjQ2NjE2N30.P4hBZbEbn5pPST47nhhiccBm7qrKuz7uj81YOIXdOEU
+
+
+{
+    "quest2": "abc",
+    "quest3": "Không",
+    "quest4": "Ho khan hoặc đau họng, Đau ngực hoặc khó thở",
+    "quest5": "Test",
+    "quest6": "Không",
+    "quest7": "Không"
+}
+
+###
+
+POST http://localhost:5000/home/register
+Content-Type: application/json
+
+{
+    "email": "ltv.9a2.21@gmail.com"
+}
+
+###
+
+//login để khai báo đối với user thường và để coi report đối với enterprise
+POST http://localhost:5000/home/login
+Content-Type: application/json
+
+{
+    "email": "nhatlam1695@gmail.com"
+}
+
+###
+
+//login để khai báo đối với user thường và để coi report đối với enterprise
+POST http://localhost:5000/enterprise/pre-register
+Content-Type: application/json
+
+{
+    "email": "nmman06@gmail.com"
+}
+
+###
+
+//Add staff into DB with enterprise ID + name
+POST http://localhost:5000/enterprise/add
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVkNWI2YzdkOGU0ODI0MGM2NWY4ZDAiLCJlbWFpbCI6ImxvbmduaDIwMDcyMDAwQGdtYWlsLmNvbSIsIm5hbWUiOiJGUFQgU29mdHdhcmUiLCJpYXQiOjE2MjYyNTM1NDAsImV4cCI6MTYyNjI1NTM0MH0.hbvIrVKN1ab-ZOTF4OpWNuejqH2iDPCimZBAMZ_rYtw
+
+{
+    "email": "hnka301220@gmail.com",
+    "department": "CEO",
+    "phone": "0123456789"
+}
+
+###
+
+//enterprise register
+POST http://localhost:5000/enterprise/register
+Content-Type: application/json
+
+{
+    "name": "Cty TNHH LHL",
+    "email": "longnh20072000@gmail.com",
+    "address": "100 Nguyễn Huệ, Q1, TP.HCM",
+    "MST": "234567890",
+    "document": ""
+}
+
+###
+
+POST http://localhost:5000/home/activation
+Content-Type: application/json
+
+{
+    "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVkNWI2YzdkOGU0ODI0MGM2NWY4ZDAiLCJlbWFpbCI6ImxvbmduaDIwMDcyMDAwQGdtYWlsLmNvbSIsIm5hbWUiOiJGUFQgU29mdHdhcmUiLCJpYXQiOjE2MjYzNzY0MjYsImV4cCI6MTYyNjM3ODIyNn0.NAm2zOsb9MMPdeGR7L9AOysTCqJdK_Pr-CexO1Eo-io"
+}
