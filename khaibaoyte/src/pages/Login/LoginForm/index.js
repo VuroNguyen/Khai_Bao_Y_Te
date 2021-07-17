@@ -45,12 +45,13 @@ function LoginForm() {
 
 
             // set DD/MM/YY format
-            const CreatedAtdate = new Date(lastest.data[0].createdAt);
-            const getCreatedAtday = getDay(CreatedAtdate.getDay());
-            const getCreatedAtdate = `${getCreatedAtday}, ${CreatedAtdate.getDate()}/${CreatedAtdate.getMonth() + 1}/${CreatedAtdate.getFullYear()}`;
+            // const CreatedAtdate = new Date(lastest.data[0] ? lastest.data[0].createdAt : 'Chưa hiển thị');
+            // const CreatedAtdate =  lastest.data[].length !== 0 ? new Date( lastest.data[0].createdAt) : 'Chưa hiển thị'; 
+            // const getCreatedAtday = getDay(CreatedAtdate.getDay());
+            // const getCreatedAtdate = `${getCreatedAtday}, ${CreatedAtdate.getDate()}/${CreatedAtdate.getMonth() + 1}/${CreatedAtdate.getFullYear()}`;
 
             setUserInfoTotal(total.data);
-            setUserInfoLastest(getCreatedAtdate);
+            // setUserInfoLastest(CreatedAtdate);
             console.log('Lastest: ', lastest.data[0]);
             console.log('Total: ', total.data);
             //In ra check
@@ -225,7 +226,7 @@ function LoginForm() {
                     </div>
                     <p className='font-weight-bold'>Số lần khai báo trong ngày: {userInfoTotal.length} </p>
                     {/* Xong */}
-                    <p className='font-italic'>Khai báo lần cuối lúc: {userInfoLastest ? userInfoLastest : 'Chưa có khai báo'}</p>
+                    {/* <p className='font-italic'>Khai báo lần cuối lúc: {userInfoLastest ? userInfoLastest : 'Chưa có khai báo'}</p> */}
                     <Button outline color="info" type="submit">Lịch sử khai báo</Button>
                 </Form>
             </Container>
