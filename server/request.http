@@ -76,7 +76,7 @@ POST http://localhost:5000/home/register
 Content-Type: application/json
 
 {
-    "email": "ltv.9a2.21@gmail.com"
+    "email": "nmman06@gmail.com"
 }
 
 ###
@@ -86,7 +86,7 @@ POST http://localhost:5000/home/login
 Content-Type: application/json
 
 {
-    "email": "9915ln002@gmail.com"
+    "email": "nmman06@gmail.com"
 }
 
 ###
@@ -96,7 +96,7 @@ POST http://localhost:5000/enterprise/pre-register
 Content-Type: application/json
 
 {
-    "email": "9915ln002@gmail.com"
+    "email": "nmman06@gmail.com"
 }
 
 ###

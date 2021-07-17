@@ -28,15 +28,15 @@ function Login() {
         try {
             const loginData = await loginUser(data)
             if (loginData.enterprise) {
-                alert('Đăng nhập với mail doanh nghiệp');
+                alert('Email xác thực đã được gửi. vui lòng check email để tiếp tục');
                 history.push({
-                    pathname: "/admindashboard",
+                    pathname:"/admindashboard"
                 })
             }
             if (loginData.user) {
-                alert('Đăng nhập với mail nhân viên');
+                alert('Email xác thực đã được gửi. vui lòng check email để tiếp tục. Đăng nhập với mail nhân viên');
                 history.push({
-                    pathname: "/form"
+                    pathname:"/form"
                 })
             }
             // if login failed == no email in db
@@ -58,7 +58,6 @@ function Login() {
                 }
                 if (createData.success) {
                     history.push({
-                        pathname: "/form"
                     })
                 }
                 console.log(createData);
