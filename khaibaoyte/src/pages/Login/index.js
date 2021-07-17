@@ -28,13 +28,13 @@ function Login() {
         try {
             const loginData = await loginUser(data)
             if (loginData.enterprise) {
-                alert('Email xác thực đã được gửi. vui lòng check email để tiếp tục');
+                alert('Đăng nhập với mail doanh nghiệp');
                 history.push({
                     pathname:"/admindashboard"
                 })
             }
             if (loginData.user) {
-                alert('Email xác thực đã được gửi. vui lòng check email để tiếp tục. Đăng nhập với mail nhân viên');
+                alert('Đăng nhập với mail nhân viên');
                 history.push({
                     pathname:"/form"
                 })
@@ -43,14 +43,14 @@ function Login() {
             if (!loginData.success) {
                 isRegistered = false;
             }
-            console.log(loginData);
+            console.log('login',loginData);
         } catch (error) {
             console.log(error)
         }
 
         // if there is no email in the db
         // login try catch for unregistered emails
-        if (!isRegistered) {
+        if (isRegistered === false) {
             try {
                 const createData = await registerUser(data);
                 if (createData.success) {
@@ -60,7 +60,7 @@ function Login() {
                     history.push({
                     })
                 }
-                console.log(createData);
+                console.log('createData', createData);
             } catch (error) {
                 console.log(error)
             }
