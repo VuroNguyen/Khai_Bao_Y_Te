@@ -71,7 +71,7 @@ router.get('/form/lastform', async (req, res) => {
 
   MedicalForm.find(condition).limit(1).sort({ $natural: -1 })
     .then((data) => {
-      res.json({data})
+      res.send(data)
     })
      .catch(err => {
         console.log('Error:', err);
@@ -87,7 +87,7 @@ startOfToday.setHours(0,0,0,0);
 
   MedicalForm.find({$and: [condition, {"createdAt": { "$gte": startOfToday}}]})
   .then((data) => {
-    res.json({data: data})
+    res.send(data)
   })
    .catch(err => {
       console.log('Error:', err);

@@ -15,7 +15,7 @@ GET http://localhost:5000/enterprise/getAllEnterprise
 
 ###
 
-//Update nhân viên theo id
+//Update nhân viên theo id, ko dc để miền status 1 mình, nếu ko ếu chạy
 PUT  http://localhost:5000/enterprise/editstaff/60eea912c96a4a15ac7f3df5
 Content-Type: application/json
 
@@ -25,6 +25,16 @@ Content-Type: application/json
     "phone": "65413215"
 }
 
+###
+
+//Verify user theo id. phải có miền email, nếu ko éo chạy
+PUT http://localhost:5000/home/verification/60f1cfbc92660542241977a3
+Content-Type: application/json
+
+{
+    "status": true,
+    "email": "sept9th2015@gmail.com"
+}
 
 ###
 
