@@ -7,6 +7,7 @@ import { AuthContext } from '../../components/contexts/AuthContext'
 function Login() {
     const [userEmail, setUserEmail] = useState('');
     const history = useHistory();
+
     const data = JSON.stringify({
         email: userEmail
     })
@@ -35,8 +36,7 @@ function Login() {
             if (loginData.user) {
                 alert('Đăng nhập với mail nhân viên');
                 history.push({
-                    pathname: "/form",
-                    state: { Authtoken: loginData }
+                    pathname: "/form"
                 })
             }
             // if login failed == no email in db
@@ -58,8 +58,7 @@ function Login() {
                 }
                 if (createData.success) {
                     history.push({
-                        pathname: "/form",
-                        state: { Authtoken: createData }
+                        pathname: "/form"
                     })
                 }
                 console.log(createData);
@@ -67,7 +66,6 @@ function Login() {
                 console.log(error)
             }
         }
-
     }
 
     return (
