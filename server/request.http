@@ -58,13 +58,14 @@ GET http://localhost:5000/api/khaibao/form/getAllFormToday?email=ltv.9a2.21@gmai
 
 POST http://localhost:5000/api/khaibao
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGYxZDVhZjA4NGQwMTRlYzA0YTgwZjkiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2NDY1NzU4LCJleHAiOjE2MjY0Njc1NTh9.GHnfi5yli6Uu5Q0iPctRLey8CwgdmnTqHz513T2iaS4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVkNWI0YzdkOGU0ODI0MGM2NWY4Y2QiLCJlbWFpbCI6Im5oYXRsYW0xNjk1QGdtYWlsLmNvbSIsIm5hbWUiOiJGUFQgU29mdHdhcmUiLCJpYXQiOjE2MjY0NjQzNjcsImV4cCI6MTYyNjQ2NjE2N30.P4hBZbEbn5pPST47nhhiccBm7qrKuz7uj81YOIXdOEU
+
 
 {
-    "quest2": "Long đẹp trai hehe",
+    "quest2": "abc",
     "quest3": "Không",
     "quest4": "Ho khan hoặc đau họng, Đau ngực hoặc khó thở",
-    "quest5": "Không",
+    "quest5": "Test",
     "quest6": "Không",
     "quest7": "Không"
 }
@@ -85,7 +86,7 @@ POST http://localhost:5000/home/login
 Content-Type: application/json
 
 {
-    "email": "ltv.9a2.21@gmail.com"
+    "email": "nhatlam1695@gmail.com"
 }
 
 ###

@@ -1,61 +1,66 @@
 import axios from 'axios';
 import moment from 'moment';
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from "react-router-dom";
 import { Table } from 'reactstrap';
-import ControllableStates from '../../components/Searchbar/index';
 
+const UserHistory = (props) => {
+    const [data, setData] = useState([]);
+    const [response, setResponse] = useState('');
+    const email = useLocation();
 
-class UserHistory extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            responses: []
-        }
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios(
+                `http://localhost:5000/api/khaibao/form?email=${email.state.mail}`,
+            );
+            const response = await axios(
+                `http://localhost:5000/api/khaibao/form/count?email=${email.state.mail}`,
+            );
 
-    componentDidMount() {
-        axios.get(`http://localhost:5000/api/khaibao/form/`)
-            .then(res => {
-                const responses = res.data;
-                this.setState({ responses });
-                console.log(responses)
-            })
-            .catch(error => console.log(error));
-    }
+            setData(result.data);
+            setResponse(response.data);
+            console.log(result.data);
+        };
 
-    render() {
-        const { responses } = this.state;
-        return (
-            <>
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Email</th>
-                            <th>Question 4</th>
-                            <th>Question 5</th>
-                            <th>Question 6</th>
-                            <th>Question 7</th>
+        fetchData();
+    }, []);
+
+    return (
+        <>
+            <div className='text-center'>
+                <h3 style={{ color: '#55befc' }}>Lịch sử khai báo</h3>
+                <div style={{ paddingTop: '1em' }} />
+            </div>
+            <p className='font-weight-bold'>Tổng số khai báo: {response.count}
+            </p>
+            <br />
+            <Table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Các dấu hiệu</th>
+                        <th>Di chuyển</th>
+                        <th>Tiếp xúc</th>
+                        <th>Cư trú</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    {data.map(data => (
+                        <tr key={data._id}>
+                            <th scope="row">{moment(data.createdAt).format('DD/MM/YYYY')}</th>
+                            <td>{moment(data.createdAt).format('HH:mm:ss')}</td>
+                            <td>{data.quest4}</td>
+                            <td>{data.quest5}</td>
+                            <td>{data.quest6}</td>
+                            <td>{data.quest7}</td>
                         </tr>
-                    </thead>
-                    <tbody >
-                        {responses.map(response => (
-                            <tr key={response._id}>
-                                <th scope="row">{moment(response.createdAt).format('DD/MM/YYYY')}</th>
-                                <td>{moment(response.createdAt).format('HH:mm:ss')}</td>
-                                <td>{response.email}</td>
-                                <td>{response.quest3}</td>
-                                <td>{response.quest4}</td>
-                                <td>{response.quest5}</td>
-                                <td>{response.quest6}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-                </>
-        )
-    }
+                    ))}
+                </tbody>
+            </Table>
+        </>
+    )
 }
 
 export default UserHistory
