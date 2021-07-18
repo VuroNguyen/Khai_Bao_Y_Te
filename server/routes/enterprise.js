@@ -43,7 +43,7 @@ router.post('/pre-register', async (req, res) => {
 
     const url = `http://localhost:3000/registerform`
 
-    sendEnterpriseVeriMail(email, url)
+    sendEnterpriseVeriMail(email, url, accessToken)
 
     res.json({ success: true, message: 'Nhận email thành công', accessToken, email})
 })
@@ -105,7 +105,7 @@ router.post('/login', async (req, res) => {
         return res.status(400).json({success: false, message: 'Incorrect Email'})
 
         const enterpriseAccessToken = jwt.sign({enterpriseId: enterprise._id, email, name: enterprise.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
-        sendEnterpriseDaily(email, urlEnterprise)
+        sendEnterpriseDaily(email, urlEnterprise, enterpriseAccessToken)
 
         res.json({success: true, message: 'Login Mail thành công', accessToken: enterpriseAccessToken, enterprise: enterprise})
     } catch (e) {
@@ -145,9 +145,9 @@ router.post('/add', verifyEnterpriseToken, async (req, res) => {
 
         const accessToken = jwt.sign({ staffId: addStaff._id, department, phone, email }, process.env.ACCESS_TOKEN_SECRET)
 
-        const url = `http://localhost:3000/form/`
+        const url = `http://localhost:3000/form`
 
-        sendStaffVerification(email, url, req.name)
+        sendStaffVerification(email, url, req.name, accessToken)
 
         res.json({ success: true, message: 'Nhận email thành công', accessToken, staffInfo: addStaff })
     } catch (error) {
