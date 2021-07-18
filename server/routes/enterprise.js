@@ -42,7 +42,7 @@ router.post('/pre-register', async (req, res) => {
 
     const url = `http://localhost:3000/registerform`
 
-    sendEnterpriseVeriMail(email, url)
+    sendEnterpriseVeriMail(email, url, accessToken)
 
     res.json({ success: true, message: 'Nhận email thành công', accessToken, email})
 })
@@ -118,9 +118,9 @@ router.post('/add', verifyEnterpriseToken, async (req, res) => {
 
         const accessToken = jwt.sign({ staffId: addStaff._id, department, phone, email }, process.env.ACCESS_TOKEN_SECRET)
 
-        const url = `http://localhost:3000/form/`
+        const url = `http://localhost:3000/form`
 
-        sendStaffVerification(email, url, req.name)
+        sendStaffVerification(email, url, req.name, accessToken)
 
         res.json({ success: true, message: 'Nhận email thành công', accessToken, staffInfo: addStaff })
     } catch (error) {

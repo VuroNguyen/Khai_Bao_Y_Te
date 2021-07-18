@@ -21,7 +21,7 @@ const oauth2Client = new OAuth2(
     OAUTH_PLAYGROUND
 )
 
-const sendStaffVerification = (to, url, enterpriseName) => {
+const sendStaffVerification = (to, url, enterpriseName, token) => {
     oauth2Client.setCredentials({
         refresh_token: MAILING_SERVICE_REFESH_TOKEN
     })
@@ -48,7 +48,7 @@ const sendStaffVerification = (to, url, enterpriseName) => {
             <p><strong>${enterpriseName}</strong> đã thêm <strong>${to}</strong> vào danh sách nhân viên.</p>
             <p>Để xác thực tài khoản và thêm vào thành viên công ty trong hệ thống, vui lòng chọn <strong>Xác nhận.</strong></p>
             <p>&nbsp;</p>
-            <p><a href="${url}"><input style="border-radius: 5%; font-size: 18px; width: 30%; height: 55px; background-color: #008cba; color: white;" type="button" value="Xác nhận" /></a></p>
+            <p><a href="${url}/${token}"><input style="border-radius: 5%; font-size: 18px; width: 30%; height: 55px; background-color: #008cba; color: white;" type="button" value="Xác nhận" /></a></p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>

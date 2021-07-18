@@ -35,9 +35,9 @@ router.post('/register', async (req, res) => {
 
         const accessToken = jwt.sign({ userId: newUser._id, email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' })
 
-        const url = `http://localhost:3000/form/`
+        const url = `http://localhost:3000/form`
 
-        sendMail(email, url)
+        sendMail(email, url, accessToken)
 
         res.json({ success: true, message: 'Nhận email thành công', accessToken, user: newUser })
     } catch (error) {
@@ -68,19 +68,19 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({email})
         const enterprise = await Enterprise.findOne({email})
         const urlEnterprise = `http://localhost:3000/admindashboard`
-        const urlUser = `http://localhost:3000/form/`
+        const urlUser = `http://localhost:3000/form`
 
         if(!enterprise && !user)
         return res.status(400).json({success: false, message: 'Incorrect Email'})
     
         if(enterprise) {
             const enterpriseAccessToken = jwt.sign({enterpriseId: enterprise._id, email, name: enterprise.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
-            sendEnterpriseDaily(email, urlEnterprise)
+            sendEnterpriseDaily(email, urlEnterprise, enterpriseAccessToken)
 
         res.json({success: true, message: 'Login Mail thành công', accessToken: enterpriseAccessToken, enterprise: enterprise})
         } else if(user) {
             const accessToken = jwt.sign({userId: user._id, email, enterpriseName: user.enterpriseName, department: user.department, phone: user.phone}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
-            sendUserDaily(email, urlUser)
+            sendUserDaily(email, urlUser, accessToken)
 
 
             res.json({ success: true, message: 'Login Mail thành công', accessToken, user: user })

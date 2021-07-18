@@ -6,22 +6,22 @@ export const routeConfig = {
         "list-url": "/register"
     },
     "registerForm": {
-        "list-url": "/registerform"
+        "list-url": "/registerform/:token"
     },
     "loginForm": {
-        "list-url": "/form"
+        "list-url": "/form/:token"
     },
     "report": {
         "list-url": "/report"
     },
     "history": {
-        "list-url": "/history"
+        "list-url": "/history/:token"
     },
     "adminDashboard": {
-        "list-url": "/admindashboard"
+        "list-url": "/admindashboard/:token"
     },
     "enterpriseinfo": {
-        "list-url": "/enterprise"
+        "list-url": "/enterprise/:token"
     }
 }
 export default routeConfig
