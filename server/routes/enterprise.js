@@ -94,7 +94,9 @@ router.post('/login', async (req, res) => {
     //simple validation
     if (!email)
         return res.status(400).json({ success: false, message: 'Missing email!!' })
-
+        const isUser = await User.findOne({ email })
+        if (isUser) return res.status(400).json({ success: false, message: 'Email này đã được đăng kí dưới dạng email nhân viên' })
+    
     try {
         const enterprise = await Enterprise.findOne({email})
         const urlEnterprise = `http://localhost:3000/admindashboard`
