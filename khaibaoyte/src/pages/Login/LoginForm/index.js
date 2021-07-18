@@ -22,14 +22,16 @@ function LoginForm() {
     const history = useHistory();
 
     const gettokenfromurl = () => {
-        const emailtoken = window.location.href.split('/form/')[1];
+        const emailtoken = window.location.href.split('form/')[1];
         const today = new Date();
         if (emailtoken == null) {
             history.push('/')
+            window.location.reload();
             alert('No token found');
         }
         if(jwt_decode(emailtoken).exp * 1000 < today.getTime()){
             history.push('/');
+            window.location.reload();
             alert('Token expired ahihihih');
         }
         else {
