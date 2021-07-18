@@ -1,8 +1,7 @@
-import { createContext, useReducer, useEffect } from 'react'
 import axios from 'axios'
-import { authReducer } from '../reducers/authReducer'
+import { createContext, useReducer } from 'react'
 import { LOCAL_STORAGE_TOKEN_NAME } from '../../config/Route/constants'
-import setAuthToken from '../../utils/setAuthToken'
+import { authReducer } from '../reducers/authReducer'
 
 
 export const AuthContext = createContext()

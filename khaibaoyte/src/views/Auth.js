@@ -1,8 +1,8 @@
-import LoginForm from '../pages/Login/index'
-import RegisterForm from '../pages/Register/index'
-import { AuthContext } from '../components/contexts/AuthContext'
 import { useContext } from 'react'
 import { Redirect } from 'react-router-dom'
+import { AuthContext } from '../components/contexts/AuthContext'
+import LoginForm from '../pages/Login/index'
+import RegisterForm from '../pages/Register/index'
 
 const Auth = ({ authRoute }) => {
 	const {

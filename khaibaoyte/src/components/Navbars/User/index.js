@@ -3,10 +3,10 @@ import {
     Col, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem,
     NavLink
 } from 'reactstrap';
-import addImage from '../../assets/images/add1.png';
-import './index.css';
+import addImage from '../../../assets/images/add1.png';
+import '../index.css';
 
-const Navbars = (props) => {
+const UserNav = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
@@ -38,4 +38,4 @@ const Navbars = (props) => {
     )
 };
 
-export default Navbars
+export default UserNav

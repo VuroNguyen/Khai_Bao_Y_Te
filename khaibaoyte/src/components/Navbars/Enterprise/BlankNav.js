@@ -3,10 +3,10 @@ import {
     Col, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem,
     NavLink
 } from 'reactstrap';
-import addImage from '../../assets/images/add1.png';
-import './index.css';
+import addImage from '../../../assets/images/add1.png';
+import '../index.css';
 
-const Navbars = (props) => {
+const BlankNav = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
@@ -28,9 +28,6 @@ const Navbars = (props) => {
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="ml-auto" navbar>
                     <Col xs="auto">
-                        <NavItem>
-                            <NavLink href="/register">Dành cho chủ doanh nghiệp</NavLink>
-                        </NavItem>
                     </Col>
                 </Nav>
             </Collapse>
@@ -38,4 +35,4 @@ const Navbars = (props) => {
     )
 };
 
-export default Navbars
+export default BlankNav
