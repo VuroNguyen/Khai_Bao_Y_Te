@@ -9,7 +9,7 @@ export const routeConfig = {
         "list-url": "/registerform/:token"
     },
     "loginForm": {
-        "list-url": "/form"
+        "list-url": "/form/:token"
     },
     "report": {
         "list-url": "/report"

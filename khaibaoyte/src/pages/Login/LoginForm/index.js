@@ -1,8 +1,6 @@
 import axios from 'axios';
 //nhớ cài npm i mới nhất lại nha
 import jwt_decode from 'jwt-decode';
-import moment from 'moment';
-import 'moment/locale/vi';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap';
@@ -12,30 +10,11 @@ import FormNav from '../../../components/Navbars/Enterprise/FormNav';
 import UserNav from '../../../components/Navbars/User';
 import SystemTime from '../../../components/System';
 
-
-moment.locale('vi');
 function LoginForm() {
-
     // set location for react-router to parse data to
     const userData = useLocation();
     // useHistory
     const history = useHistory();
-
-    const gettokenfromurl = () => {
-        const emailtoken = window.location.href.split('/form/')[1];
-        const today = new Date();
-        if (emailtoken == null) {
-            history.push('/')
-            alert('No token found');
-        }
-        if(jwt_decode(emailtoken).exp * 1000 < today.getTime()){
-            history.push('/');
-            alert('Token expired ahihihih');
-        }
-        else {
-            localStorage.setItem('khaibaoyte', emailtoken);
-        }
-    }
 
     //Get data số lần khai báo trong ngày với lần khai báo gần nhất
     const [userInfoTotal, setUserInfoTotal] = useState('');
@@ -81,8 +60,6 @@ function LoginForm() {
             // console.log('Decoded: ', decoded);
             // console.log('lần cuối lúc: ', getCreatedAtdate);
         };
-
-        gettokenfromurl();
         fetchData();
     }, [])
 
@@ -204,7 +181,7 @@ function LoginForm() {
             console.log(res.data);
 
             history.push({
-                pathname: `/history/${usertoken}`,
+                pathname: "/history",
                 state: { mail: useremail }
             });
 
@@ -235,7 +212,7 @@ function LoginForm() {
 
     const handleHistory = e => {
         history.push({
-            pathname: `/history/${usertoken}`,
+            pathname: "/history",
             state: { mail: useremail }
         });
     }

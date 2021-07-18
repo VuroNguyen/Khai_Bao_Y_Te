@@ -141,5 +141,5 @@ POST http://localhost:5000/home/activation
 Content-Type: application/json
 
 {
-    "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGYzZjZkMDJkNzc3ZjU1ODBlNDc2YzgiLCJlbWFpbCI6ImFuaGRxMTIxMjIwMDBAZ21haWwuY29tIiwiaWF0IjoxNjI2NjA1NjkyLCJleHAiOjE2MjY2MDU2OTN9.t7SK2IqM_rsjVldGOjksIA2uQS_1d6HDI-22BHFDaeY"
+    "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVkNWI2YzdkOGU0ODI0MGM2NWY4ZDAiLCJlbWFpbCI6ImxvbmduaDIwMDcyMDAwQGdtYWlsLmNvbSIsIm5hbWUiOiJGUFQgU29mdHdhcmUiLCJpYXQiOjE2MjYzNzY0MjYsImV4cCI6MTYyNjM3ODIyNn0.NAm2zOsb9MMPdeGR7L9AOysTCqJdK_Pr-CexO1Eo-io"
 }
