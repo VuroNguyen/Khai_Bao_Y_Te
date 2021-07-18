@@ -35,7 +35,7 @@ app.use(cors())
 const dirname = path.resolve();
 app.use('/uploads', express.static(path.join(dirname, '/uploads')));
 app.use(express.static(path.join(dirname, '/server')));
-app.get('*', (req, res) => res.sendFile(path.join(dirname, '/khai_bao_y_te/build/index.html')))
+// app.get('*', (req, res) => res.sendFile(path.join(dirname, '/khai_bao_y_te/build/index.html')))
 
 app.use('/home', User)
 app.use('/api/khaibao', medicalForm)
