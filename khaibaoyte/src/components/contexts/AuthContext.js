@@ -36,30 +36,6 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  //Login enterprise
-  const loginEnterprise = async (data) => {
-    try {
-      const response = await axios({
-        method: "POST",
-        url: "http://localhost:5000/enterprise/login",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      });
-      if (response.data.success) {
-        localStorage.setItem(
-          LOCAL_STORAGE_TOKEN_NAME,
-          response.data.accessToken
-        );
-      }
-
-      return response.data;
-    } catch (e) {
-      return { success: false, message: e.message };
-    }
-  };
-
   //Register
   const registerUser = async (data) => {
     try {
@@ -133,18 +109,19 @@ const AuthContextProvider = ({ children }) => {
   };
 
   //add enterprise user
-  const registerUserEnterprise = async (data, token) => {
+  const registerUserEnterprise = async (data,token) => {
+
     try {
       const response = await axios({
         method: "POST",
         url: "http://localhost:5000/enterprise/add",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
         data: data,
       });
-      console.log(token);
+      console.log(token)
       return response.data;
     } catch (e) {
       return { success: false, message: e.message };
@@ -154,11 +131,10 @@ const AuthContextProvider = ({ children }) => {
   //ContextData
   const authContextData = {
     loginUser,
-    registerUser,
+    registerUser,    
     preRegisterEnterprise,
     registerEnterprise,
     registerUserEnterprise,
-    loginEnterprise,
     authState,
   };
 
