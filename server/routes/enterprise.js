@@ -10,6 +10,7 @@ const User = require('../models/User')
 const sendMail = require('./sendMail')
 const sendEnterpriseVeriMail = require('./sendEnterpriseVeriMail')
 const sendStaffVerification = require('./sendStaffVerification')
+const sendEnterpriseDaily = require('./sendEnterpriseDaily')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -85,6 +86,30 @@ router.post('/register', multer({ storage: storage}).single('document'), async (
         res.status(500).json({ success: false, message: 'Có gì đó không ổn' })
     }
 
+})
+
+router.post('/login', async (req, res) => {
+    const { email } = req.body
+
+    //simple validation
+    if (!email)
+        return res.status(400).json({ success: false, message: 'Missing email!!' })
+
+    try {
+        const enterprise = await Enterprise.findOne({email})
+        const urlEnterprise = `http://localhost:3000/admindashboard`
+
+        if(!enterprise)
+        return res.status(400).json({success: false, message: 'Incorrect Email'})
+
+        const enterpriseAccessToken = jwt.sign({enterpriseId: enterprise._id, email, name: enterprise.name}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '30m'})
+        sendEnterpriseDaily(email, urlEnterprise)
+
+        res.json({success: true, message: 'Login Mail thành công', accessToken: enterpriseAccessToken, enterprise: enterprise})
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({ success: false, message: 'Có gì đó không ổn' })
+    }
 })
 
 router.post('/add', verifyEnterpriseToken, async (req, res) => {

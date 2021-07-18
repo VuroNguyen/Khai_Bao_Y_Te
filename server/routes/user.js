@@ -111,21 +111,6 @@ router.get('/getAllEmail', async (req, res) => {
         });
 })
 
-// @route GET API email user
-// desc check user logged or not
-// public
-router.get('/', verifyToken, async (req, res) => {
-    try {
-        const user = await User.findById(req.userId)
-        if (!user)
-            return res.status(400).json({ success: false, message: 'Email not found' })
-        res.json({ success: true, user })
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({ success: false, message: 'Internal server error' })
-    }
-})
-
 router.put('/verification/:id', async (req, res) => {
     if (!req.body) {
         return res.status(400).send({
