@@ -25,9 +25,11 @@ function App() {
           render={props => <Auth {...props} authRoute='login' />} />
 
         {/* add privateRoutes for user w tokens */}
-        <PrivateRoutes
+        {/* Chỉnh thành route thường vì gửi email đính kèm token */}
+        {/* => Méo cần private */}
+        {/* Bỏ exact để xét trường hợp user vào bằng link 3000/form/ sẽ bị sút ra */}
+        <Route
           path={routeConfig.loginForm["list-url"]}
-          exact
           component={LoginForm} />
 
         <PrivateRoutes
