@@ -217,23 +217,36 @@ export default function AdminDashboard() {
   //   // then toggle the form
   // };
 
-  const [editEnterpriseUser, setEditEnterpriseUser] = useState({
-    editEmail: "",
-    editDepartment: "",
-    editPhone: "",
-  });
+  // const [editEnterpriseUser, setEditEnterpriseUser] = useState({
+  //   editEmail: "",
+  //   editDepartment: "",
+  //   editPhone: "",
+  // });
 
+  // const parseFormEdit = (email, deparment, telephone) => {
+  //   toggleFormEdit();
+
+  //   setEditEnterpriseUser({
+  //     editEmail: email,
+  //     editDepartment: deparment,
+  //     editPhone: telephone,
+  //   });
+  // };
+
+  // const { editEmail, editDepartment, editPhone } = editEnterpriseUser;
+
+  const [editEmail, setEditEmail] = useState("");
+  const [editDept, setEditDept] = useState("");
+  const [editTel, setEditTel] = useState("");
   const parseFormEdit = (email, deparment, telephone) => {
+    // toggle editform
     toggleFormEdit();
-
-    setEditEnterpriseUser({
-      editEmail: email,
-      editDepartment: deparment,
-      editPhone: telephone,
-    });
+    // parse data to form
+    setEditEmail(email);
+    setEditDept(deparment);
+    setEditTel(telephone);
+    console.log('thong tin ',editDept)
   };
-
-  const { editEmail, editDepartment, editPhone } = editEnterpriseUser;
 
   const toggleFormEdit = () => {
     console.log("edit");
@@ -243,21 +256,19 @@ export default function AdminDashboard() {
 
   const dataUpdate = JSON.stringify({
     email: editEmail,
-    department: editDepartment,
-    phone: editPhone,
+    department: editDept,
+    phone: editTel,
   });
 
-  const onEditChange = (event) => {
-    event.preventDefault();
-    setEditEnterpriseUser({
-      ...editEnterpriseUser,
-      [event.target.name]: event.target.value,
-    });
-  };
+  // const onEditChange = (event) => {
+  //   setEditEnterpriseUser({
+  //     ...editEnterpriseUser,
+  //     [event.target.name]: event.target.value,
+  //   });
+  // };
 
   const updateUser = async (event) => {
     event.preventDefault();
-    
     let userId;
 
     try {
@@ -276,18 +287,6 @@ export default function AdminDashboard() {
       console.log(error);
     }
   };
-
-  // const [editEmail, setEditEmail] = useState("");
-  // const [editDept, setEditDept] = useState("");
-  // const [editTel, setEditTel] = useState("");
-  // const parseFormEdit = (email, deparment, telephone) => {
-  //   // toggle editform
-  //   toggleFormEdit();
-  //   // parse data to form
-  //   setEditEmail(email);
-  //   setEditDept(deparment);
-  //   setEditTel(telephone);
-  // };
 
   const submitFormEdit = (e) => {
     e.preventDefault();
@@ -322,11 +321,6 @@ export default function AdminDashboard() {
 
   const addUser = async (event) => {
     event.preventDefault();
-    const data = JSON.stringify({
-      email: userEmail,
-      department: userDepartment,
-      phone: userPhone,
-    });
     try {
       const addUserEnterprise = await registerUserEnterprise(data, token);
       console.log(addUserEnterprise);
@@ -478,7 +472,7 @@ export default function AdminDashboard() {
                         onClick={() =>
                           parseFormEdit(
                             response.email,
-                            response.deparment,
+                            response.department,
                             response.phone
                           )
                         }
@@ -490,7 +484,7 @@ export default function AdminDashboard() {
                         <ModalHeader toggle={toggleFormEdit}>
                           Sửa thông tin nhân viên
                         </ModalHeader>
-                        <Form onChange={updateUser}>
+                        <Form onSubmit={updateUser}>
                           <ModalBody>
                             <FormGroup>
                               <Label for="userEmail">
@@ -504,7 +498,9 @@ export default function AdminDashboard() {
                                 placeholder="ex: 0845372112"
                                 required
                                 value={editEmail}
-                                onChange={onEditChange}
+                                onChange={(event) => {
+                                  setEditEmail(event.target.value);
+                                }}
                               />
                             </FormGroup>
                             <FormGroup>
@@ -517,8 +513,10 @@ export default function AdminDashboard() {
                                 id="userDepartment"
                                 name="editDepartment"
                                 required
-                                value={editDepartment}
-                                onChange={(e)=>{onEditChange(e);}}
+                                value={editDept}
+                                onChange={(event) => {
+                                  setEditDept(event.target.value);
+                                }}
                               >
                                 <option value="">
                                   Vui lòng chọn phòng ban
@@ -542,8 +540,10 @@ export default function AdminDashboard() {
                                 id="userPhone"
                                 placeholder="ex: 0845372112"
                                 required
-                                value={editPhone}
-                                onChange={onEditChange}
+                                value={editTel}
+                                onChange={(event) => {
+                                  setEditTel(event.target.value);
+                                }}
                               />
                             </FormGroup>
                           </ModalBody>
