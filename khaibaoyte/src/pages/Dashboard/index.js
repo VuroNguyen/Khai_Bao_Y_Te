@@ -190,7 +190,7 @@ export default function AdminDashboard() {
   //Decode token
   const decoded = jwt_decode(token);
   const useremail = decoded.email;
-  const [length, setLength] = useState('');
+  const [fetch, setFetch] = useState(false);
 
   
 
@@ -272,25 +272,30 @@ export default function AdminDashboard() {
     try {
       const addUserEnterprise = await registerUserEnterprise(data, token);
       console.log(addUserEnterprise);
-      window.location.reload();
+      setFetch(true);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const fetchData = async () => {
+    const res = await axios(
+      `http://localhost:5000/home/getAllEmail?enterpriseName=${decoded.name}`
+    );
+    setResponses(res.data);
+    console.log(res.data);
+    console.log(decoded);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await axios(
-        `http://localhost:5000/home/getAllEmail?enterpriseName=${decoded.name}`
-      );
-
-      setResponses(res.data);
-      console.log(res.data);
-      console.log(decoded);
-    };
     fetchData();
-  }, [count]);
+
+  }, []);
+  
+  useEffect(() => {
+    fetchData();
+    setFetch(false);
+  }, [fetch]);
 
   return (
     <div className="page-container">
