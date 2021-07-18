@@ -58,7 +58,7 @@ function Register() {
 
   // const onChangeConfirm = event => setBusinessEmail(event.target.value)
 
-  const { preRegisterEnterprise, loginUser } = useContext(AuthContext);
+  const { preRegisterEnterprise, loginEnterprise  } = useContext(AuthContext);
 
   const register = async (event) => {
     event.preventDefault();
@@ -66,7 +66,7 @@ function Register() {
     let isRegistered = true;
 
     try {
-      const loginData = await loginUser(data);
+      const loginData = await loginEnterprise(data);
       if (loginData.enterprise) {
         setAlert({
           type: "success",
@@ -91,6 +91,12 @@ function Register() {
             type: "success",
             message:
               "Email xác thực đăng ký đã được gửi. Vui lòng truy cập email xác nhận và bắt đầu",
+          });
+          setTimeout(() => setAlert(null), 5000);
+        } else {
+          setAlert({
+            type: "danger",
+            message: "Email đã tồn tại",
           });
           setTimeout(() => setAlert(null), 5000);
         }

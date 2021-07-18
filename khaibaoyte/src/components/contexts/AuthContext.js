@@ -36,6 +36,30 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+    //Login enterprise
+    const loginEnterprise = async (data) => {
+      try {
+        const response = await axios({
+          method: "POST",
+          url: "http://localhost:5000/enterprise/login",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: data,
+        });
+        if (response.data.success) {
+          localStorage.setItem(
+            LOCAL_STORAGE_TOKEN_NAME,
+            response.data.accessToken
+          );
+        }
+  
+        return response.data;
+      } catch (e) {
+        return { success: false, message: e.message };
+      }
+    };
+
   //Register
   const registerUser = async (data) => {
     try {
@@ -135,6 +159,7 @@ const AuthContextProvider = ({ children }) => {
     preRegisterEnterprise,
     registerEnterprise,
     registerUserEnterprise,
+    loginEnterprise,
     authState,
   };
 

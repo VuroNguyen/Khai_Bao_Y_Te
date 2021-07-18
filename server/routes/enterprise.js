@@ -43,7 +43,7 @@ router.post('/pre-register', async (req, res) => {
 
     const url = `http://localhost:3000/registerform`
 
-    sendEnterpriseVeriMail(email, url, accessToken)
+    sendEnterpriseVeriMail(email, url)
 
     res.json({ success: true, message: 'Nhận email thành công', accessToken, email})
 })
@@ -94,7 +94,9 @@ router.post('/login', async (req, res) => {
     //simple validation
     if (!email)
         return res.status(400).json({ success: false, message: 'Missing email!!' })
-
+        const isUser = await User.findOne({ email })
+        if (isUser) return res.status(400).json({ success: false, message: 'Email này đã được đăng kí dưới dạng email nhân viên' })
+    
     try {
         const enterprise = await Enterprise.findOne({email})
         const urlEnterprise = `http://localhost:3000/admindashboard`
@@ -143,9 +145,9 @@ router.post('/add', verifyEnterpriseToken, async (req, res) => {
 
         const accessToken = jwt.sign({ staffId: addStaff._id, department, phone, email }, process.env.ACCESS_TOKEN_SECRET)
 
-        const url = `http://localhost:3000/form`
+        const url = `http://localhost:3000/form/`
 
-        sendStaffVerification(email, url, req.name, accessToken)
+        sendStaffVerification(email, url, req.name)
 
         res.json({ success: true, message: 'Nhận email thành công', accessToken, staffInfo: addStaff })
     } catch (error) {
