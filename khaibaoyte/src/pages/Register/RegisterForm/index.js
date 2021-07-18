@@ -1,4 +1,5 @@
 
+import jwtDecode from 'jwt-decode';
 import React, { useState } from 'react';
 import { Button, Col, Container, CustomInput, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import Footer from '../../../components/Footer';
@@ -6,6 +7,8 @@ import BlankNav from '../../../components/Navbars/Enterprise/BlankNav';
 import UserNav from '../../../components/Navbars/User';
 import SystemTime from '../../../components/System';
 import './index.css';
+
+
 
 // export default class RegisterForm extends Component {
 // constructor(props) {
@@ -83,6 +86,11 @@ export default function RegisterForm() {
     const [businessEmail, setBusinessEmail] = useState('');
     const [businessTaxNumber, setBusinessTaxNumber] = useState('');
 
+    const token = localStorage.getItem('khaibaoyte');
+    const decoded = jwtDecode(token);
+
+    console.log(decoded.email);
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         alert(this.state);
@@ -123,6 +131,8 @@ export default function RegisterForm() {
         //     setLoadingUpload(false);
         // }
     }
+
+
     return (
 
         <div className='page-container'>
@@ -145,7 +155,7 @@ export default function RegisterForm() {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="userEmail">2. Email</Label>
-                                    <Input type="email" name="businessEmail" id="businessEmail" placeholder={businessEmail} disabled />
+                                    <Input type="email" name="businessEmail" id="businessEmail" placeholder={businessEmail} />
                                 </FormGroup>
                                 <Row form>
                                     <Col md={8}>

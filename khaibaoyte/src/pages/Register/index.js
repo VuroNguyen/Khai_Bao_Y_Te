@@ -58,7 +58,7 @@ function Register() {
 
   // const onChangeConfirm = event => setBusinessEmail(event.target.value)
 
-  const { registerEnterprise, loginUser } = useContext(AuthContext);
+  const { preRegisterEnterprise, loginUser } = useContext(AuthContext);
 
   const register = async (event) => {
     event.preventDefault();
@@ -85,7 +85,7 @@ function Register() {
 
     if (isRegistered === false) {
       try {
-        const createData = await registerEnterprise(data);
+        const createData = await preRegisterEnterprise(data);
         if (createData.success) {
           setAlert({
             type: "success",
