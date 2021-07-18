@@ -5,9 +5,7 @@ import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { Table } from 'reactstrap';
 import Footer from '../../components/Footer';
-import EnterpriseNav from '../../components/Navbars/Enterprise';
 import HistoryNav from '../../components/Navbars/Enterprise/HistoryNav';
-import UserNav from '../../components/Navbars/User';
 import SystemTime from '../../components/System';
 
 const UserHistory = (props) => {
