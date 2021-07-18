@@ -145,7 +145,41 @@ const AuthContextProvider = ({ children }) => {
         },
         data: data,
       });
-      console.log(token)
+      return response.data;
+    } catch (e) {
+      return { success: false, message: e.message };
+    }
+  };
+
+  //get enterprise user
+  const getUserEnterprise = async (email) => {
+
+    try {
+      const response = await axios({
+        method: "GET",
+        url: `http://localhost:5000/home/getAllEmail?email=${email}`,
+        headers: {
+          "Content-Type": "application/json"
+        },
+      });
+      return response.data;
+    } catch (e) {
+      return { success: false, message: e.message };
+    }
+  };
+
+  //update enterprise user
+  const updateUserEnterprise = async (data,userId) => {
+
+    try {
+      const response = await axios({
+        method: "PUT",
+        url: `http://localhost:5000/enterprise/editstaff/${userId}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      });
       return response.data;
     } catch (e) {
       return { success: false, message: e.message };
@@ -160,6 +194,8 @@ const AuthContextProvider = ({ children }) => {
     registerEnterprise,
     registerUserEnterprise,
     loginEnterprise,
+    updateUserEnterprise,
+    getUserEnterprise,
     authState,
   };
 

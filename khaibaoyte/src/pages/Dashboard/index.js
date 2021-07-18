@@ -184,6 +184,9 @@ export default function AdminDashboard() {
   const [responses, setResponses] = useState([]);
   const [modalFormAdd, setModalFormAdd] = useState(false);
   const [modalFormEdit, setModalFormEdit] = useState(false);
+  const { registerUserEnterprise, getUserEnterprise, updateUserEnterprise } =
+    useContext(AuthContext);
+
   const history = useHistory();
 
   const token = localStorage.getItem("khaibaoyte");
@@ -191,8 +194,6 @@ export default function AdminDashboard() {
   const decoded = jwt_decode(token);
   const useremail = decoded.email;
   const [fetch, setFetch] = useState(false);
-
-  
 
   const toHistoryClick = (useremail) => {
     history.push({
@@ -207,14 +208,32 @@ export default function AdminDashboard() {
     console.log("after setState: ", modalFormAdd);
   };
 
-  const [addEmail, setAddEmail] = useState("");
-  const [addDept, setAddDept] = useState("");
-  const [addTel, setAddTel] = useState("");
-  const submitFormAdd = (e) => {
-    e.preventDefault();
-    // on submit success clear the form
-    // then toggle the form
+  // const [addEmail, setAddEmail] = useState("");
+  // const [addDept, setAddDept] = useState("");
+  // const [addTel, setAddTel] = useState("");
+  // const submitFormAdd = (e) => {
+  //   e.preventDefault();
+  //   // on submit success clear the form
+  //   // then toggle the form
+  // };
+
+  const [editEnterpriseUser, setEditEnterpriseUser] = useState({
+    editEmail: "",
+    editDepartment: "",
+    editPhone: "",
+  });
+
+  const parseFormEdit = (email, deparment, telephone) => {
+    toggleFormEdit();
+
+    setEditEnterpriseUser({
+      editEmail: email,
+      editDepartment: deparment,
+      editPhone: telephone,
+    });
   };
+
+  const { editEmail, editDepartment, editPhone } = editEnterpriseUser;
 
   const toggleFormEdit = () => {
     console.log("edit");
@@ -222,17 +241,53 @@ export default function AdminDashboard() {
     console.log("after setState: ", modalFormEdit);
   };
 
-  const [editEmail, setEditEmail] = useState("");
-  const [editDept, setEditDept] = useState("");
-  const [editTel, setEditTel] = useState("");
-  const parseFormEdit = (email, deparment, telephone) => {
-    // toggle editform
-    toggleFormEdit();
-    // parse data to form
-    setEditEmail(email);
-    setEditDept(deparment);
-    setEditTel(telephone);
+  const dataUpdate = JSON.stringify({
+    email: editEmail,
+    department: editDepartment,
+    phone: editPhone,
+  });
+
+  const onEditChange = (event) => {
+    event.preventDefault();
+    setEditEnterpriseUser({
+      ...editEnterpriseUser,
+      [event.target.name]: event.target.value,
+    });
   };
+
+  const updateUser = async (event) => {
+    event.preventDefault();
+    
+    let userId;
+
+    try {
+      const getUser = await getUserEnterprise(editEmail);
+      userId = getUser[0]._id;
+      console.log(getUser[0]._id);
+    } catch (error) {
+      console.log(error);
+    }
+
+    try {
+      const updateUser = await updateUserEnterprise(dataUpdate, userId);
+      console.log(updateUser);
+      setFetch(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const [editEmail, setEditEmail] = useState("");
+  // const [editDept, setEditDept] = useState("");
+  // const [editTel, setEditTel] = useState("");
+  // const parseFormEdit = (email, deparment, telephone) => {
+  //   // toggle editform
+  //   toggleFormEdit();
+  //   // parse data to form
+  //   setEditEmail(email);
+  //   setEditDept(deparment);
+  //   setEditTel(telephone);
+  // };
 
   const submitFormEdit = (e) => {
     e.preventDefault();
@@ -243,7 +298,6 @@ export default function AdminDashboard() {
   // TODO: add useEffect whenever addnew or edit
   // refresh the table with new data
   // WTF nhân viên méo ai có sdt vs phòng ban bro ???
-  const { registerUserEnterprise } = useContext(AuthContext);
 
   const [enterpriseUser, setEnterpriseUser] = useState({
     userEmail: "",
@@ -265,10 +319,14 @@ export default function AdminDashboard() {
     department: userDepartment,
     phone: userPhone,
   });
-  let count = 0;
 
   const addUser = async (event) => {
     event.preventDefault();
+    const data = JSON.stringify({
+      email: userEmail,
+      department: userDepartment,
+      phone: userPhone,
+    });
     try {
       const addUserEnterprise = await registerUserEnterprise(data, token);
       console.log(addUserEnterprise);
@@ -289,9 +347,8 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     fetchData();
-
   }, []);
-  
+
   useEffect(() => {
     fetchData();
     setFetch(false);
@@ -433,8 +490,8 @@ export default function AdminDashboard() {
                         <ModalHeader toggle={toggleFormEdit}>
                           Sửa thông tin nhân viên
                         </ModalHeader>
-                        <ModalBody>
-                          <Form>
+                        <Form onChange={updateUser}>
+                          <ModalBody>
                             <FormGroup>
                               <Label for="userEmail">
                                 1. Email nhân viên{" "}
@@ -442,11 +499,12 @@ export default function AdminDashboard() {
                               </Label>
                               <Input
                                 type="text"
-                                name="userEmail"
+                                name="editEmail"
                                 id="userEmail"
                                 placeholder="ex: 0845372112"
                                 required
                                 value={editEmail}
+                                onChange={onEditChange}
                               />
                             </FormGroup>
                             <FormGroup>
@@ -457,8 +515,10 @@ export default function AdminDashboard() {
                               <CustomInput
                                 type="select"
                                 id="userDepartment"
-                                name="userDepartment"
+                                name="editDepartment"
                                 required
+                                value={editDepartment}
+                                onChange={(e)=>{onEditChange(e);}}
                               >
                                 <option value="">
                                   Vui lòng chọn phòng ban
@@ -478,25 +538,26 @@ export default function AdminDashboard() {
                               <Input
                                 className="without_number"
                                 type="number"
-                                name="userPhone"
+                                name="editPhone"
                                 id="userPhone"
                                 placeholder="ex: 0845372112"
                                 required
-                                value={editTel}
+                                value={editPhone}
+                                onChange={onEditChange}
                               />
                             </FormGroup>
-                          </Form>
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button
-                            onClick={toggleFormEdit}
-                            type="submit"
-                            outline
-                            color="info"
-                          >
-                            OK
-                          </Button>{" "}
-                        </ModalFooter>
+                          </ModalBody>
+                          <ModalFooter>
+                            <Button
+                              onClick={toggleFormEdit}
+                              type="submit"
+                              outline
+                              color="info"
+                            >
+                              OK
+                            </Button>{" "}
+                          </ModalFooter>
+                        </Form>
                       </Modal>
                     </td>
                     <td className="text-center">
