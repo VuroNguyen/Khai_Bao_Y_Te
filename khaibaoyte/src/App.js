@@ -25,7 +25,7 @@ function App() {
           render={props => <Auth {...props} authRoute='login' />} />
 
         {/* add privateRoutes for user w tokens */}
-        <PrivateRoutes
+        <Route
           path={routeConfig.loginForm["list-url"]}
           exact
           component={LoginForm} />

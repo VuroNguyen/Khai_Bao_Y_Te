@@ -23,6 +23,8 @@ const AuthContextProvider = ({ children }) => {
         },
         data: data,
       });
+      // bỏ khúc này vì đăng nhập => gửi mail vs token
+      // chứ không phải là set ngay khi đăng nhập
       if (response.data.success) {
         localStorage.setItem(
           LOCAL_STORAGE_TOKEN_NAME,
@@ -71,6 +73,7 @@ const AuthContextProvider = ({ children }) => {
         },
         data: data,
       });
+      // y chang phía trên
       if (response.data.success) {
         localStorage.setItem(
           LOCAL_STORAGE_TOKEN_NAME,
