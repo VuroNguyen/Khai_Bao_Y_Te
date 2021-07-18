@@ -1,11 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  Button, Container, Form,
-  FormGroup,
-  Input,
-  Label
-} from "reactstrap";
+import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import AlertMessage from "../../components/AlertMessage/AlertMessage";
 import { AuthContext } from "../../components/contexts/AuthContext";
 import Footer from "../../components/Footer";
@@ -58,7 +53,7 @@ function Register() {
 
   // const onChangeConfirm = event => setBusinessEmail(event.target.value)
 
-  const { preRegisterEnterprise, loginUser } = useContext(AuthContext);
+  const { preRegisterEnterprise, loginEnterprise } = useContext(AuthContext);
 
   const register = async (event) => {
     event.preventDefault();
@@ -66,7 +61,7 @@ function Register() {
     let isRegistered = true;
 
     try {
-      const loginData = await loginUser(data);
+      const loginData = await loginEnterprise(data);
       if (loginData.enterprise) {
         setAlert({
           type: "success",
@@ -83,7 +78,7 @@ function Register() {
       console.log(error);
     }
 
-    if (isRegistered === false) {
+    if (isRegistered == false) {
       try {
         const createData = await preRegisterEnterprise(data);
         if (createData.success) {
@@ -93,7 +88,14 @@ function Register() {
               "Email xác thực đăng ký đã được gửi. Vui lòng truy cập email xác nhận và bắt đầu",
           });
           setTimeout(() => setAlert(null), 5000);
+        } else {
+          setAlert({
+            type: "danger",
+            message: "Email đã tồn tại",
+          });
+          setTimeout(() => setAlert(null), 5000);
         }
+
         console.log("createData", createData);
       } catch (error) {
         console.log(error);
@@ -110,14 +112,13 @@ function Register() {
     });
 
   return (
-
-    <div className='page-container'>
-      <div className='content-wrap'>
+    <div className="page-container">
+      <div className="content-wrap">
         <EnterpriseNav />
-        <div className='container'>
-          <div style={{ paddingTop: '2vh' }} />
+        <div className="container">
+          <div style={{ paddingTop: "2vh" }} />
           <SystemTime />
-          <div style={{ paddingTop: '3vh' }} />
+          <div style={{ paddingTop: "3vh" }} />
           <Container>
             <Container>
               <div className="text-center">
@@ -160,21 +161,59 @@ function Register() {
             <Container>
               <div style={{ paddingTop: "30px" }} />
               {/* <h4>Thông tin chung</h4> */}
-              <p>Hệ thống khai báo y tế là công cụ hỗ trợ các doanh nghiệp ghi nhận và tổng hợp các khai báo y tế của nhân viên. Với các chức năng khai báo, quản lý nhân viên, và các công cụ báo cáo, tổng hợp tờ khai, hệ thống sẽ đưa đến cho doanh nghiệp một góc nhìn tổng quan và trực diện hơn về tình hình dịch bệnh COVID19. Từ đó, hỗ trợ thúc đẩy các hoạt động sản xuất, kinh doanh trong bối cảnh dịch bệnh như hiện nay.</p>
-              <p>Nhân viên trong doanh nghiệp, tổ chức thực hiện khai báo y tế qua hệ thống hằng ngày để báo cáo tình trạng sức khỏe, lịch trình di chuyển và lịch sử tiếp xúc với các trường hợp được cho là liên quan đến các trường hợp nhiễm bệnh COVID19. Các chủ doanh nghiệp có thể theo dõi các tờ khai được khai báo bởi nhân viên để theo dõi tình hình diễn biến của dịch bệnh và tạo ra các thống kê, báo cáo về các tình trạng của nhân viên trong doanh nghiệp.</p>
-              <strong><ol><li>Đối với doanh nghiệp đã đăng ký</li></ol></strong>
+              <p>
+                Hệ thống khai báo y tế là công cụ hỗ trợ các doanh nghiệp ghi
+                nhận và tổng hợp các khai báo y tế của nhân viên. Với các chức
+                năng khai báo, quản lý nhân viên, và các công cụ báo cáo, tổng
+                hợp tờ khai, hệ thống sẽ đưa đến cho doanh nghiệp một góc nhìn
+                tổng quan và trực diện hơn về tình hình dịch bệnh COVID19. Từ
+                đó, hỗ trợ thúc đẩy các hoạt động sản xuất, kinh doanh trong bối
+                cảnh dịch bệnh như hiện nay.
+              </p>
+              <p>
+                Nhân viên trong doanh nghiệp, tổ chức thực hiện khai báo y tế
+                qua hệ thống hằng ngày để báo cáo tình trạng sức khỏe, lịch
+                trình di chuyển và lịch sử tiếp xúc với các trường hợp được cho
+                là liên quan đến các trường hợp nhiễm bệnh COVID19. Các chủ
+                doanh nghiệp có thể theo dõi các tờ khai được khai báo bởi nhân
+                viên để theo dõi tình hình diễn biến của dịch bệnh và tạo ra các
+                thống kê, báo cáo về các tình trạng của nhân viên trong doanh
+                nghiệp.
+              </p>
+              <strong>
+                <ol>
+                  <li>Đối với doanh nghiệp đã đăng ký</li>
+                </ol>
+              </strong>
               <ul>
                 <li>Nhập email vào ô bên trên và nhấn gửi.</li>
                 <li>Hệ thống sẽ gửi email để xác thực người dùng.</li>
-                <li>Truy cập email và chọn xác nhận để truy cập hệ thống quản lý Khai báo y tế Doanh nghiệp</li>
+                <li>
+                  Truy cập email và chọn xác nhận để truy cập hệ thống quản lý
+                  Khai báo y tế Doanh nghiệp
+                </li>
               </ul>
-              <strong><ol start='2'><li><strong></strong>Đối với doanh nghiệp mới</li></ol></strong>
+              <strong>
+                <ol start="2">
+                  <li>
+                    <strong></strong>Đối với doanh nghiệp mới
+                  </li>
+                </ol>
+              </strong>
               <ul>
                 <li>Nhập email vào ô bên trên và nhấn gửi.</li>
                 <li>Hệ thống sẽ gửi email để xác thực người dùng.</li>
-                <li>Truy cập email và chọn xác nhận để tiến hành đăng ký thông tin doanh nghiệp.</li>
-                <li>Nhập thông tin doanh nghiệp để đăng ký và truy cập hệ thống.</li>
-                <li>Bổ sung danh sách nhân viên thông qua email để tổng hợp khai báo y tế.</li>
+                <li>
+                  Truy cập email và chọn xác nhận để tiến hành đăng ký thông tin
+                  doanh nghiệp.
+                </li>
+                <li>
+                  Nhập thông tin doanh nghiệp để đăng ký và truy cập hệ thống.
+                </li>
+                <li>
+                  Bổ sung danh sách nhân viên thông qua email để tổng hợp khai
+                  báo y tế.
+                </li>
               </ul>
               <br />
               <p className="text-primary font-italic">
@@ -184,7 +223,7 @@ function Register() {
             </Container>
           </Container>
         </div>
-        <div style={{ paddingBottom: '2vh' }} />
+        <div style={{ paddingBottom: "2vh" }} />
       </div>
       <Footer />
     </div>
