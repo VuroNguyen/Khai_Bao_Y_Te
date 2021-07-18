@@ -90,6 +90,16 @@ Content-Type: application/json
 
 ###
 
+//login của enterprise
+POST http://localhost:5000/enterprise/login
+Content-Type: application/json
+
+{
+    "email": "sept9th2015@gmail.com"
+}
+
+###
+
 //login để khai báo đối với user thường và để coi report đối với enterprise
 POST http://localhost:5000/enterprise/pre-register
 Content-Type: application/json
