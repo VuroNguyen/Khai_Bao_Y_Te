@@ -3,6 +3,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Table } from 'reactstrap';
 import Footer from '../../components/Footer';
 import EnterpriseNav from '../../components/Navbars/Enterprise';
@@ -13,19 +14,19 @@ import SystemTime from '../../components/System';
 const UserHistory = (props) => {
     const [data, setData] = useState([]);
     const [count, setCount] = useState('');
+    const statetoken = useLocation();
 
     //Khai bao
-    const token = localStorage.getItem('khaibaoyte');
-    //Decode
-    const decoded = jwt_decode(token);
+    let email = statetoken.state.useremail;
+    console.log(email);
 
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-                `http://localhost:5000/api/khaibao/form?email=${decoded.email}`,
+                `http://localhost:5000/api/khaibao/form?email=${email}`,
             );
             const response = await axios(
-                `http://localhost:5000/api/khaibao/form/count?email=${decoded.email}`,
+                `http://localhost:5000/api/khaibao/form/count?email=${email}`,
             );
             setData(result.data);
             setCount(response.data);

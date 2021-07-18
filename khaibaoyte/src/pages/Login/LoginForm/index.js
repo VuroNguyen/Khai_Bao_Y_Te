@@ -204,11 +204,11 @@ function LoginForm() {
                 data: data,
             })
             console.log(res.data);
-
+            alert('Bạn đã khai báo thành công, bạn có thể xem lại lịch sử khai báo sau đây')
             history.push({
-                pathname: `/history/${usertoken}`,
-                state: { mail: useremail }
-            });
+                pathname: `/history`,
+                state: {useremail : useremail}
+              });
 
             return res.data;
         } catch (e) {
@@ -224,7 +224,6 @@ function LoginForm() {
             setUserDepartment(decoded.department ? decoded.department : 'Không có');
             setUserTelephone(decoded.phone ? decoded.phone : '0');
             // alert('deparment ' + userdepartment + ' tel ' + usertelephone + ' ans4 ' + JSON.stringify(answer4) + ' ans5 ' + answer5 + ' ans6 ' + answer6 + ' ans7 ' + answer7);
-            alert('Bạn đã khai báo thành công, bạn có thể xem lại lịch sử khai báo sau đây')
             validated = true;
             postReport(answer);
         }
@@ -237,9 +236,9 @@ function LoginForm() {
 
     const handleHistory = e => {
         history.push({
-            pathname: `/history/${usertoken}`,
-            state: { mail: useremail }
-        });
+            pathname: `/history`,
+            state: {useremail : useremail}
+          });
     }
 
     return (

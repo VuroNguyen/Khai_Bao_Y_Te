@@ -198,7 +198,7 @@ export default function AdminDashboard() {
   const toHistoryClick = (useremail) => {
     history.push({
       pathname: "/history",
-      state: { mail: useremail },
+      state: { useremail: useremail },
     });
   };
 
