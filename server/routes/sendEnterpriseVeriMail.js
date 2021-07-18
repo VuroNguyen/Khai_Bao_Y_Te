@@ -21,7 +21,7 @@ const oauth2Client = new OAuth2(
     OAUTH_PLAYGROUND
 )
 
-const sendEnterpriseVeriMail = (to, url, enterpriseName, token) => {
+const sendEnterpriseVeriMail = (to, url, token) => {
     oauth2Client.setCredentials({
         refresh_token: MAILING_SERVICE_REFESH_TOKEN
     })
@@ -44,7 +44,7 @@ const sendEnterpriseVeriMail = (to, url, enterpriseName, token) => {
         to: to,
         subject: 'Yêu cầu xác thực email',
         html: `
-        <p>Xin chào <strong>${enterpriseName}</strong>,</p>
+        <p>Xin chào,</p>
         <p>Cảm ơn bạn đã truy cập <strong>Hệ thống Khai báo y tế dành cho Doanh nghiệp</strong></p>
         <p>Bạn vui lòng chọn <strong>Xác Nhận</strong> để bắt đầu đăng ký thông tin Doanh nghiệp và quản lý nhân viên</p>
         <p>&nbsp;</p>
