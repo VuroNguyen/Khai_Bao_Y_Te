@@ -18,7 +18,7 @@ export const routeConfig = {
         "list-url": "/history"
     },
     "adminDashboard": {
-        "list-url": "/admindashboard/:token"
+        "list-url": "/admindashboard"
     },
     "enterpriseinfo": {
         "list-url": "/enterprise/:token"

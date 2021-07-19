@@ -24,7 +24,7 @@ function LoginForm() {
     const gettokenfromurl = () => {
         const emailtoken = window.location.href.split('form/')[1];
         const today = new Date();
-        if (emailtoken == null) {
+        if (emailtoken == null || emailtoken == '') {
             history.push('/')
             window.location.reload();
             alert('No token found');
