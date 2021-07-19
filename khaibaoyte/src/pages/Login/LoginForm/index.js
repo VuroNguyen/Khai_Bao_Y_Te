@@ -4,10 +4,12 @@ import jwt_decode from 'jwt-decode';
 import moment from 'moment';
 import 'moment/locale/vi';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap';
 import Footer from '../../../components/Footer';
+import EnterpriseNav from '../../../components/Navbars/Enterprise';
 import FormNav from '../../../components/Navbars/Enterprise/FormNav';
+import UserNav from '../../../components/Navbars/User';
 import SystemTime from '../../../components/System';
 
 
@@ -29,6 +31,8 @@ function LoginForm() {
     //     console.log(activeData)
     // }
 
+    // set location for react-router to parse data to
+    const userData = useLocation();
     // useHistory
     const history = useHistory();
 
@@ -52,6 +56,9 @@ function LoginForm() {
 
     //Get data số lần khai báo trong ngày với lần khai báo gần nhất
     const [userInfoTotal, setUserInfoTotal] = useState('');
+    const [userInfoLastest, setUserInfoLastest] = useState('');
+
+    const [length, setLength] = useState('');
 
     const checkuserAuth = (e) => {
         if (localStorage.getItem('khaibaoyte') == null) {
@@ -78,6 +85,7 @@ function LoginForm() {
 
             setUserInfoTotal(total.data);
             // setUserInfoLastest(lastest.data === null ? 'Chua' : lastest.data[0].createdAt);
+            setLength(lastest.data.length);
             // console.log('Lastest: ', lastest.data);
             // console.log('Total: ', total.data);
             // console.log(lastest.data[0].createdAt);

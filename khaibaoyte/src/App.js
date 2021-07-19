@@ -48,14 +48,14 @@ function App() {
           path={routeConfig.adminDashboard["list-url"]}
           exact
           component={AdminDashboard} />
-        <PrivateRoutes
+          <PrivateRoutes
           path={routeConfig.enterpriseinfo["list-url"]}
           exact
           component={EnterpriseInfo} />
-        <Route
-          path={routeConfig.report["list-url"]}
-          exact
-          component={Report} />
+          <Route
+            path={routeConfig.report["list-url"]}
+            exact
+            component={Report} />
       </Switch>
     </AuthContextProvider>
   );

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Button, Container, Form,
   FormGroup,
@@ -25,6 +26,7 @@ function Register() {
   //     documentBusiness: 'không',
   // });
 
+  const history = useHistory();
   const data = JSON.stringify(businessForm);
 
   // const getMail = async data => {

@@ -1,7 +1,7 @@
 import axios from "axios";
 //decode
 import jwt_decode from "jwt-decode";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Button,
@@ -14,13 +14,13 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  Table
+  Table,
 } from "reactstrap";
-import { AuthContext } from "../../components/contexts/AuthContext";
 import Footer from "../../components/Footer";
 import CustomNav from "../../components/Navbars/Enterprise/CustomNav";
 import SystemTime from "../../components/System";
 import "./index.css";
+import { AuthContext } from "../../components/contexts/AuthContext";
 
 // class AdminDashboard extends Component {
 //     constructor(props) {
@@ -192,6 +192,7 @@ export default function AdminDashboard() {
   const token = localStorage.getItem("khaibaoyte");
   //Decode token
   const decoded = jwt_decode(token);
+  const useremail = decoded.email;
   const [fetch, setFetch] = useState(false);
 
   const toHistoryClick = (useremail) => {
@@ -244,7 +245,7 @@ export default function AdminDashboard() {
     setEditEmail(email);
     setEditDept(deparment);
     setEditTel(telephone);
-    console.log('thong tin ', editDept)
+    console.log('thong tin ',editDept)
   };
 
   const toggleFormEdit = () => {
@@ -286,13 +287,12 @@ export default function AdminDashboard() {
       console.log(error);
     }
   };
-  
-  // Mẫn check cái additional này nha
-  // const submitFormEdit = (e) => {
-  //   e.preventDefault();
-  //   // on submit success clear the form
-  //   // then toggle the form
-  // };
+
+  const submitFormEdit = (e) => {
+    e.preventDefault();
+    // on submit success clear the form
+    // then toggle the form
+  };
 
   // TODO: add useEffect whenever addnew or edit
   // refresh the table with new data

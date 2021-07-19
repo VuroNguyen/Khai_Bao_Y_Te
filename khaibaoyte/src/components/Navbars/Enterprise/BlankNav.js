@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
-    Col, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler
+    Col, Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem,
+    NavLink
 } from 'reactstrap';
 import addImage from '../../../assets/images/add1.png';
 import '../index.css';
