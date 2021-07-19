@@ -31,7 +31,6 @@ function App() {
         <Route
           path={routeConfig.loginForm["list-url"]}
           component={LoginForm} />
-
         <PrivateRoutes
           path={routeConfig.history["list-url"]}
           exact
@@ -48,14 +47,13 @@ function App() {
           path={routeConfig.adminDashboard["list-url"]}
           exact
           component={AdminDashboard} />
-          <PrivateRoutes
+        <PrivateRoutes
           path={routeConfig.enterpriseinfo["list-url"]}
           exact
           component={EnterpriseInfo} />
-          <Route
-            path={routeConfig.report["list-url"]}
-            exact
-            component={Report} />
+        <Route
+          path={routeConfig.report["list-url"]}
+          component={Report} />
       </Switch>
     </AuthContextProvider>
   );

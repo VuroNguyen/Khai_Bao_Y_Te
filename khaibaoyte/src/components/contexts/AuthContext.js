@@ -2,6 +2,7 @@ import axios from "axios";
 import { createContext, useReducer } from "react";
 import { LOCAL_STORAGE_TOKEN_NAME } from "../../config/Route/constants";
 import { authReducer } from "../reducers/authReducer";
+import {serverUrl} from "../../config/Route/server";
 
 export const AuthContext = createContext();
 
@@ -17,7 +18,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const response = await axios({
         method: "POST",
-        url: "http://localhost:5000/home/login",
+        url: `${serverUrl}/home/login`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -43,7 +44,7 @@ const AuthContextProvider = ({ children }) => {
       try {
         const response = await axios({
           method: "POST",
-          url: "http://localhost:5000/enterprise/login",
+          url: `${serverUrl}/enterprise/login`,
           headers: {
             "Content-Type": "application/json",
           },
@@ -67,7 +68,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const response = await axios({
         method: "POST",
-        url: "http://localhost:5000/home/register",
+        url: `${serverUrl}/home/register`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -92,7 +93,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const response = await axios({
         method: "POST",
-        url: "http://localhost:5000/enterprise/pre-register",
+        url: `${serverUrl}/enterprise/pre-register`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -116,7 +117,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const response = await axios({
         method: "POST",
-        url: "http://localhost:5000/enterprise/register",
+        url: `${serverUrl}/enterprise/register`,
         headers: {
           "Content-Type": "application/json",
         },
@@ -141,7 +142,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const response = await axios({
         method: "POST",
-        url: "http://localhost:5000/enterprise/add",
+        url: `${serverUrl}/enterprise/add`,
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
@@ -160,7 +161,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const response = await axios({
         method: "GET",
-        url: `http://localhost:5000/home/getAllEmail?email=${email}`,
+        url: `${serverUrl}/home/getAllEmail?email=${email}`,
         headers: {
           "Content-Type": "application/json"
         },
@@ -177,7 +178,7 @@ const AuthContextProvider = ({ children }) => {
     try {
       const response = await axios({
         method: "PUT",
-        url: `http://localhost:5000/enterprise/editstaff/${userId}`,
+        url: `${serverUrl}/enterprise/editstaff/${userId}`,
         headers: {
           "Content-Type": "application/json",
         },

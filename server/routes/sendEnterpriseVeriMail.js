@@ -47,12 +47,28 @@ const sendEnterpriseVeriMail = (to, url, token) => {
         <p>Xin chào ${to},</p>
         <p>Cảm ơn bạn đã truy cập <strong>Hệ thống Khai báo y tế dành cho Doanh nghiệp</strong></p>
         <p>Bạn vui lòng chọn <strong>Xác Nhận</strong> để bắt đầu đăng ký thông tin Doanh nghiệp và quản lý nhân viên</p>
-        <p>&nbsp;</p>
-        <p><a href="${url}/${token}"><input style="border-radius: 5%; font-size: 18px; width: 30%; height: 55px; background-color: #008cba; color: white;" type="button" value="Xác nhận" /></a></p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
+        <p><a href="${url}/${token}"><button style=
+                "
+                width: 230px;
+                height: 60px;
+                background-color: white;
+                border-radius: 4px;
+                color: #0d6efd;
+                border: 1px solid #0d6efd;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 18px;
+                margin: 4px 2px;
+                cursor: pointer;
+                "
+                >
+                Xác nhận
+                </button></a></p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
         <p><span style="color: #999999;">Nếu bạn không thuộc doanh nghiệp này, vui lòng bỏ qua email</span></p>
         `
     }

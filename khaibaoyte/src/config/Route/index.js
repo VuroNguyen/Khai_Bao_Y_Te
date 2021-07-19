@@ -12,7 +12,7 @@ export const routeConfig = {
         "list-url": "/form"
     },
     "report": {
-        "list-url": "/report"
+        "list-url": "/report/:token"
     },
     "history": {
         "list-url": "/history/:token"
@@ -22,6 +22,9 @@ export const routeConfig = {
     },
     "enterpriseinfo": {
         "list-url": "/enterprise/:token"
+    },
+    "reportTest": {
+        "list-url": "/reporttest"
     }
 }
 export default routeConfig
