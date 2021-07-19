@@ -23,7 +23,7 @@ function LoginForm() {
     //Decode token
     const decoded = jwt_decode(emailtoken);
     const useremail = decoded.email;
-    const userID = decoded.staffId;
+    const userID = decoded.userId;
 
     // const active = async () => {
 

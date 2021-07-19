@@ -143,7 +143,7 @@ router.post('/add', verifyEnterpriseToken, async (req, res) => {
 
         await addStaff.save()
 
-        const accessToken = jwt.sign({ staffId: addStaff._id, department, phone, email }, process.env.ACCESS_TOKEN_SECRET)
+        const accessToken = jwt.sign({ userId: addStaff._id, department, phone, email }, process.env.ACCESS_TOKEN_SECRET)
 
         const url = `http://localhost:3000/form`
 

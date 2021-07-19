@@ -93,7 +93,7 @@ export default function RegisterForm() {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert(this.state);
+        // alert(this.state);
     }
     const handleChange = (e) => {
         console.log(e.target.name);
