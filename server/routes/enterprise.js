@@ -13,10 +13,10 @@ const sendStaffVerification = require('./sendStaffVerification')
 const sendEnterpriseDaily = require('./sendEnterpriseDaily')
 
 const storage = multer.diskStorage({
-    destination(req, file, cb) {
+    destination: function (req, file, cb) {
         cb(null, 'uploads/');
     },
-    filename(req, file, cb) {
+    filename: function (req, file, cb) {
         const originalname = file.originalname;
         const extension = originalname.split(".");
         filename = Date.now() + '.' + extension[extension.length - 1];
@@ -48,8 +48,7 @@ router.post('/pre-register', async (req, res) => {
     res.json({ success: true, message: 'Nhận email thành công', accessToken, email})
 })
 
-// multer({ storage: storage}).single('document'),
-router.post('/register',  async (req, res) => {
+router.post('/register', multer({ storage: storage}).single('document'), async (req, res) => {
 
     const { name, email, address, MST, document } = req.body
 
@@ -74,7 +73,7 @@ router.post('/register',  async (req, res) => {
             email,
             address,
             MST,
-            document,
+            document: req.file ? req.file.path : 'Không',
         })
 
         await newEnterprise.save()
@@ -87,9 +86,6 @@ router.post('/register',  async (req, res) => {
         res.status(500).json({ success: false, message: 'Có gì đó không ổn' })
     }
 
-})
-router.post('/uploaddoc',  multer({ storage: storage}).single('document'), (req,res) => {
-    res.send(`/${req.file.path}`);
 })
 
 router.post('/login', async (req, res) => {
@@ -147,7 +143,7 @@ router.post('/add', verifyEnterpriseToken, async (req, res) => {
 
         await addStaff.save()
 
-        const accessToken = jwt.sign({ staffId: addStaff._id, department, phone, email }, process.env.ACCESS_TOKEN_SECRET)
+        const accessToken = jwt.sign({ userId: addStaff._id, department, phone, email }, process.env.ACCESS_TOKEN_SECRET)
 
         const url = `http://localhost:3000/form`
 

@@ -16,13 +16,28 @@ import SystemTime from '../../../components/System';
 moment.locale('vi');
 function LoginForm() {
 
+    // Anh Lam làm thêm cái local
+    //get token from localStorage
+    const usertoken = localStorage.getItem('khaibaoyte');
+    const emailtoken = window.location.href.split('form/')[1];
+    //Decode token
+    const decoded = jwt_decode(emailtoken);
+    const useremail = decoded.email;
+    const userID = decoded.userId;
+
+    // const active = async () => {
+
+    //     alert(activeData.data.message)
+    //     console.log(activeData)
+    // }
+
     // set location for react-router to parse data to
     const userData = useLocation();
     // useHistory
     const history = useHistory();
 
     const gettokenfromurl = () => {
-        const emailtoken = window.location.href.split('form/')[1];
+
         const today = new Date();
         if (emailtoken == null || emailtoken == '') {
             history.push('/')
@@ -42,13 +57,6 @@ function LoginForm() {
     //Get data số lần khai báo trong ngày với lần khai báo gần nhất
     const [userInfoTotal, setUserInfoTotal] = useState('');
     const [userInfoLastest, setUserInfoLastest] = useState('');
-
-    // Anh Lam làm thêm cái local
-    //get token from localStorage
-    const usertoken = localStorage.getItem('khaibaoyte');
-    //Decode token
-    const decoded = jwt_decode(usertoken);
-    const useremail = decoded.email;
 
     const [length, setLength] = useState('');
 
@@ -71,6 +79,9 @@ function LoginForm() {
             const lastest = await axios(
                 `http://localhost:5000/api/khaibao/form/lastform?email=${useremail}`,
             );
+            const test = await axios.put(`http://localhost:5000/home/verification/${userID}`, {
+                status: true
+            });
 
             setUserInfoTotal(total.data);
             // setUserInfoLastest(lastest.data === null ? 'Chua' : lastest.data[0].createdAt);
@@ -240,6 +251,8 @@ function LoginForm() {
             state: {useremail : useremail}
           });
     }
+
+
 
     return (
         <div className='page-container'>
