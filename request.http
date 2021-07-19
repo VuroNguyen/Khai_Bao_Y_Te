@@ -1,10 +1,23 @@
+
 GET http://localhost:5000/api/khaibao/form
 
 
 ###
 
+//lấy tất cả form trong 1 ngày xác định. nhập ngày như dưới
+GET http://localhost:5000/enterprise/getSpecificDay/2021-07-17
+
+
+###
+
+//get data for report page with enterprise name like below.
+GET http://localhost:5000/enterprise/getReport?enterpriseName=CÔNG TY
+
+
+###
+
 //chọn user theo mail hoặc doanh nghiệp. filter => ?email=tên, ?enterpriseName=tên
-GET http://localhost:5000/home/getAllEmail
+GET http://localhost:5000/home/getAllEmail?email=la
 
 
 ###
@@ -57,12 +70,12 @@ GET http://localhost:5000/api/khaibao/form/getAllFormToday?email=ltv.9a2.21@gmai
 
 POST http://localhost:5000/api/khaibao
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVkNWI0YzdkOGU0ODI0MGM2NWY4Y2QiLCJlbWFpbCI6Im5oYXRsYW0xNjk1QGdtYWlsLmNvbSIsIm5hbWUiOiJGUFQgU29mdHdhcmUiLCJpYXQiOjE2MjY0NjQzNjcsImV4cCI6MTYyNjQ2NjE2N30.P4hBZbEbn5pPST47nhhiccBm7qrKuz7uj81YOIXdOEU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGY1Mjc4NWMxMDQ4NzMwYWNlNmI2NjEiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2NzA5MzUwLCJleHAiOjE2MjY3MTExNTB9.Yc214IU5p0Ldh9l6_GlGhnyyL7eoGjd99cBguOTepxE
 
 
 {
-    "quest2": "abc",
-    "quest3": "Không",
+    "department": "abc",
+    "phone": "8521555",
     "quest4": "Ho khan hoặc đau họng, Đau ngực hoặc khó thở",
     "quest5": "Test",
     "quest6": "Không",
@@ -85,7 +98,7 @@ POST http://localhost:5000/home/login
 Content-Type: application/json
 
 {
-    "email": "nhatlam1695@gmail.com"
+    "email": "ltv.9a2.21@gmail.com"
 }
 
 ###
@@ -141,5 +154,5 @@ POST http://localhost:5000/home/activation
 Content-Type: application/json
 
 {
-    "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRlcnByaXNlSWQiOiI2MGVkNWI2YzdkOGU0ODI0MGM2NWY4ZDAiLCJlbWFpbCI6ImxvbmduaDIwMDcyMDAwQGdtYWlsLmNvbSIsIm5hbWUiOiJGUFQgU29mdHdhcmUiLCJpYXQiOjE2MjYzNzY0MjYsImV4cCI6MTYyNjM3ODIyNn0.NAm2zOsb9MMPdeGR7L9AOysTCqJdK_Pr-CexO1Eo-io"
+    "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MGY1Mjc4NWMxMDQ4NzMwYWNlNmI2NjEiLCJlbWFpbCI6Imx0di45YTIuMjFAZ21haWwuY29tIiwiaWF0IjoxNjI2NzA5MzUwLCJleHAiOjE2MjY3MTExNTB9.Yc214IU5p0Ldh9l6_GlGhnyyL7eoGjd99cBguOTepxE"
 }

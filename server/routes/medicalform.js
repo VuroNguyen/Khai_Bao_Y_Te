@@ -5,16 +5,16 @@ const verifyToken = require('../middleware/auth')
 const MedicalForm = require('../models/MedicalForm')
 
 router.post('/', verifyToken, async (req, res) => {
-  const { quest2, quest3, quest4, quest5, quest6, quest7 } = req.body;
+  const { department, phone, quest4, quest5, quest6, quest7 } = req.body;
 
-  if (!quest2)
-    return res.status(400).json({ success: false, message: 'Câu 2 không được để trống' })
+  // if (!quest2)
+  //   return res.status(400).json({ success: false, message: 'Câu 2 không được để trống' })
 
   try {
     const newForm = new MedicalForm({
       email: req.email,
-      quest2,
-      quest3,
+      department,
+      phone,
       quest4,
       quest5: quest5 || 'Không',
       quest6: quest6 || 'Không',

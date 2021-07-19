@@ -8,12 +8,12 @@ const MedicalFormSchema = new Schema({
         ref: 'users'
     },
 
-    quest2: {
+    department: {
         type: String,
         required: true
     },
 
-    quest3: {
+    phone: {
         type: String,
         required: true
     },
@@ -38,6 +38,16 @@ const MedicalFormSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
+
+    status: {
+        type: Boolean,
+        ref: 'users'
+    },
+
+    enterpriseName: {
+        type: String,
+        ref: 'users'
+    }
 }, {
     timestamps: true
 })
