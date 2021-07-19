@@ -29,7 +29,7 @@ const CustomNav = (props) => {
                 <Nav className="ml-auto" navbar>
                     <Col xs="auto">
                         <NavItem>
-                            <NavLink href="/enterprise">Thông tin doanh nghiệp</NavLink>
+                            <NavLink href="/enterprise/:token">Thông tin doanh nghiệp</NavLink>
                         </NavItem>
                     </Col>
                 </Nav>

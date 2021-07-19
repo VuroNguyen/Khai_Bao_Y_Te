@@ -25,11 +25,12 @@ function App() {
           render={props => <Auth {...props} authRoute='login' />} />
 
         {/* add privateRoutes for user w tokens */}
-        <PrivateRoutes
+        {/* Chỉnh thành route thường vì gửi email đính kèm token */}
+        {/* => Méo cần private */}
+        {/* Bỏ exact để xét trường hợp user vào bằng link 3000/form/ sẽ bị sút ra */}
+        <Route
           path={routeConfig.loginForm["list-url"]}
-          exact
           component={LoginForm} />
-
         <PrivateRoutes
           path={routeConfig.history["list-url"]}
           exact
@@ -46,14 +47,13 @@ function App() {
           path={routeConfig.adminDashboard["list-url"]}
           exact
           component={AdminDashboard} />
-          <PrivateRoutes
+        <PrivateRoutes
           path={routeConfig.enterpriseinfo["list-url"]}
           exact
           component={EnterpriseInfo} />
-          <Route
-            path={routeConfig.report["list-url"]}
-            exact
-            component={Report} />
+        <Route
+          path={routeConfig.report["list-url"]}
+          component={Report} />
       </Switch>
     </AuthContextProvider>
   );

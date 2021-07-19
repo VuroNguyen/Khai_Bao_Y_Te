@@ -1,31 +1,61 @@
 import axios from 'axios';
 //nhớ cài npm i mới nhất lại nha
 import jwt_decode from 'jwt-decode';
+import moment from 'moment';
+import 'moment/locale/vi';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Button, Container, CustomInput, Form, FormGroup, Input, Label } from 'reactstrap';
 import Footer from '../../../components/Footer';
-import EnterpriseNav from '../../../components/Navbars/Enterprise';
 import FormNav from '../../../components/Navbars/Enterprise/FormNav';
-import UserNav from '../../../components/Navbars/User';
 import SystemTime from '../../../components/System';
+//Chuyển mail thành server, sau này vào config sửa là tất cả tự động đổi
+import { serverUrl } from '../../../config/Route/server';
 
+moment.locale('vi');
 function LoginForm() {
+
+    // Anh Lam làm thêm cái local
+    //get token from localStorage
+    const usertoken = localStorage.getItem('khaibaoyte');
+    const emailtoken = window.location.href.split('form/')[1];
+    //Decode token
+    const decoded = jwt_decode(emailtoken);
+    const useremail = decoded.email;
+    const userID = decoded.userId;
+
+    // const active = async () => {
+
+    //     alert(activeData.data.message)
+    //     console.log(activeData)
+    // }
+
     // set location for react-router to parse data to
     const userData = useLocation();
     // useHistory
     const history = useHistory();
 
+    const gettokenfromurl = () => {
+
+        const today = new Date();
+        if (emailtoken == null) {
+            history.push('/')
+            window.location.reload();
+            alert('No token found');
+        }
+        if (jwt_decode(emailtoken).exp * 1000 < today.getTime()) {
+            history.push('/');
+            window.location.reload();
+            alert('Token expired ahihihih');
+        }
+        else {
+            localStorage.setItem('khaibaoyte', emailtoken);
+        }
+    }
+
     //Get data số lần khai báo trong ngày với lần khai báo gần nhất
     const [userInfoTotal, setUserInfoTotal] = useState('');
     const [userInfoLastest, setUserInfoLastest] = useState('');
-
-    // Anh Lam làm thêm cái local
-    //get token from localStorage
-    const usertoken = localStorage.getItem('khaibaoyte');
-    //Decode token
-    const decoded = jwt_decode(usertoken);
-    const useremail = decoded.email;
 
     const [length, setLength] = useState('');
 
@@ -43,16 +73,19 @@ function LoginForm() {
     useEffect(() => {
         const fetchData = async () => {
             const total = await axios(
-                `http://localhost:5000/api/khaibao/form/getAllFormToday?email=${useremail}`,
+                `${serverUrl}/api/khaibao/form/getAllFormToday?email=${useremail}`,
             );
             const lastest = await axios(
-                `http://localhost:5000/api/khaibao/form/lastform?email=${useremail}`,
+                `${serverUrl}/api/khaibao/form/lastform?email=${useremail}`,
             );
+            const test = await axios.put(`${serverUrl}/home/verification/${userID}`, {
+                status: true
+            });
 
             setUserInfoTotal(total.data);
-            // setUserInfoLastest(lastest.data === null ? 'Chua' : lastest.data[0].createdAt);
+            setUserInfoLastest(lastest.data[0] ? lastest.data[0].createdAt : 'Chua');
             setLength(lastest.data.length);
-            // console.log('Lastest: ', lastest.data);
+            console.log('Lastest: ', lastest.data);
             // console.log('Total: ', total.data);
             // console.log(lastest.data[0].createdAt);
             //In ra check
@@ -60,6 +93,8 @@ function LoginForm() {
             // console.log('Decoded: ', decoded);
             // console.log('lần cuối lúc: ', getCreatedAtdate);
         };
+
+        gettokenfromurl();
         fetchData();
     }, [])
 
@@ -171,7 +206,7 @@ function LoginForm() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: 'http://localhost:5000/api/khaibao',
+                url: `${serverUrl}/api/khaibao`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${usertoken}`
@@ -181,7 +216,7 @@ function LoginForm() {
             console.log(res.data);
 
             history.push({
-                pathname: "/history",
+                pathname: `/history/${usertoken}`,
                 state: { mail: useremail }
             });
 
@@ -212,7 +247,7 @@ function LoginForm() {
 
     const handleHistory = e => {
         history.push({
-            pathname: "/history",
+            pathname: `/history/${usertoken}`,
             state: { mail: useremail }
         });
     }
@@ -221,83 +256,79 @@ function LoginForm() {
         <div className='page-container'>
             <div className='content-wrap'>
                 <FormNav />
-                <div className='container'>
+                <div className='container-fluid'>
                     <div style={{ paddingTop: '2vh' }} />
-                    <SystemTime />
-                    <div style={{ paddingTop: '3vh' }} />
                     <Container>
+                        <SystemTime />
+                        <div style={{ paddingTop: '3vh' }} />
                         {window.onloadstart = checkuserAuth()}
-                        <Container>
-                            <Form onSubmit={handleHistory}>
-                                <div className='text-center'>
-                                    <h3 style={{ color: '#55befc' }}>Khai báo</h3>
-                                    <div style={{ paddingTop: '1em' }} />
-                                </div>
-                                <p className='font-weight-bold'>Số lần khai báo trong ngày: {userInfoTotal.length} </p>
-                                {/* Xong */}
-                                <p className='font-italic'>Khai báo lần cuối lúc: { }</p>
-                                <Button outline color="info" type="submit">Lịch sử khai báo</Button>
-                            </Form>
-                        </Container>
+                        <Form onSubmit={handleHistory}>
+                            <div className='text-center'>
+                                <h3 style={{ color: '#55befc' }}>Khai báo</h3>
+                                <div style={{ paddingTop: '1em' }} />
+                            </div>
+                            <p className='font-weight-bold'>Số lần khai báo trong ngày: {userInfoTotal.length} </p>
+                            {/* Xong */}
+                            <p className='font-italic'><strong>Khai báo lần cuối lúc: </strong>{moment(userInfoLastest).format('LLL')}</p>
+                            <Button outline color="info" type="submit">Lịch sử khai báo</Button>
+                        </Form>
                         <div style={{ paddingTop: '2%' }} />
-                        <Container>
-                            <Form onSubmit={handleSubmit}>
-                                <FormGroup>
-                                    <Label for="userEmail">1. Email</Label>
-                                    <Input type="email" name="userEmail" id="userEmail" placeholder={decoded.email} disabled />
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="userDepartment">2. Phòng ban</Label>
-                                    <Input type="email" name="userDepartment" id="userDepartment" placeholder={decoded.department ? decoded.department : 'Không có'} disabled />
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="userTel">3. Số điện thoại</Label>
-                                    <Input type="email" name="userTel" id="userTel" placeholder={decoded.phone ? decoded.phone : 'Không có'} disabled />
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="question4">4. Anh/Chị có dấu hiệu lâm sàng nào dưới đây? <span className='text-danger'>*</span></Label>
-                                    <div>
-                                        <CustomInput type="checkbox" id="dauhieu1" label="Ho khan hoặc đau họng" value="Ho khan hoặc đau họng" onChange={chcklist} checked={ans4Opt1} />
-                                        <CustomInput type="checkbox" id="dauhieu2" label="Đau ngực hoặc khó thở" value="Đau ngực hoặc khó thở" onChange={chcklist} checked={ans4Opt2} />
-                                        <CustomInput type="checkbox" id="dauhieu3" label="Sốt cao (trên 38 độ C)" value="Sốt cao (trên 38 độ C)" onChange={chcklist} checked={ans4Opt3} />
-                                        <CustomInput type="checkbox" id="dauhieu4" label="Chảy nước mũi khó chịu" value="Chảy nước mũi khó chịu" onChange={chcklist} checked={ans4Opt4} />
-                                        <CustomInput type="checkbox" id="none4" label="Không có tất cả dấu hiệu trên" value="Không có tất cả dấu hiệu trên" onChange={chcklist} checked={ans4Opt5} />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup name='question5'>
-                                    <Label for="question5">5. Anh/Chị hoặc người thân tiếp xúc gần có vừa di chuyển từ nơi khác về không? <span className='text-danger'>*</span></Label>
-                                    <div>
-                                        <CustomInput type="radio" id="none5" name="question5" value="Không" label="Không" required onChange={onValueChange} />
-                                        <CustomInput type="radio" id="dichuyen1" name="question5" value="Có và đã khai báo trong 14 ngày" label="Có và đã khai báo trong 14 ngày" onChange={onValueChange} />
-                                        <CustomInput type="radio" id="dichuyen2" name="question5" value="Anh/Chị là người di chuyển" label="Anh/Chị là người di chuyển" onChange={onValueChange} />
-                                        <CustomInput type="radio" id="dichuyen3" name="question5" value="Người thân tiếp xúc gần của Anh/Chị là người di chuyển" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển" onChange={onValueChange} />
-                                        <CustomInput type="radio" id="dichuyen4" name="question5" value="Cả hai đều là người di chuyển" label="Cả hai đều là người di chuyển" onChange={onValueChange} />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup name="question6">
-                                    <Label for="question6">6. Anh/Chị hoặc người thân tiếp xúc gần có tiếp xúc gần với người từ nước ngoài/người từ vùng dịch về/người được xếp loại F không? <span className='text-danger'>*</span></Label>
-                                    <div>
-                                        <CustomInput type="radio" id="none6" name="question6" value="Không" label="Không" required onChange={onValueChange} />
-                                        <CustomInput type="radio" id="tiepxuc1" name="question6" value="Có và đã khai báo trong 14 ngày" label="Có và đã khai báo trong 14 ngày" onChange={onValueChange} />
-                                        <CustomInput type="radio" id="tiepxuc2" name="question6" value="Anh/Chị là người tiếp xúc" label="Anh/Chị là người tiếp xúc" onChange={onValueChange} />
-                                        <CustomInput type="radio" id="tiepxuc3" name="question6" value="Người thân tiếp xúc gần của Anh/Chị là người tiếp xúc" label="Người thân tiếp xúc gần của Anh/Chị là người tiếp xúc" onChange={onValueChange} />
-                                        <CustomInput type="radio" id="tiepxuc4" name="question6" value="Cả hai đều là người tiếp xúc" label="Cả hai đều là người tiếp xúc" onChange={onValueChange} />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup name="question7">
-                                    <Label for="question7">7. Anh/Chị có đến hoặc lưu trú tại các địa điểm liên quan đến người nhiễm Covid được công bố hoặc có tiếp xúc với người nhiễm/nghi nhiễm Covid không? <span className='text-danger'>*</span></Label>
-                                    <div>
-                                        <CustomInput type="radio" id="none7" name="question7" value="Không" label="Không" required onChange={onValueChange} />
-                                        <CustomInput type="radio" id="luutru1" name="question7" value="Có và đã khai báo trong 14 ngày" label="Có và đã khai báo trong 14 ngày" onChange={onValueChange} />
-                                        <CustomInput type="radio" id="luutru2" name="question7" value="Anh/Chị là người di chuyển/tiếp xúc" label="Anh/Chị là người di chuyển/tiếp xúc" onChange={onValueChange} />
-                                        <CustomInput type="radio" id="luutru3" name="question7" value="Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc" onChange={onValueChange} />
-                                        <CustomInput type="radio" id="luutru4" name="question7" value="Cả hai đều là người di chuyển/tiếp xúc" label="Cả hai đều là người di chuyển/tiếp xúc" onChange={onValueChange} />
-                                    </div>
-                                </FormGroup>
-                                <Button outline color="info" type="submit">Gửi</Button>
-                            </Form>
-                        </Container>
-                    </Container >
+                        <Form onSubmit={handleSubmit}>
+                            <FormGroup>
+                                <Label for="userEmail">1. Email</Label>
+                                <Input type="email" name="userEmail" id="userEmail" placeholder={decoded.email} disabled />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="userDepartment">2. Phòng ban</Label>
+                                <Input type="email" name="userDepartment" id="userDepartment" placeholder={decoded.department ? decoded.department : 'Không có'} disabled />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="userTel">3. Số điện thoại</Label>
+                                <Input type="email" name="userTel" id="userTel" placeholder={decoded.phone ? decoded.phone : 'Không có'} disabled />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="question4">4. Anh/Chị có dấu hiệu lâm sàng nào dưới đây? <span className='text-danger'>*</span></Label>
+                                <div>
+                                    <CustomInput type="checkbox" id="dauhieu1" label="Ho khan hoặc đau họng" value="Ho khan hoặc đau họng" onChange={chcklist} checked={ans4Opt1} />
+                                    <CustomInput type="checkbox" id="dauhieu2" label="Đau ngực hoặc khó thở" value="Đau ngực hoặc khó thở" onChange={chcklist} checked={ans4Opt2} />
+                                    <CustomInput type="checkbox" id="dauhieu3" label="Sốt cao (trên 38 độ C)" value="Sốt cao (trên 38 độ C)" onChange={chcklist} checked={ans4Opt3} />
+                                    <CustomInput type="checkbox" id="dauhieu4" label="Chảy nước mũi khó chịu" value="Chảy nước mũi khó chịu" onChange={chcklist} checked={ans4Opt4} />
+                                    <CustomInput type="checkbox" id="none4" label="Không có tất cả dấu hiệu trên" value="Không có tất cả dấu hiệu trên" onChange={chcklist} checked={ans4Opt5} />
+                                </div>
+                            </FormGroup>
+                            <FormGroup name='question5'>
+                                <Label for="question5">5. Anh/Chị hoặc người thân tiếp xúc gần có vừa di chuyển từ nơi khác về không? <span className='text-danger'>*</span></Label>
+                                <div>
+                                    <CustomInput type="radio" id="none5" name="question5" value="Không" label="Không" required onChange={onValueChange} />
+                                    <CustomInput type="radio" id="dichuyen1" name="question5" value="Có và đã khai báo trong 14 ngày" label="Có và đã khai báo trong 14 ngày" onChange={onValueChange} />
+                                    <CustomInput type="radio" id="dichuyen2" name="question5" value="Anh/Chị là người di chuyển" label="Anh/Chị là người di chuyển" onChange={onValueChange} />
+                                    <CustomInput type="radio" id="dichuyen3" name="question5" value="Người thân tiếp xúc gần của Anh/Chị là người di chuyển" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển" onChange={onValueChange} />
+                                    <CustomInput type="radio" id="dichuyen4" name="question5" value="Cả hai đều là người di chuyển" label="Cả hai đều là người di chuyển" onChange={onValueChange} />
+                                </div>
+                            </FormGroup>
+                            <FormGroup name="question6">
+                                <Label for="question6">6. Anh/Chị hoặc người thân tiếp xúc gần có tiếp xúc gần với người từ nước ngoài/người từ vùng dịch về/người được xếp loại F không? <span className='text-danger'>*</span></Label>
+                                <div>
+                                    <CustomInput type="radio" id="none6" name="question6" value="Không" label="Không" required onChange={onValueChange} />
+                                    <CustomInput type="radio" id="tiepxuc1" name="question6" value="Có và đã khai báo trong 14 ngày" label="Có và đã khai báo trong 14 ngày" onChange={onValueChange} />
+                                    <CustomInput type="radio" id="tiepxuc2" name="question6" value="Anh/Chị là người tiếp xúc" label="Anh/Chị là người tiếp xúc" onChange={onValueChange} />
+                                    <CustomInput type="radio" id="tiepxuc3" name="question6" value="Người thân tiếp xúc gần của Anh/Chị là người tiếp xúc" label="Người thân tiếp xúc gần của Anh/Chị là người tiếp xúc" onChange={onValueChange} />
+                                    <CustomInput type="radio" id="tiepxuc4" name="question6" value="Cả hai đều là người tiếp xúc" label="Cả hai đều là người tiếp xúc" onChange={onValueChange} />
+                                </div>
+                            </FormGroup>
+                            <FormGroup name="question7">
+                                <Label for="question7">7. Anh/Chị có đến hoặc lưu trú tại các địa điểm liên quan đến người nhiễm Covid được công bố hoặc có tiếp xúc với người nhiễm/nghi nhiễm Covid không? <span className='text-danger'>*</span></Label>
+                                <div>
+                                    <CustomInput type="radio" id="none7" name="question7" value="Không" label="Không" required onChange={onValueChange} />
+                                    <CustomInput type="radio" id="luutru1" name="question7" value="Có và đã khai báo trong 14 ngày" label="Có và đã khai báo trong 14 ngày" onChange={onValueChange} />
+                                    <CustomInput type="radio" id="luutru2" name="question7" value="Anh/Chị là người di chuyển/tiếp xúc" label="Anh/Chị là người di chuyển/tiếp xúc" onChange={onValueChange} />
+                                    <CustomInput type="radio" id="luutru3" name="question7" value="Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc" label="Người thân tiếp xúc gần của Anh/Chị là người di chuyển/tiếp xúc" onChange={onValueChange} />
+                                    <CustomInput type="radio" id="luutru4" name="question7" value="Cả hai đều là người di chuyển/tiếp xúc" label="Cả hai đều là người di chuyển/tiếp xúc" onChange={onValueChange} />
+                                </div>
+                            </FormGroup>
+                            <Button outline color="info" type="submit">Gửi</Button>
+                        </Form>
+                    </Container>
                 </div>
                 <div style={{ paddingBottom: '2vh' }} />
             </div>
