@@ -204,29 +204,29 @@ export default function AdminDashboard() {
     });
   };
 
-  const [flag, setFlag] = useState(false);
+  // const [flag, setFlag] = useState(false);
 
-  const toggleFormAddOK = () => {
-    if (!userEmail || !userDepartment || !userPhone) {
-      setFlag(false);
-    } else {
-      setFlag(true);
-    }
-    console.log("im flag: ", flag);
-  };
+  // const toggleFormAddOK = () => {
+  //   if (!userEmail || !userDepartment || !userPhone) {
+  //     setFlag(false);
+  //   } else {
+  //     setFlag(true);
+  //   }
+  //   console.log("im flag: ", flag);
+  // };
 
   const toggleFormAdd = () => {
     setModalFormAdd(!modalFormAdd);
   };
 
-  const toggleFormEditOK = () => {
-    if (!editEmail || !editDept || !editTel) {
-      setFlagEdit(false);
-    } else {
-      setFlagEdit(true);
-    }
-    console.log("im flag edit: ", flagEdit);
-  };
+  // const toggleFormEditOK = () => {
+  //   if (!editEmail || !editDept || !editTel) {
+  //     setFlagEdit(false);
+  //   } else {
+  //     setFlagEdit(true);
+  //   }
+  //   console.log("im flag edit: ", flagEdit);
+  // };
 
   const toggleFormEdit = () => {
     setModalFormEdit(!modalFormEdit);
@@ -258,13 +258,13 @@ export default function AdminDashboard() {
     });
   };
 
-  const onEditChange = (event) => {
-    toggleFormEditOK();
-    setEditEnterpriseUser({
-      ...editEnterpriseUser,
-      [event.target.name]: event.target.value,
-    });
-  };
+  // const onEditChange = (event) => {
+  //   toggleFormEditOK();
+  //   setEditEnterpriseUser({
+  //     ...editEnterpriseUser,
+  //     [event.target.name]: event.target.value,
+  //   });
+  // };
 
   const dataUpdate = JSON.stringify({
     email: editEmail,
@@ -314,13 +314,13 @@ export default function AdminDashboard() {
   // declare from enterpriseUser
   const { userEmail, userDepartment, userPhone } = enterpriseUser;
 
-  const onSubmitChange = (event) => {
-    setEnterpriseUser({
-      ...enterpriseUser,
-      [event.target.name]: event.target.value,
-    });
-    toggleFormAddOK();
-  };
+  // const onSubmitChange = (event) => {
+  //   setEnterpriseUser({
+  //     ...enterpriseUser,
+  //     [event.target.name]: event.target.value,
+  //   });
+  //   toggleFormAddOK();
+  // };
 
   const data = JSON.stringify({
     email: userEmail,
@@ -336,18 +336,6 @@ export default function AdminDashboard() {
       setFetch(true);
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  let checkEmail = (email) => {
-    // don't remember from where i copied this code, but this works.
-    let re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (re.test(email)) {
-      setFlagAdd({ ...flagAdd, flagAddDepartment: true });
-    } else {
-      setFlagAdd({ ...flagAdd, flagAddEmail: false });
     }
   };
 
@@ -418,10 +406,8 @@ export default function AdminDashboard() {
                             [event.target.name]: event.target.value,
                           });
                           if (re.test(userEmail)) {
-                            console.log("im userEmail: ", userEmail);
                             setFlagAdd({ ...flagAdd, flagAddEmail: true });
                           } else {
-                            console.log("im userEmail: ", userEmail);
                             setFlagAdd({ ...flagAdd, flagAddEmail: false });
                           }
                           // console.log(
