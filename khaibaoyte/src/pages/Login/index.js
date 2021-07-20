@@ -11,6 +11,12 @@ function Login() {
   const [userEmail, setUserEmail] = useState("");
   const [alert, setAlert] = useState(null);
 
+  const [isEmailVisible, setEmailVisible] = useState(true);
+
+  const toggle = () => {
+    setEmailVisible(!isEmailVisible);
+  }
+
   const history = useHistory();
 
   const data = JSON.stringify({
@@ -25,6 +31,7 @@ function Login() {
     // double try catch for both scenario whether
     // the email is registered or not
     event.preventDefault();
+    toggle();
     // add variable to check if its registered
     let isRegistered = true;
 
@@ -37,14 +44,12 @@ function Login() {
           type: "success",
           message: "Vui lòng kiểm tra email xác thực để quản lí doanh nghiệp",
         });
-        setTimeout(() => setAlert(null), 5000);
       }
       if (loginData.user) {
         setAlert({
           type: "success",
           message: "Vui lòng kiểm tra email xác thực để bắt đầu khai báo",
         });
-        setTimeout(() => setAlert(null), 5000);
       }
       // if login failed == no email in db
       if (!loginData.success) {
@@ -66,7 +71,6 @@ function Login() {
             message:
               "Email xác thực đã được gửi. Vui lòng truy cập email để xác thực",
           });
-          setTimeout(() => setAlert(null), 5000);
         }
         if (createData.success) {
           history.push({});
@@ -95,7 +99,7 @@ function Login() {
                   <Label for="userEmail">
                     <h4>Nhập email để xác thực</h4>
                   </Label>
-                  <Input
+                  {isEmailVisible ? <Input
                     className="w-75 mx-auto"
                     type="email"
                     name="userEmail"
@@ -104,7 +108,8 @@ function Login() {
                     required
                     value={userEmail}
                     onChange={onSubmitChange}
-                  />
+                  /> : <AlertMessage info={alert} />}
+
                 </FormGroup>
                 <Button
                   style={{ height: "5vh", width: "15vh" }}
@@ -113,9 +118,10 @@ function Login() {
                 >
                   Gửi email
                 </Button>
+                
               </Form>
               <br />
-              <AlertMessage info={alert} />
+
               {/* {<p className="text-danger font-italic">
             Lỗi báo chỗ này, thêm if các thứ để hiển thị
           </p>} */}

@@ -61,7 +61,6 @@ const Report = (props) => {
                                 selected={startDate}
                                 onChange={(date) => {
                                     setStartDate(date)
-                                    console.log(date)
                                 }}
                                 // dataFormat="dd-MM-yyyy"
                                 dateFormat="yyyy-MM-dd"
