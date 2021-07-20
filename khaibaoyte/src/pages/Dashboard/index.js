@@ -35,10 +35,6 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [fetch, setFetch] = useState(false);
 
-  const [editEmail, setEditEmail] = useState("");
-  const [editDept, setEditDept] = useState("");
-  const [editTel, setEditTel] = useState("");
-
   const emailtoken = window.location.href.split('admindashboard/')[1]; 
   //Decode token 
   const decoded = jwt_decode(emailtoken);
@@ -184,6 +180,11 @@ export default function AdminDashboard() {
         // setFlagAdd({ ...flagAdd, flagAddEmail: false });
         // setModalFormAdd(true);
         setFlagAdd({ ...flagAdd, flagAddEmail: false }); 
+      }
+      if (addUserEnterprise.success) {
+        // setFlagAdd({ ...flagAdd, flagAddEmail: false });
+        // setModalFormAdd(true);
+        setFlagAdd({ ...flagAdd, flagAddEmail: true }); 
       }
 
       flagAddEmail && flagAddDepartment && flagAddPhone
