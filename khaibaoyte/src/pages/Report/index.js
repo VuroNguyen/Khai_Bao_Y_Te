@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import vi from "date-fns/locale/vi";
 import moment from "moment";
 import { format } from "date-fns";
+import { ExportToExcel } from "../../components/Excel";
 
 registerLocale("vi", vi);
 
@@ -19,12 +20,14 @@ const Report = (props) => {
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
 
-  let formatDate = startDate.getFullYear()+'-'+(startDate.getMonth()+1)+'-'+(startDate.getDate())
+  let formatDate = startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + (startDate.getDate())
+
   console.log(formatDate);
   //Khai bao
   const token = localStorage.getItem("khaibaoyte");
   //Decode
   const decoded = jwt_decode(token);
+
   //2021-07-19
 
   useEffect(() => {
@@ -42,6 +45,8 @@ const Report = (props) => {
     fetchData();
   }, [formatDate]);
 
+  const fileName = formatDate + ' khaibaoytedoanhnghiep'
+
   return (
     <div className="page-container">
       <div className="content-wrap">
@@ -56,18 +61,28 @@ const Report = (props) => {
               <h4>{decoded.name}</h4>
             </div>
             <br />
-            <div>
-              <DatePicker
-                todayButton="Hôm nay"
-                locale="vi"
-                placeholderText="Vui lòng chọn ngày"
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                // dataFormat="dd-MM-yyyy"
-                dateFormat="MM/dd/yyyy"
-                className="text-center"
-                style={{ width: "500px" }}
-              />
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col">
+                  <div className="float-left">
+                    <DatePicker
+                      todayButton="Hôm nay"
+                      locale="vi"
+                      placeholderText="Vui lòng chọn ngày"
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                      // dataFormat="dd-MM-yyyy"
+                      dateFormat="MM/dd/yyyy"
+                      className="text-center"
+                      style={{ width: "500px" }} />
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="float-right">
+                    <ExportToExcel apiData={data} fileName={fileName} />
+                  </div>
+                </div>
+              </div>
             </div>
             <div style={{ paddingTop: "3vh" }} />
             <Table>
