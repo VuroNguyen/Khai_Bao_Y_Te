@@ -65,6 +65,9 @@ router.post('/register',  async (req, res) => {
     const enterprise = await Enterprise.findOne({ email })
     if (enterprise) return res.status(400).json({ success: false, message: 'Email đã tồn tại' })
 
+    const enterpriseMST = await Enterprise.findOne({ MST })
+    if (enterpriseMST) return res.status(400).json({ success: false, message: 'MST đã tồn tại' })
+
     const isUser = await User.findOne({ email })
     if (isUser) return res.status(400).json({ success: false, message: 'Email này đã được đăng kí dưới dạng email nhân viên' })
 
