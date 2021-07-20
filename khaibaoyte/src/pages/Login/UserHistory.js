@@ -1,20 +1,46 @@
 import axios from 'axios';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Container, Table } from 'reactstrap';
 import Footer from '../../components/Footer';
 import HistoryNav from '../../components/Navbars/Enterprise/HistoryNav';
+import jwt_decode from 'jwt-decode';
 import SystemTime from '../../components/System';
 
 const UserHistory = (props) => {
     const [data, setData] = useState([]);
     const [count, setCount] = useState('');
     const statetoken = useLocation();
+    const [email, setEmail] = useState('');
+    const today = new Date();
+    const history = useHistory();
+
+    // Làn riêng function cho Navbar vì không pass state qua history.push đc
+    const gettokenfromurl = async () => {
+        let urltoken = window.location.href.split('history/')[1];
+        // ko có trong url => dùng state
+        if (urltoken == null || urltoken === '') {
+            setEmail(statetoken.state.useremail);
+            console.log(email);
+            return;
+        }
+        if (jwt_decode(urltoken).exp * 1000 < today.getTime()) {
+            setEmail(statetoken.state.useremail);
+            history.push('/');
+            window.location.reload();
+            alert('Token expired ahihihih');
+            return;
+        }
+        else return setEmail(jwt_decode(urltoken).email);
+    }
 
     //Khai bao
-    let email = statetoken.state.useremail;
-    console.log(email);
+    // let email = statetoken.state.useremail;
+    // console.log(email);
+    useEffect(() => {
+        gettokenfromurl();
+    }, [])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,14 +57,13 @@ const UserHistory = (props) => {
             // In ra check
             // console.log(decoded);
         };
-
         fetchData();
     }, []);
 
     return (
         <div className='page-container'>
             <div className='content-wrap'>
-                <HistoryNav />
+                <HistoryNav token={localStorage.getItem('khaibaoyte')}/>
                 <div className='container-fluid'>
                     <div style={{ paddingTop: '2vh' }} />
                     <Container>

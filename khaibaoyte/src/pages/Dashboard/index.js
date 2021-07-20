@@ -241,7 +241,7 @@ export default function AdminDashboard() {
   return (
     <div className="page-container">
       <div className="content-wrap">
-        <CustomNav />
+        <CustomNav token={emailtoken}/>
         <div className="container-fluid">
           <div style={{ paddingTop: "2vh" }} />
           <Container>
