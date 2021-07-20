@@ -49,8 +49,8 @@ const Report = (props) => {
                         <SystemTime />
                         <div style={{ paddingTop: '3vh' }} />
                         <div className="text-center">
-                            <h3 style={{ color: "#55befc" }}>{decoded.name}</h3>
-                            <h4>Báo cáo</h4>
+                            <h3 style={{ color: "#55befc" }}>Báo cáo</h3>
+                            <h4>{decoded.name}</h4>
                         </div>
                         <br />
                         <div>
@@ -73,7 +73,6 @@ const Report = (props) => {
                             <thead>
                                 <tr>
                                     <th>Email</th>
-                                    <th>Tình trạng</th>
                                     <th>Phòng ban</th>
                                     <th>SĐT</th>
                                     <th>Các dấu hiệu</th>
@@ -86,7 +85,6 @@ const Report = (props) => {
                                 {data.map(data => (
                                     <tr key={data._id}>
                                         <td>{data.email}</td>
-                                        <td>{data.status}</td>
                                         <td>{data.department}</td>
                                         <td>{data.phone}</td>
                                         <td>{data.quest4}</td>
