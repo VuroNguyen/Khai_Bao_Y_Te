@@ -279,6 +279,126 @@ router.get('/getSpecificDay/:datetime', async (req, res) => {
     });
 })
 
+router.get('/getReportForExcel', async (req, res) => {
+    const email = req.query.email;
+    const emailQuery = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
+
+    const enterpriseName = req.query.enterpriseName;
+    const nameQuery = enterpriseName ? { enterpriseName: { $regex: new RegExp(enterpriseName), $options: "g" } } : {};
+
+    MedicalForm.aggregate(
+        [
+            {
+                "$lookup": {
+                    "from": "users", // <-- collection name for examples
+                    "localField": "userId",
+                    "foreignField": "_id",
+                    // let: {
+                    //     "userId": "$userId"
+                    //   },
+                    //   pipeline: [{
+                    //     $match: {
+                    //       $expr: {
+                    //         $eq: ["$userId", "$$_id"]
+                    //       },
+                    //       status: true
+                    //     }
+                    //   }],
+                    "as": "userInfo",
+                }
+            },
+
+            {
+                $replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$userInfo", 0 ] }, "$$ROOT" ] } }
+             },
+
+             { $project: {
+                userInfo: 0,
+                _id: 0,
+                enterpriseId: 0,
+                createdAt: 0,
+                updatedAt: 0,
+                __v: 0,
+                userId: 0,
+             } },
+             {$match: nameQuery}
+
+            // { "$unwind": "$userInfo" },
+        ]
+    ).then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving forms."
+        });
+    });
+})
+
+router.get('/getSpecificDayForExcel/:datetime', async (req, res) => {
+    const enterpriseName = req.query.enterpriseName;
+    const nameQuery = enterpriseName ? { enterpriseName: { $regex: new RegExp(enterpriseName), $options: "g" } } : {};
+
+    const start = new Date(req.params.datetime)
+    const dateParts = req.params.datetime.split('-'),
+          y = parseInt(dateParts[0], 10),
+          m = parseInt(dateParts[1], 10),
+          d = parseInt(dateParts[2], 10),
+        end = new Date(y, m-1, d+1);
+
+    MedicalForm.aggregate(
+        [
+            {
+                "$lookup": {
+                    "from": "users", // <-- collection name for examples
+                    "localField": "userId",
+                    "foreignField": "_id",
+                    // let: {
+                    //     "userId": "$userId"
+                    //   },
+                    //   pipeline: [{
+                    //     $match: {
+                    //       $expr: {
+                    //         $eq: ["$userId", "$$_id"]
+                    //       },
+                    //       status: true
+                    //     }
+                    //   }],
+                    "as": "userInfo",
+                }
+            },
+
+            {
+                $replaceRoot: { newRoot: { $mergeObjects: [ { $arrayElemAt: [ "$userInfo", 0 ] }, "$$ROOT" ] } }
+             },
+
+             { $project: {
+                userInfo: 0,
+                _id: 0,
+                enterpriseId: 0,
+                updatedAt: 0,
+                __v: 0,
+                userId: 0,
+             } },
+             {$match: {$and: [nameQuery, {"createdAt": {
+                $gte: start,
+                $lt: end,
+            }}]}}
+
+            // { "$unwind": "$userInfo" },
+        ]
+    ).then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while retrieving forms."
+        });
+    });
+})
+
 router.put('/editstaff/:id', async (req, res) => {
     if (!req.body) {
         return res.status(400).send({
