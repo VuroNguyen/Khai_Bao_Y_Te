@@ -24,7 +24,7 @@ export default function RegisterForm() {
     const decoded = jwtDecode(token);
     const history = useHistory();
 
-    console.log(decoded.email);
+    // console.log(decoded.email);
 
     // POST method to the backend
     const postRegisterForm = async (data) => {
@@ -39,7 +39,7 @@ export default function RegisterForm() {
             })
             console.log(res.data);
             alert('Thành Công. Chuyển hướng đến trang Quản Lý Nhân Viên')
-            history.push(`/admindashboard/${token}`);
+            history.push(`/admindashboard/${res.data.accessToken}`);
             return res.data;
         } catch (e) {
             alert(e.message);
@@ -61,7 +61,7 @@ export default function RegisterForm() {
 
 
     const handleChange = (e) => {
-        console.log(e.target.name);
+        // console.log(e.target.name);
         switch (e.target.name) {
             case 'businessName': {
                 setBusinessName(e.target.value);
