@@ -204,11 +204,21 @@ export default function AdminDashboard() {
     });
   };
 
-  const toggleFormAdd = () => {
+  const [flag, setFlag] = useState(false);
+
+  const toggleFormAddOK = () => {
     console.log("add");
-    setModalFormAdd(!modalFormAdd);
-    console.log("after setState: ", modalFormAdd);
+    if (!userEmail || !userDepartment || !userPhone) {
+      setFlag(false);
+    }
+    else {
+      setFlag(true);
+    }
   };
+
+  const toggleFormAdd = () => {
+    setModalFormAdd(!modalFormAdd);
+  }
 
   // const [addEmail, setAddEmail] = useState("");
   // const [addDept, setAddDept] = useState("");
@@ -247,13 +257,10 @@ export default function AdminDashboard() {
     setEditEmail(email);
     setEditDept(deparment);
     setEditTel(telephone);
-    console.log('thong tin ', editDept)
   };
 
   const toggleFormEdit = () => {
-    console.log("edit");
     setModalFormEdit(!modalFormEdit);
-    console.log("after setState: ", modalFormEdit);
   };
 
   const dataUpdate = JSON.stringify({
@@ -309,11 +316,13 @@ export default function AdminDashboard() {
   // declare from enterpriseUser
   const { userEmail, userDepartment, userPhone } = enterpriseUser;
 
-  const onSubmitChange = (event) =>
+  const onSubmitChange = (event) => {
     setEnterpriseUser({
       ...enterpriseUser,
       [event.target.name]: event.target.value,
     });
+    toggleFormAddOK();
+  }
 
   const data = JSON.stringify({
     email: userEmail,
@@ -435,7 +444,7 @@ export default function AdminDashboard() {
                   </ModalBody>
                   <ModalFooter>
                     <Button
-                      onClick={toggleFormAdd}
+                      onClick={flag ? toggleFormAdd : null}
                       type="submit"
                       outline
                       color="info"
