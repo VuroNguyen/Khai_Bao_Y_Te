@@ -76,6 +76,24 @@ export default function AdminDashboard() {
     // console.log("after setState: ", modalFormAdd);
   };
 
+  const [flag, setFlag] = useState(false);
+
+  const toggleFormAddOK = () => {
+    console.log("add");
+    if (!userEmail || !userDepartment || !userPhone) {
+      setFlag(false);
+    }
+    else {
+      setFlag(true);
+    }
+  };
+
+  const toggleFormAdd = () => {
+    setModalFormAdd(!modalFormAdd);
+  }
+  const [editEmail, setEditEmail] = useState("");
+  const [editDept, setEditDept] = useState("");
+  const [editTel, setEditTel] = useState("");
   const parseFormEdit = (email, deparment, telephone) => {
     // toggle editform
     toggleFormEdit();
@@ -83,13 +101,10 @@ export default function AdminDashboard() {
     setEditEmail(email);
     setEditDept(deparment);
     setEditTel(telephone);
-    // console.log('thong tin ', editDept)
   };
 
   const toggleFormEdit = () => {
-    // console.log("edit");
     setModalFormEdit(!modalFormEdit);
-    // console.log("after setState: ", modalFormEdit);
   };
 
   const dataUpdate = JSON.stringify({
@@ -128,11 +143,13 @@ export default function AdminDashboard() {
   // declare from enterpriseUser
   const { userEmail, userDepartment, userPhone } = enterpriseUser;
 
-  const onSubmitChange = (event) =>
+  const onSubmitChange = (event) => {
     setEnterpriseUser({
       ...enterpriseUser,
       [event.target.name]: event.target.value,
     });
+    toggleFormAddOK();
+  }
 
   const data = JSON.stringify({
     email: userEmail,
@@ -265,7 +282,7 @@ export default function AdminDashboard() {
                   </ModalBody>
                   <ModalFooter>
                     <Button
-                      onClick={toggleFormAdd}
+                      onClick={flag ? toggleFormAdd : null}
                       type="submit"
                       outline
                       color="info"
