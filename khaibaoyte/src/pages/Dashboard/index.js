@@ -23,6 +23,7 @@ import SystemTime from "../../components/System";
 import "./index.css";
 import { AuthContext } from "../../components/contexts/AuthContext";
 import { serverUrl } from "../../config/Route/server";
+import AlertMessage from "../../components/AlertMessage/AlertMessage";
 
 // class AdminDashboard extends Component {
 //     constructor(props) {
@@ -186,6 +187,7 @@ export default function AdminDashboard() {
   const [responses, setResponses] = useState([]);
   const [modalFormAdd, setModalFormAdd] = useState(false);
   const [modalFormEdit, setModalFormEdit] = useState(false);
+  const [alert, setAlert] = useState(null);
   const { registerUserEnterprise, getUserEnterprise, updateUserEnterprise } =
     useContext(AuthContext);
 
@@ -333,6 +335,35 @@ export default function AdminDashboard() {
     try {
       const addUserEnterprise = await registerUserEnterprise(data, token);
       console.log(addUserEnterprise);
+      if (!addUserEnterprise.success) {
+        setAlert({
+          type: "danger",
+          message: "Email đã tồn tại hoặc không đúng",
+        });
+        setTimeout(() => {
+          setAlert(null);
+        }, 5000);
+        // setFlagAdd({ ...flagAdd, flagAddEmail: false });
+        // setModalFormAdd(true);
+        setFlagAdd({ ...flagAdd, flagAddEmail: false }); 
+      }
+
+      flagAddEmail && flagAddDepartment && flagAddPhone
+          ? setModalFormAdd(false)
+          : setModalFormAdd(true);
+        console.log(
+          ",im here flagAddEmail: ",
+          flagAddEmail,
+          "im here flagAddDepartment: ",
+          flagAddDepartment,
+          " im here flagAddPhone: ",
+          flagAddPhone
+        );
+
+      // if (addUserEnterprise.success) {
+      //   setFlagAdd({ ...flagAdd, flagAddEmail: true });
+      //   setModalFormAdd(false);
+      // }
       setFetch(true);
     } catch (error) {
       console.log(error);
@@ -482,17 +513,9 @@ export default function AdminDashboard() {
                       />
                     </FormGroup>
                   </ModalBody>
+                  <AlertMessage info={alert} />
                   <ModalFooter>
-                    <Button
-                      onClick={
-                        flagAddEmail && flagAddDepartment && flagAddPhone
-                          ? toggleFormAdd
-                          : null
-                      }
-                      type="submit"
-                      outline
-                      color="info"
-                    >
+                    <Button type="submit" outline color="info">
                       OK
                     </Button>{" "}
                   </ModalFooter>
@@ -590,13 +613,13 @@ export default function AdminDashboard() {
                                     setFlagEdit({
                                       ...flagEdit,
                                       flagEditEmail: true,
-                                      flagEditDepartment:true,
+                                      flagEditDepartment: true,
                                     });
                                   } else {
                                     setFlagEdit({
                                       ...flagEdit,
                                       flagEditEmail: true,
-                                      flagEditDepartment:false,
+                                      flagEditDepartment: false,
                                     });
                                   }
                                 }}
@@ -633,13 +656,13 @@ export default function AdminDashboard() {
                                     setFlagEdit({
                                       ...flagEdit,
                                       flagEditEmail: true,
-                                      flagEditPhone:true,
+                                      flagEditPhone: true,
                                     });
                                   } else {
                                     setFlagEdit({
                                       ...flagEdit,
                                       flagEditEmail: true,
-                                      flagEditPhone:false,
+                                      flagEditPhone: false,
                                     });
                                   }
                                   // console.log(
