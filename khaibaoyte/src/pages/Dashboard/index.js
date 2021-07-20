@@ -70,12 +70,6 @@ export default function AdminDashboard() {
     }
   }
 
-  const toggleFormAdd = () => {
-    // console.log("add");
-    setModalFormAdd(!modalFormAdd);
-    // console.log("after setState: ", modalFormAdd);
-  };
-
   const [flag, setFlag] = useState(false);
 
   const toggleFormAddOK = () => {
@@ -91,9 +85,7 @@ export default function AdminDashboard() {
   const toggleFormAdd = () => {
     setModalFormAdd(!modalFormAdd);
   }
-  const [editEmail, setEditEmail] = useState("");
-  const [editDept, setEditDept] = useState("");
-  const [editTel, setEditTel] = useState("");
+  
   const parseFormEdit = (email, deparment, telephone) => {
     // toggle editform
     toggleFormEdit();
