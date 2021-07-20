@@ -10,6 +10,10 @@ import { serverUrl } from '../../config/Route/server';
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import vi from 'date-fns/locale/vi';
+import moment from 'moment'
+import { format } from 'date-fns';
+
+
 registerLocale('vi', vi);
 
 const Report = (props) => {
@@ -24,7 +28,7 @@ const Report = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-                `${serverUrl}/home/getAllEmail?enterpriseName=${decoded.name}`,
+                `${serverUrl}/enterprise/getSpecificDay/2021-07-19`,
             );
             setData(result.data);
             console.log(result.data);
@@ -51,14 +55,18 @@ const Report = (props) => {
                         <br />
                         <div>
                             <DatePicker
-                            todayButton="Hôm nay"s
-                            locale="vi"
-                            placeholderText="Vui lòng chọn ngày"
-                            selected={startDate} 
-                            onChange={(date) => setStartDate(date)}
-                            dateFormat="dd/MM/yyyy"
-                            className="text-center"
-                            style={{width: '500px'}}
+                                todayButton="Hôm nay"
+                                locale="vi"
+                                placeholderText="Vui lòng chọn ngày"
+                                selected={startDate}
+                                onChange={(date) => {
+                                    setStartDate(date)
+                                    console.log(date)
+                                }}
+                                // dataFormat="dd-MM-yyyy"
+                                dateFormat="yyyy-MM-dd"
+                                className="text-center"
+                                style={{ width: '500px' }}
                             />
                         </div>
                         <div style={{ paddingTop: '3vh' }} />
@@ -78,13 +86,13 @@ const Report = (props) => {
                             <tbody >
                                 {data.map(data => (
                                     <tr key={data._id}>
+                                        <td>{data.email}</td>
+                                        <td>{data.status}</td>
+                                        <td>{data.department}</td>
+                                        <td>{data.phone}</td>
                                         <td>{data.quest4}</td>
                                         <td>{data.quest5}</td>
                                         <td>{data.quest6}</td>
-                                        <td>{data.quest7}</td>
-                                        <td>{data.quest7}</td>
-                                        <td>{data.quest7}</td>
-                                        <td>{data.quest7}</td>
                                         <td>{data.quest7}</td>
                                     </tr>
                                 ))}

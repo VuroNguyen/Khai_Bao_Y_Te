@@ -193,8 +193,8 @@ function LoginForm() {
     // create an answer JSON file to save in the server
     let answer = JSON.stringify({
         email: useremail,
-        quest2: decoded.department ? decoded.department : 'Không có',
-        quest3: decoded.phone ? decoded.phone : '0',
+        department: decoded.department ? decoded.department : 'Không có',
+        phone: decoded.phone ? decoded.phone : '0',
         quest4: answer4.join(', ').toString(),
         quest5: answer5,
         quest6: answer6,

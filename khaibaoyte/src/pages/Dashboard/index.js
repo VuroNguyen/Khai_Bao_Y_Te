@@ -22,7 +22,7 @@ import CustomNav from "../../components/Navbars/Enterprise/CustomNav";
 import SystemTime from "../../components/System";
 import "./index.css";
 import { AuthContext } from "../../components/contexts/AuthContext";
-import {serverUrl} from '../../config/Route/server'
+import { serverUrl } from '../../config/Route/server'
 
 // class AdminDashboard extends Component {
 //     constructor(props) {
@@ -363,7 +363,7 @@ export default function AdminDashboard() {
               <h3 style={{ color: "#55befc" }}>{enterpriseName}</h3>
               <h4>Quản lý nhân viên</h4>
             </div>
-            <br/>
+            <br />
             <div style={{ paddingTop: "2vh" }}>
               {/* Pass data onClick */}
               <Button
@@ -388,7 +388,7 @@ export default function AdminDashboard() {
                         type="text"
                         name="userEmail"
                         id="userEmail"
-                        placeholder="ex: 0845372112"
+                        placeholder="Ví dụ: emailcuaban@fpt.com.vn"
                         value={userEmail}
                         onChange={onSubmitChange}
                         required
@@ -406,12 +406,14 @@ export default function AdminDashboard() {
                         value={userDepartment}
                         onChange={onSubmitChange}
                       >
-                        <option value="">Vui lòng chọn phòng ban</option>
-                        <option value="HR">Nhân sự</option>
+                        <option value="">
+                          Vui lòng chọn phòng ban
+                        </option>
+                        <option value="Nhân sự">Nhân sự</option>
                         <option value="IT">IT</option>
                         <option value="Marketing">Marketing</option>
-                        <option value="Manager">Quản lí</option>
-                        <option value="Accounting">Kế toán</option>
+                        <option value="Quản lý">Quản lý</option>
+                        <option value="Kế toàn">Kế toán</option>
                       </CustomInput>
                     </FormGroup>
                     <FormGroup>
@@ -424,7 +426,7 @@ export default function AdminDashboard() {
                         type="number"
                         name="userPhone"
                         id="userPhone"
-                        placeholder="ex: 0845372112"
+                        placeholder="Ví dụ: 0845372112"
                         value={userPhone}
                         onChange={onSubmitChange}
                         required
@@ -499,7 +501,7 @@ export default function AdminDashboard() {
                                 type="text"
                                 name="editEmail"
                                 id="userEmail"
-                                placeholder="ex: 0845372112"
+                                placeholder="Ví dụ: mailcuaban@fpt.com.vn"
                                 required
                                 value={editEmail}
                                 onChange={(event) => {
@@ -525,11 +527,11 @@ export default function AdminDashboard() {
                                 <option value="">
                                   Vui lòng chọn phòng ban
                                 </option>
-                                <option value="HR">Nhân sự</option>
+                                <option value="Nhân sự">Nhân sự</option>
                                 <option value="IT">IT</option>
                                 <option value="Marketing">Marketing</option>
-                                <option value="Manager">Quản lí</option>
-                                <option value="Accounting">Kế toán</option>
+                                <option value="Quản lý">Quản lý</option>
+                                <option value="Kế toàn">Kế toán</option>
                               </CustomInput>
                             </FormGroup>
                             <FormGroup>
@@ -542,7 +544,7 @@ export default function AdminDashboard() {
                                 type="number"
                                 name="editPhone"
                                 id="userPhone"
-                                placeholder="ex: 0845372112"
+                                placeholder="Ví dụ: 0845372112"
                                 required
                                 value={editTel}
                                 onChange={(event) => {
