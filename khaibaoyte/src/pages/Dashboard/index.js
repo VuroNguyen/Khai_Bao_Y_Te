@@ -503,6 +503,7 @@ export default function AdminDashboard() {
                                 id="userEmail"
                                 placeholder="Ví dụ: mailcuaban@fpt.com.vn"
                                 required
+                                disabled
                                 value={editEmail}
                                 onChange={(event) => {
                                   setEditEmail(event.target.value);
