@@ -10,8 +10,20 @@ GET http://localhost:5000/enterprise/getSpecificDay/2021-07-17?enterpriseName=C�
 
 ###
 
+//lấy tất cả form trong 1 ngày xác định. nhập ngày như dưới theo name của enterprise. Only for excel
+GET http://localhost:5000/enterprise/getSpecificDayForExcel/2021-07-17?enterpriseName=CÔNG
+
+
+###
+
 //get data for report page with enterprise name like below.
 GET http://localhost:5000/enterprise/getReport?enterpriseName=CÔNG TY
+
+
+###
+
+//get data for report page with enterprise name like below. Only for excel
+GET http://localhost:5000/enterprise/getReportForExcel?enterpriseName=CÔNG TY
 
 
 ###
