@@ -17,6 +17,12 @@ function Register() {
     email: "",
   });
 
+  const [isEmailVisible, setEmailVisible] = useState(true);
+
+  const toggle = () => {
+    setEmailVisible(!isEmailVisible);
+  }
+
   const [alert, setAlert] = useState(null);
 
   // const [businessForm, setBusinessForm] = useState({
@@ -65,6 +71,8 @@ function Register() {
   const register = async (event) => {
     event.preventDefault();
 
+    toggle();
+
     let isRegistered = true;
 
     try {
@@ -74,7 +82,6 @@ function Register() {
           type: "success",
           message: "Vui lòng kiểm tra email xác thực để quản lí doanh nghiệp",
         });
-        setTimeout(() => setAlert(null), 5000);
       }
       // if login failed == no email in db
       if (!loginData.success) {
@@ -94,13 +101,11 @@ function Register() {
             message:
               "Email xác thực đăng ký đã được gửi. Vui lòng truy cập email xác nhận và bắt đầu",
           });
-          setTimeout(() => setAlert(null), 5000);
         } else {
           setAlert({
             type: "danger",
             message: "Email đã tồn tại",
           });
-          setTimeout(() => setAlert(null), 5000);
         }
         console.log("createData", createData);
       } catch (error) {
@@ -134,7 +139,7 @@ function Register() {
                   <Label for="userEmail">
                     <h4>Nhập email để điền thông tin</h4>
                   </Label>
-                  <Input
+                  {isEmailVisible ? <Input
                     className="w-75 mx-auto"
                     type="email"
                     name="email"
@@ -142,8 +147,10 @@ function Register() {
                     placeholder="Ví dụ: emailcuaban@fpt.com.vn"
                     required
                     value={email}
-                    onChange={onChangeBusinessForm}
-                  />
+                    onChange={onChangeBusinessForm} />
+                    :
+                    <AlertMessage info={alert} />
+                  }
                 </FormGroup>
                 <Button
                   style={{ height: "5vh", width: "15vh" }}
@@ -154,8 +161,7 @@ function Register() {
                 </Button>
               </Form>
               <br />
-              {/* Mẫn */}
-              <AlertMessage info={alert} />
+
               <br />
               <br />
             </div>
