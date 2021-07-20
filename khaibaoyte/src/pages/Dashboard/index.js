@@ -1,7 +1,7 @@
 import axios from "axios";
 //decode
 import jwt_decode from "jwt-decode";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Button,
@@ -15,231 +15,65 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  Table,
+  Table
 } from "reactstrap";
+import { AuthContext } from "../../components/contexts/AuthContext";
 import Footer from "../../components/Footer";
 import CustomNav from "../../components/Navbars/Enterprise/CustomNav";
 import SystemTime from "../../components/System";
 import "./index.css";
-import { AuthContext } from "../../components/contexts/AuthContext";
-import { serverUrl } from '../../config/Route/server'
-
-// class AdminDashboard extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             responses: [],
-//             modalFormAdd: false,
-//             modalFormEdit: false,
-//         }
-//         this.toggleFormAdd = this.toggleFormAdd.bind(this);
-//         this.toggleFormEdit = this.toggleFormEdit.bind(this);
-//     }
-
-//     toggleFormEdit() {
-//         console.log("edit");
-//         this.setState({
-//             modalFormEdit: !this.state.modalFormEdit
-//         });
-//         console.log('after setState: ', this.state)
-//     }
-
-//     toggleFormAdd() {
-//         console.log("add");
-//         this.setState({
-//             modalFormAdd: !this.state.modalFormAdd
-//         });
-//         console.log('after setState: ', this.state);
-//     }
-
-//     componentDidMount() {
-//         axios.get(`${serverUrl}/home/getAllEmail`)
-//             .then(res => {
-//                 const responses = res.data;
-//                 this.setState({ responses });
-//                 console.log(responses)
-//             })
-
-//             .catch(error => console.log(error));
-//     }
-
-//     render() {
-//         const { responses } = this.state;
-//         const history = useHistory();
-
-//         const toHistoryClick = (e, useremail) => {
-//             history.push({
-//                 pathname : "/history",
-//                 state : { userEmail: useremail}
-//             })
-//         }
-//         return (
-//             <div>
-//                 <div className='text-center'>
-//                     <h3 style={{ color: '#55befc' }}>Quản lý nhân viên</h3>
-//                     <div style={{ paddingTop: '1em' }} />
-//                 </div>
-//                 <Table>
-//                     <thead>
-//                         <tr>
-//                             <th>Email nhân viên</th>
-//                             <th>Tình trạng</th>
-//                             <th>Phòng ban</th>
-//                             <th>SĐT</th>
-//                             <th>Function</th>
-//                             <th>Edit</th>
-//                             <th>Lịch sử khai báo</th>
-//                         </tr>
-//                     </thead>
-//                     <tbody >
-//                         {responses.map(response => (
-//                             <tr key={response._id}>
-//                                 <td>{response.email}</td>
-//                                 <td>{response.status === false ? "Chưa xác nhận" : "Đã xác nhận"}</td>
-//                                 <td>{response.department}</td>
-//                                 <td>{response.phone}</td>
-//                                 <td><Button outline color="info">Lịch sử khai báo</Button></td>
-//                                 <td>
-//                                     <Button outline color="info" onClick={this.toggleFormEdit}>Edit</Button>
-//                                     <Modal isOpen={this.state.modalFormEdit} toggle={this.toggleFormEdit}>
-//                                         <ModalHeader toggle={this.toggleFormEdit}>Sửa thông tin nhân viên</ModalHeader>
-//                                         <ModalBody>
-//                                             <Form>
-//                                                 <FormGroup>
-//                                                     <Label for="userEmail">1. Email nhân viên <span className='text-danger'>*</span></Label>
-//                                                     <Input type="text" name="userEmail" id="userEmail" placeholder="ex: 0845372112" required />
-//                                                 </FormGroup>
-//                                                 <FormGroup>
-//                                                     <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
-//                                                     <CustomInput
-//                                                         type="select"
-//                                                         id="userDepartment"
-//                                                         name="userDepartment"
-//                                                         required>
-//                                                         <option value="">Vui lòng chọn phòng ban</option>
-//                                                         <option value='HR'>Nhân sự</option>
-//                                                         <option value='IT'>IT</option>
-//                                                         <option value='Marketing'>Marketing</option>
-//                                                         <option value='Manager'>Quản lí</option>
-//                                                         <option value='Accounting'>Kế toán</option>
-//                                                     </CustomInput>
-//                                                 </FormGroup>
-//                                                 <FormGroup>
-//                                                     <Label for="userPhone">3. Số điện thoại nhân viên <span className='text-danger'>*</span></Label>
-//                                                     <Input className="without_number" type="number" name="userPhone" id="userPhone" placeholder="ex: 0845372112" required />
-//                                                 </FormGroup>
-//                                             </Form>
-//                                         </ModalBody>
-//                                         <ModalFooter>
-//                                             <Button onClick={this.toggleFormEdit} outline color="info">OK</Button>{' '}
-//                                         </ModalFooter>
-//                                     </Modal>
-//                                 </td>
-//                                 <td><Button outline color="info" onClick={toHistoryClick} >Tới lịch sử</Button></td>
-//                             </tr>
-//                         ))}
-//                     </tbody>
-//                 </Table>
-//                 <div style={{ paddingTop: '2em' }} />
-//                 <Button outline color="info" onClick={this.toggleFormAdd} >Thêm tài khoản nhân viên</Button>
-//                 <Modal isOpen={this.state.modalFormAdd} toggle={this.toggleFormAdd}>
-//                     <ModalHeader toggle={this.toggleFormAdd}>Đăng ký email nhân viên</ModalHeader>
-//                     <ModalBody>
-//                         <Form>
-//                             <FormGroup>
-//                                 <Label for="userEmail">1. Email nhân viên <span className='text-danger'>*</span></Label>
-//                                 <Input type="text" name="userEmail" id="userEmail" placeholder="ex: 0845372112" required />
-//                             </FormGroup>
-//                             <FormGroup>
-//                                 <Label for="userDepartment">2. Phòng ban <span className='text-danger'>*</span></Label>
-//                                 <CustomInput
-//                                     type="select"
-//                                     id="userDepartment"
-//                                     name="userDepartment"
-//                                     required>
-//                                     <option value="">Vui lòng chọn phòng ban</option>
-//                                     <option value='HR'>Nhân sự</option>
-//                                     <option value='IT'>IT</option>
-//                                     <option value='Marketing'>Marketing</option>
-//                                     <option value='Manager'>Quản lí</option>
-//                                     <option value='Accounting'>Kế toán</option>
-//                                 </CustomInput>
-//                             </FormGroup>
-//                             <FormGroup>
-//                                 <Label for="userPhone">3. Số điện thoại nhân viên <span className='text-danger'>*</span></Label>
-//                                 <Input className="without_number" type="number" name="userPhone" id="userPhone" placeholder="ex: 0845372112" required />
-//                             </FormGroup>
-//                         </Form>
-//                     </ModalBody>
-//                     <ModalFooter>
-//                         <Button onClick={this.toggleFormAdd} outline color="info">OK</Button>{' '}
-//                     </ModalFooter>
-//                 </Modal>
-//             </div>
-//         )
-//     }
-// }
-
-// export default AdminDashboard
 
 export default function AdminDashboard() {
   const [responses, setResponses] = useState([]);
   const [modalFormAdd, setModalFormAdd] = useState(false);
   const [modalFormEdit, setModalFormEdit] = useState(false);
-  const { registerUserEnterprise, getUserEnterprise, updateUserEnterprise } =
-    useContext(AuthContext);
 
-  const history = useHistory();
-
-  const token = localStorage.getItem("khaibaoyte");
-  //Decode token
-  const decoded = jwt_decode(token);
-  const enterpriseName = decoded.name;
+  const [loading, setLoading] = useState(false);
   const [fetch, setFetch] = useState(false);
-
-  const toHistoryClick = (useremail) => {
-    history.push({
-      pathname: "/history",
-      state: { mail: useremail },
-    });
-  };
-
-  const toggleFormAdd = () => {
-    console.log("add");
-    setModalFormAdd(!modalFormAdd);
-    console.log("after setState: ", modalFormAdd);
-  };
-
-  // const [addEmail, setAddEmail] = useState("");
-  // const [addDept, setAddDept] = useState("");
-  // const [addTel, setAddTel] = useState("");
-  // const submitFormAdd = (e) => {
-  //   e.preventDefault();
-  //   // on submit success clear the form
-  //   // then toggle the form
-  // };
-
-  // const [editEnterpriseUser, setEditEnterpriseUser] = useState({
-  //   editEmail: "",
-  //   editDepartment: "",
-  //   editPhone: "",
-  // });
-
-  // const parseFormEdit = (email, deparment, telephone) => {
-  //   toggleFormEdit();
-
-  //   setEditEnterpriseUser({
-  //     editEmail: email,
-  //     editDepartment: deparment,
-  //     editPhone: telephone,
-  //   });
-  // };
-
-  // const { editEmail, editDepartment, editPhone } = editEnterpriseUser;
 
   const [editEmail, setEditEmail] = useState("");
   const [editDept, setEditDept] = useState("");
   const [editTel, setEditTel] = useState("");
+
+  const { registerUserEnterprise, getUserEnterprise, updateUserEnterprise } = useContext(AuthContext);
+  const emailtoken = window.location.href.split('admindashboard/')[1]; 
+  //Decode token 
+  const decoded = jwt_decode(emailtoken);
+  const useremail = decoded.email;
+  const history = useHistory();
+
+  const toHistoryClick = (useremail) => {
+    history.push({
+      pathname: "/history",
+      state: { useremail: useremail },
+    });
+  };
+
+  const gettokenfromurl = () => {
+    setLoading(true);
+    const today = new Date();
+    if (emailtoken == null || emailtoken === '') {
+      history.push('/')
+      alert('No token found');
+      setLoading(false)
+    }
+    if (jwt_decode(emailtoken).exp * 1000 < today.getTime()) {
+      history.push('/');
+      alert('Token expired');
+      setLoading(false)
+    }
+    else {
+      localStorage.setItem('khaibaoyte', emailtoken);
+      setLoading(false)
+    }
+  }
+
+  const toggleFormAdd = () => {
+    // console.log("add");
+    setModalFormAdd(!modalFormAdd);
+    // console.log("after setState: ", modalFormAdd);
+  };
+
   const parseFormEdit = (email, deparment, telephone) => {
     // toggle editform
     toggleFormEdit();
@@ -247,13 +81,13 @@ export default function AdminDashboard() {
     setEditEmail(email);
     setEditDept(deparment);
     setEditTel(telephone);
-    console.log('thong tin ', editDept)
+    // console.log('thong tin ', editDept)
   };
 
   const toggleFormEdit = () => {
-    console.log("edit");
+    // console.log("edit");
     setModalFormEdit(!modalFormEdit);
-    console.log("after setState: ", modalFormEdit);
+    // console.log("after setState: ", modalFormEdit);
   };
 
   const dataUpdate = JSON.stringify({
@@ -261,13 +95,6 @@ export default function AdminDashboard() {
     department: editDept,
     phone: editTel,
   });
-
-  // const onEditChange = (event) => {
-  //   setEditEnterpriseUser({
-  //     ...editEnterpriseUser,
-  //     [event.target.name]: event.target.value,
-  //   });
-  // };
 
   const updateUser = async (event) => {
     event.preventDefault();
@@ -289,16 +116,6 @@ export default function AdminDashboard() {
       console.log(error);
     }
   };
-
-  const submitFormEdit = (e) => {
-    e.preventDefault();
-    // on submit success clear the form
-    // then toggle the form
-  };
-
-  // TODO: add useEffect whenever addnew or edit
-  // refresh the table with new data
-  // WTF nhân viên méo ai có sdt vs phòng ban bro ???
 
   const [enterpriseUser, setEnterpriseUser] = useState({
     userEmail: "",
@@ -324,7 +141,7 @@ export default function AdminDashboard() {
   const addUser = async (event) => {
     event.preventDefault();
     try {
-      const addUserEnterprise = await registerUserEnterprise(data, token);
+      const addUserEnterprise = await registerUserEnterprise(data, emailtoken);
       console.log(addUserEnterprise);
       setFetch(true);
     } catch (error) {
@@ -341,10 +158,21 @@ export default function AdminDashboard() {
     console.log(decoded);
   };
 
+  // Chạy không điều kiện
   useEffect(() => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    try {
+      gettokenfromurl();
+    } catch (error) {
+      alert(error);
+    }
+    return setLoading(false);
+  }, [loading])
+
+  // Chạy có điều kiện
   useEffect(() => {
     fetchData();
     setFetch(false);
