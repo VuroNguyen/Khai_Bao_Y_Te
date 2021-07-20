@@ -1,24 +1,24 @@
 import axios from "axios";
+import vi from "date-fns/locale/vi";
 //decode
 import jwt_decode from "jwt-decode";
 import React, { useEffect, useState } from "react";
-import { Button, Container, Table } from "reactstrap";
+import DatePicker, { registerLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Container, Table } from "reactstrap";
+import { ExportToExcel } from "../../components/Excel";
+import { ExportToExcelDay } from "../../components/Excel/dayExport";
 import Footer from "../../components/Footer";
-import HistoryNav from "../../components/Navbars/Enterprise/HistoryNav";
+import ManageNav from "../../components/Navbars/Enterprise/ManageNav";
 import SystemTime from "../../components/System";
 import { serverUrl } from "../../config/Route/server";
-import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import vi from "date-fns/locale/vi";
-import moment from "moment";
-import { format } from "date-fns";
-import { ExportToExcel } from "../../components/Excel";
 
 registerLocale("vi", vi);
 
 const Report = (props) => {
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
+  const [excelData, setExcelData] = useState([]);
 
   let formatDate = startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + (startDate.getDate())
 
@@ -33,10 +33,14 @@ const Report = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
-        `${serverUrl}/enterprise/getSpecificDay/${formatDate}`
+        `${serverUrl}/enterprise/getSpecificDay/${formatDate}?enterpriseName=${decoded.name}`
+      );
+      const response = await axios(
+        `${serverUrl}/enterprise/getReportForExcel?enterpriseName=${decoded.name}`
       );
       console.log('im here: ', formatDate)
       setData(result.data);
+      setExcelData(response.data);
       console.log(result.data);
       // console.log(count);
       // In ra check
@@ -45,12 +49,13 @@ const Report = (props) => {
     fetchData();
   }, [formatDate]);
 
-  const fileName = formatDate + ' khaibaoytedoanhnghiep'
+  const fileNameDay = formatDate + ' khaibaoytedoanhnghiep'
+  const fileName = formatDate + ' all khaibaoytedoanhnghiep'
 
   return (
     <div className="page-container">
       <div className="content-wrap">
-        <HistoryNav />
+        <ManageNav />
         <div className="container-fluid">
           <div style={{ paddingTop: "2vh" }} />
           <Container>
@@ -79,7 +84,8 @@ const Report = (props) => {
                 </div>
                 <div className="col">
                   <div className="float-right">
-                    <ExportToExcel apiData={data} fileName={fileName} />
+                      <ExportToExcelDay apiData={data} fileName={fileNameDay} />
+                      <ExportToExcel apiData={excelData} fileName={fileName} />
                   </div>
                 </div>
               </div>

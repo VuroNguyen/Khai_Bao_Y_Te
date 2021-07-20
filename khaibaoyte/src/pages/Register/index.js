@@ -9,7 +9,7 @@ import {
 import AlertMessage from "../../components/AlertMessage/AlertMessage";
 import { AuthContext } from "../../components/contexts/AuthContext";
 import Footer from "../../components/Footer";
-import EnterpriseNav from "../../components/Navbars/Enterprise";
+import EnterpriseNavBar from "../../components/Navbars/Enterprise";
 import SystemTime from "../../components/System";
 
 function Register() {
@@ -125,7 +125,7 @@ function Register() {
   return (
     <div className='page-container'>
       <div className='content-wrap'>
-        <EnterpriseNav />
+        <EnterpriseNavBar />
         <div className='container-fluid'>
           <div style={{ paddingTop: '2vh' }} />
           <Container>

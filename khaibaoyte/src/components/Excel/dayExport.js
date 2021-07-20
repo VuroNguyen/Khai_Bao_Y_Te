@@ -3,7 +3,7 @@ import * as FileSaver from "file-saver";
 import { Button } from 'reactstrap'
 import * as XLSX from "xlsx";
 
-export const ExportToExcel = ({ apiData, fileName }) => {
+export const ExportToExcelDay = ({ apiData, fileName }) => {
     const fileType =
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
     const fileExtension = ".xlsx";
@@ -17,6 +17,6 @@ export const ExportToExcel = ({ apiData, fileName }) => {
     };
 
     return (
-        <Button outline color="info" onClick={(e) => exportToCSV(apiData, fileName)}>Xuất ra file Excel tổng hợp</Button>
+        <Button outline color="info" onClick={(e) => exportToCSV(apiData, fileName)}>Xuất ra Excel theo ngày</Button>
     );
 };

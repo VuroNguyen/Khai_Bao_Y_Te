@@ -1,15 +1,14 @@
-import React from 'react'
-import Footer from '../../components/Footer'
-import UserNav from '../../components/Navbars/User'
-import SystemTime from '../../components/System'
-import { Button, Col, Container, CustomInput, Form, FormGroup, Input, Label, Row } from 'reactstrap';
-import ManageNav from '../../components/Navbars/Enterprise/ManageNav';
+import React from 'react';
+import { Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap';
+import Footer from '../../components/Footer';
+import EnterpriseNav from '../../components/Navbars/Enterprise/EnterpriseNav';
+import SystemTime from '../../components/System';
 
 function EnterpriseInfo() {
     return (
         <div className='page-container'>
             <div className='content-wrap'>
-                <ManageNav />
+                <EnterpriseNav />
                 <div className='container-fluid'>
                     <div style={{ paddingTop: '2vh' }} />
                     <Container>

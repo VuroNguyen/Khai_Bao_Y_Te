@@ -32,6 +32,11 @@ const ManageNav = (props) => {
                             <NavLink href="/admindashboard">Quản lý nhân viên</NavLink>
                         </NavItem>
                     </Col>
+                    <Col xs="auto">
+                        <NavItem>
+                            <NavLink href="/enterprise">Thông tin doanh nghiệp</NavLink>
+                        </NavItem>
+                    </Col>
                 </Nav>
             </Collapse>
         </Navbar>

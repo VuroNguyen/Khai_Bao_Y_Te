@@ -6,10 +6,11 @@ import {
 import addImage from '../../../assets/images/add1.png';
 import '../index.css';
 
-const BlankNav = (props) => {
+const EnterpriseNav = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
+
 
     return (
         <Navbar light expand="md">
@@ -27,6 +28,14 @@ const BlankNav = (props) => {
             <Collapse isOpen={isOpen} navbar>
                 <Nav className="ml-auto" navbar>
                     <Col xs="auto">
+                        <NavItem>
+                            <NavLink href="/report">Báo cáo</NavLink>
+                        </NavItem>
+                    </Col>
+                    <Col xs="auto">
+                        <NavItem>
+                            <NavLink href="/admindashboard">Quản lý nhân viên</NavLink>
+                        </NavItem>
                     </Col>
                 </Nav>
             </Collapse>
@@ -34,4 +43,4 @@ const BlankNav = (props) => {
     )
 };
 
-export default BlankNav
+export default EnterpriseNav

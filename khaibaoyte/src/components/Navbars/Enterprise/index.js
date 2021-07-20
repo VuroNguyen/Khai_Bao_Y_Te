@@ -6,7 +6,7 @@ import {
 import addImage from '../../../assets/images/add1.png';
 import '../index.css';
 
-const EnterpriseNav = (props) => {
+const EnterpriseNavBar = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
@@ -38,4 +38,4 @@ const EnterpriseNav = (props) => {
     )
 };
 
-export default EnterpriseNav
+export default EnterpriseNavBar
