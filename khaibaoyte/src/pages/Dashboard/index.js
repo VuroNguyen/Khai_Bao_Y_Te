@@ -360,8 +360,8 @@ export default function AdminDashboard() {
             <SystemTime />
             <div style={{ paddingTop: "3vh" }} />
             <div className="text-center">
-              <h3 style={{ color: "#55befc" }}>{enterpriseName}</h3>
-              <h4>Quản lý nhân viên</h4>
+              <h3 style={{ color: "#55befc" }}>Báo cáo</h3>
+              <h4>{enterpriseName}</h4>
             </div>
             <br />
             <div style={{ paddingTop: "2vh" }}>
