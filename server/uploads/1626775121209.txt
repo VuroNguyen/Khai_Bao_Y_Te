@@ -1,0 +1,12 @@
+using brawlhalla gamestyle w. Champions
+2d map
+player has sight limited
+add obstacle, traps, places to hide
+tag game
+randomly choose beween the players
+first player has 30 second
+each time the tag passed time - 5 seconds, min at 10 second.
+timer reaches 0 => player out => randomly choose next player.
+big map -> small map using border
+any players stay outside get 1 strike each second
+3 strikes => out

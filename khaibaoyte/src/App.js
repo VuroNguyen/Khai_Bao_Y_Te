@@ -28,7 +28,7 @@ function App() {
         {/* Chỉnh thành route thường vì gửi email đính kèm token */}
         {/* => Méo cần private */}
         {/* Bỏ exact để xét trường hợp user vào bằng link 3000/form/ sẽ bị sút ra */}
-        <Route
+        <PrivateRoutes
           path={routeConfig.loginForm["list-url"]}
           component={LoginForm} />
         <PrivateRoutes
@@ -45,7 +45,6 @@ function App() {
           component={RegisterForm} />
         <PrivateRoutes
           path={routeConfig.adminDashboard["list-url"]}
-          exact
           component={AdminDashboard} />
         <PrivateRoutes
           path={routeConfig.enterpriseinfo["list-url"]}
