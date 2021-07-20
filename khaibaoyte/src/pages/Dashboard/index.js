@@ -35,9 +35,9 @@ export default function AdminDashboard() {
   const [editTel, setEditTel] = useState("");
 
   const { registerUserEnterprise, getUserEnterprise, updateUserEnterprise } = useContext(AuthContext);
-  const token = localStorage.getItem('khaibaoyte');
-  //Decode token
-  const decoded = jwt_decode(token);
+  const emailtoken = window.location.href.split('admindashboard/')[1]; 
+  //Decode token 
+  const decoded = jwt_decode(emailtoken);
   const useremail = decoded.email;
   const history = useHistory();
 
@@ -50,7 +50,6 @@ export default function AdminDashboard() {
 
   const gettokenfromurl = () => {
     setLoading(true);
-    const emailtoken = window.location.href.split('admindashboard/')[1];
     const today = new Date();
     if (emailtoken == null || emailtoken === '') {
       history.push('/')
@@ -68,11 +67,10 @@ export default function AdminDashboard() {
     }
   }
 
-
   const toggleFormAdd = () => {
-    console.log("add");
+    // console.log("add");
     setModalFormAdd(!modalFormAdd);
-    console.log("after setState: ", modalFormAdd);
+    // console.log("after setState: ", modalFormAdd);
   };
 
   const parseFormEdit = (email, deparment, telephone) => {
@@ -82,13 +80,13 @@ export default function AdminDashboard() {
     setEditEmail(email);
     setEditDept(deparment);
     setEditTel(telephone);
-    console.log('thong tin ', editDept)
+    // console.log('thong tin ', editDept)
   };
 
   const toggleFormEdit = () => {
-    console.log("edit");
+    // console.log("edit");
     setModalFormEdit(!modalFormEdit);
-    console.log("after setState: ", modalFormEdit);
+    // console.log("after setState: ", modalFormEdit);
   };
 
   const dataUpdate = JSON.stringify({
@@ -142,7 +140,7 @@ export default function AdminDashboard() {
   const addUser = async (event) => {
     event.preventDefault();
     try {
-      const addUserEnterprise = await registerUserEnterprise(data, token);
+      const addUserEnterprise = await registerUserEnterprise(data, emailtoken);
       console.log(addUserEnterprise);
       setFetch(true);
     } catch (error) {
@@ -156,7 +154,7 @@ export default function AdminDashboard() {
     );
     setResponses(res.data);
     console.log(res.data);
-    console.log(decoded);
+    // console.log(decoded);
   };
 
   // Chạy không điều kiện

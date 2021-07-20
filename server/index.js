@@ -32,10 +32,10 @@ app.use(express.json())
 
 app.use(cors())
 
-// const dirname = path.resolve();
-// app.use('/uploads', express.static(path.join(dirname, '/uploads')));
-// app.use(express.static(path.join(dirname, '/khaibaoyte')));
-// app.get('*', (req, res) => res.sendFile(path.join(dirname, '/frontend/build/index.html')))
+const dirname = path.resolve();
+app.use('/uploads', express.static(path.join(dirname, '/uploads')));
+app.use(express.static(path.join(dirname, '/server')));
+// app.get('*', (req, res) => res.sendFile(path.join(dirname, '/khai_bao_y_te/build/index.html')))
 
 app.use('/home', User)
 app.use('/api/khaibao', medicalForm)

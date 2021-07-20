@@ -30,8 +30,8 @@ const UserHistory = (props) => {
             );
             setData(result.data);
             setCount(response.data);
-            // console.log(data);
-            // console.log(count);
+            console.log(data);
+            console.log(response);
             // In ra check
             // console.log(decoded);
         };
