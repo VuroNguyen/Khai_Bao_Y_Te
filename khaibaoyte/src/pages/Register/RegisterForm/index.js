@@ -19,11 +19,10 @@ export default function RegisterForm() {
     const [businessDocument, setBusinessDocument] = useState('');
 
     const token = window.location.href.split('registerform/')[1];
-    //   const token = localStorage.getItem('khaibaoyte');
     const decoded = jwtDecode(token);
     const history = useHistory();
 
-    // console.log(decoded.email);
+    console.log(decoded.email);
 
     // POST method to the backend
     const postRegisterForm = async (data) => {
@@ -105,41 +104,41 @@ export default function RegisterForm() {
                 <div className='container-fluid'>
                     <div style={{ paddingTop: '2vh' }} />
                     <Container>
-                    <SystemTime />
-                    <div style={{ paddingTop: '3vh' }} />
-                    <div className='text-center'>
-                        <h3 style={{ color: '#55befc' }}>Đăng ký thông tin doanh nghiệp</h3>
-                        <div style={{ paddingTop: '1em' }} />
-                    </div>
-                    <Form onSubmit={handleSubmit}>
-                        <FormGroup>
-                            <Label for="businessName">1. Tên doanh nghiệp <span className='text-danger'>*</span></Label>
-                            <Input type="text" name="businessName" id="businessName" placeholder='ex: FPT Information System' required value={businessName} onChange={handleChange} />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="userEmail">2. Email</Label>
-                            <Input type="email" name="businessEmail" id="businessEmail" placeholder={businessEmail} />
-                        </FormGroup>
-                        <Row form>
-                            <Col md={8}>
-                                <FormGroup>
-                                    <Label for="userEmail">2. Email</Label>
-                                    <Input type="email" name="businessEmail" id="businessEmail" placeholder={decoded.email} disabled={true} />
-                                </FormGroup>
-                            </Col>
-                            <Col md={4}>
-                                <FormGroup>
-                                    <Label for="businessTaxNumber">5. Mã số thuế <span className='text-danger'>*</span></Label>
-                                    <Input className="without_number" type="number" name="businessTaxNumber" id="businessTaxNumber" required value={businessTaxNumber} onChange={handleChange} />
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                        <FormGroup>
-                            <Label for="file">6. Tài liệu</Label>
-                            <CustomInput type="file" id="businessDocument" name="businessDocument" label="Upload tài liệu ở đây" onChange={uploadFileHandler} />
-                        </FormGroup>
-                        <Button type="submit" outline color="info">Gửi</Button>
-                    </Form>
+                        <SystemTime />
+                        <div style={{ paddingTop: '3vh' }} />
+                        <div className='text-center'>
+                            <h3 style={{ color: '#55befc' }}>Đăng ký thông tin doanh nghiệp</h3>
+                            <div style={{ paddingTop: '1em' }} />
+                        </div>
+                        <Form onSubmit={handleSubmit}>
+                            <FormGroup>
+                                <Label for="businessName">1. Tên doanh nghiệp <span className='text-danger'>*</span></Label>
+                                <Input type="text" name="businessName" id="businessName" placeholder='ex: FPT Information System' required value={businessName} onChange={handleChange} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="userEmail">2. Email</Label>
+                                <Input type="email" name="businessEmail" id="businessEmail" placeholder={decoded.email} disabled={true} />
+                            </FormGroup>
+                            <Row form>
+                                <Col md={8}>
+                                    <FormGroup>
+                                        <Label for="businessAddress">3. Địa chỉ <span className='text-danger'>*</span></Label>
+                                        <Input type="text" name="businessAddress" id="businessAddress" required value={businessAddress} onChange={handleChange} />
+                                    </FormGroup>
+                                </Col>
+                                <Col md={4}>
+                                    <FormGroup>
+                                        <Label for="businessTaxNumber">4. Mã số thuế <span className='text-danger'>*</span></Label>
+                                        <Input className="without_number" type="number" name="businessTaxNumber" id="businessTaxNumber" required value={businessTaxNumber} onChange={handleChange} />
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+                            <FormGroup>
+                                <Label for="file">5. Tài liệu</Label>
+                                <CustomInput type="file" id="businessDocument" name="businessDocument" label="Upload tài liệu ở đây" onChange={uploadFileHandler} />
+                            </FormGroup>
+                            <Button type="submit" outline color="info">Gửi</Button>
+                        </Form>
                     </Container>
                 </div>
                 <div style={{ paddingBottom: '2vh' }} />

@@ -21,6 +21,7 @@ import { AuthContext } from "../../components/contexts/AuthContext";
 import Footer from "../../components/Footer";
 import CustomNav from "../../components/Navbars/Enterprise/CustomNav";
 import SystemTime from "../../components/System";
+import { serverUrl } from "../../config/Route/server";
 import "./index.css";
 
 export default function AdminDashboard() {
@@ -40,6 +41,7 @@ export default function AdminDashboard() {
   //Decode token 
   const decoded = jwt_decode(emailtoken);
   const useremail = decoded.email;
+  const enterpriseName = decoded.name;
   const history = useHistory();
 
   const toHistoryClick = (useremail) => {

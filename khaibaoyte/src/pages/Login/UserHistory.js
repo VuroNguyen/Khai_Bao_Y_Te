@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Table } from 'reactstrap';
+import { Container, Table } from 'reactstrap';
 import Footer from '../../components/Footer';
 import EnterpriseNav from '../../components/Navbars/Enterprise';
 import HistoryNav from '../../components/Navbars/Enterprise/HistoryNav';
