@@ -224,6 +224,8 @@ router.get('/getReport', async (req, res) => {
 })
 
 router.get('/getSpecificDay/:datetime', async (req, res) => {
+    const enterpriseName = req.query.enterpriseName;
+    const nameQuery = enterpriseName ? { enterpriseName: { $regex: new RegExp(enterpriseName), $options: "g" } } : {};
 
     const start = new Date(req.params.datetime)
     const dateParts = req.params.datetime.split('-'),
@@ -259,10 +261,10 @@ router.get('/getSpecificDay/:datetime', async (req, res) => {
              },
 
              { $project: { userInfo: 0 } },
-             {$match: {"createdAt": {
-                 $gte: start,
-                 $lt: end,
-             }}}
+             {$match: {$and: [nameQuery, {"createdAt": {
+                $gte: start,
+                $lt: end,
+            }}]}}
 
             // { "$unwind": "$userInfo" },
         ]
