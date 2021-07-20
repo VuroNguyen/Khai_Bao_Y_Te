@@ -22,7 +22,7 @@ import CustomNav from "../../components/Navbars/Enterprise/CustomNav";
 import SystemTime from "../../components/System";
 import "./index.css";
 import { AuthContext } from "../../components/contexts/AuthContext";
-import { serverUrl } from '../../config/Route/server'
+import { serverUrl } from "../../config/Route/server";
 
 // class AdminDashboard extends Component {
 //     constructor(props) {
@@ -207,60 +207,63 @@ export default function AdminDashboard() {
   const [flag, setFlag] = useState(false);
 
   const toggleFormAddOK = () => {
-    console.log("add");
     if (!userEmail || !userDepartment || !userPhone) {
       setFlag(false);
-    }
-    else {
+    } else {
       setFlag(true);
     }
+    console.log("im flag: ", flag);
   };
 
   const toggleFormAdd = () => {
     setModalFormAdd(!modalFormAdd);
-  }
+  };
 
-  // const [addEmail, setAddEmail] = useState("");
-  // const [addDept, setAddDept] = useState("");
-  // const [addTel, setAddTel] = useState("");
-  // const submitFormAdd = (e) => {
-  //   e.preventDefault();
-  //   // on submit success clear the form
-  //   // then toggle the form
-  // };
-
-  // const [editEnterpriseUser, setEditEnterpriseUser] = useState({
-  //   editEmail: "",
-  //   editDepartment: "",
-  //   editPhone: "",
-  // });
-
-  // const parseFormEdit = (email, deparment, telephone) => {
-  //   toggleFormEdit();
-
-  //   setEditEnterpriseUser({
-  //     editEmail: email,
-  //     editDepartment: deparment,
-  //     editPhone: telephone,
-  //   });
-  // };
-
-  // const { editEmail, editDepartment, editPhone } = editEnterpriseUser;
-
-  const [editEmail, setEditEmail] = useState("");
-  const [editDept, setEditDept] = useState("");
-  const [editTel, setEditTel] = useState("");
-  const parseFormEdit = (email, deparment, telephone) => {
-    // toggle editform
-    toggleFormEdit();
-    // parse data to form
-    setEditEmail(email);
-    setEditDept(deparment);
-    setEditTel(telephone);
+  const toggleFormEditOK = () => {
+    if (!editEmail || !editDept || !editTel) {
+      setFlagEdit(false);
+    } else {
+      setFlagEdit(true);
+    }
+    console.log("im flag edit: ", flagEdit);
   };
 
   const toggleFormEdit = () => {
     setModalFormEdit(!modalFormEdit);
+  };
+
+  const [editEnterpriseUser, setEditEnterpriseUser] = useState({
+    editEmail: "",
+    editDept: "",
+    editTel: "",
+  });
+  const { editEmail, editDept, editTel } = editEnterpriseUser;
+
+  const [flagEdit, setFlagEdit] = useState({
+    flagEditEmail: true,
+    flagEditDepartment: true,
+    flagEditPhone: true,
+  });
+
+  const { flagEditEmail, flagEditDepartment, flagEditPhone } = flagEdit;
+
+  const parseFormEdit = (email, department, telephone) => {
+    // toggle editform
+    toggleFormEdit();
+    // parse data to form
+    setEditEnterpriseUser({
+      editEmail: email,
+      editDept: department,
+      editTel: telephone,
+    });
+  };
+
+  const onEditChange = (event) => {
+    toggleFormEditOK();
+    setEditEnterpriseUser({
+      ...editEnterpriseUser,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const dataUpdate = JSON.stringify({
@@ -268,13 +271,6 @@ export default function AdminDashboard() {
     department: editDept,
     phone: editTel,
   });
-
-  // const onEditChange = (event) => {
-  //   setEditEnterpriseUser({
-  //     ...editEnterpriseUser,
-  //     [event.target.name]: event.target.value,
-  //   });
-  // };
 
   const updateUser = async (event) => {
     event.preventDefault();
@@ -297,12 +293,6 @@ export default function AdminDashboard() {
     }
   };
 
-  const submitFormEdit = (e) => {
-    e.preventDefault();
-    // on submit success clear the form
-    // then toggle the form
-  };
-
   // TODO: add useEffect whenever addnew or edit
   // refresh the table with new data
   // WTF nhân viên méo ai có sdt vs phòng ban bro ???
@@ -313,6 +303,14 @@ export default function AdminDashboard() {
     userPhone: "",
   });
 
+  const [flagAdd, setFlagAdd] = useState({
+    flagAddEmail: false,
+    flagAddDepartment: false,
+    flagAddPhone: false,
+  });
+
+  const { flagAddEmail, flagAddDepartment, flagAddPhone } = flagAdd;
+
   // declare from enterpriseUser
   const { userEmail, userDepartment, userPhone } = enterpriseUser;
 
@@ -322,7 +320,7 @@ export default function AdminDashboard() {
       [event.target.name]: event.target.value,
     });
     toggleFormAddOK();
-  }
+  };
 
   const data = JSON.stringify({
     email: userEmail,
@@ -338,6 +336,18 @@ export default function AdminDashboard() {
       setFetch(true);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  let checkEmail = (email) => {
+    // don't remember from where i copied this code, but this works.
+    let re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    if (re.test(email)) {
+      setFlagAdd({ ...flagAdd, flagAddDepartment: true });
+    } else {
+      setFlagAdd({ ...flagAdd, flagAddEmail: false });
     }
   };
 
@@ -363,7 +373,7 @@ export default function AdminDashboard() {
     <div className="page-container">
       <div className="content-wrap">
         <CustomNav />
-        <div className='container-fluid'>
+        <div className="container-fluid">
           <div style={{ paddingTop: "2vh" }} />
           <Container>
             <SystemTime />
@@ -391,7 +401,8 @@ export default function AdminDashboard() {
                   <ModalBody>
                     <FormGroup>
                       <Label for="userEmail">
-                        1. Email nhân viên <span className="text-danger">*</span>
+                        1. Email nhân viên{" "}
+                        <span className="text-danger">*</span>
                       </Label>
                       <Input
                         type="text"
@@ -399,7 +410,29 @@ export default function AdminDashboard() {
                         id="userEmail"
                         placeholder="Ví dụ: emailcuaban@fpt.com.vn"
                         value={userEmail}
-                        onChange={onSubmitChange}
+                        onChange={(event) => {
+                          const re =
+                            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                          setEnterpriseUser({
+                            ...enterpriseUser,
+                            [event.target.name]: event.target.value,
+                          });
+                          if (re.test(userEmail)) {
+                            console.log("im userEmail: ", userEmail);
+                            setFlagAdd({ ...flagAdd, flagAddEmail: true });
+                          } else {
+                            console.log("im userEmail: ", userEmail);
+                            setFlagAdd({ ...flagAdd, flagAddEmail: false });
+                          }
+                          // console.log(
+                          //   ",im here flagAddEmail: ",
+                          //   flagAddEmail,
+                          //   "im here flagAddDepartment: ",
+                          //   flagAddDepartment,
+                          //   " im here flagAddPhone: ",
+                          //   flagAddPhone
+                          // );
+                        }}
                         required
                       />
                     </FormGroup>
@@ -413,11 +446,22 @@ export default function AdminDashboard() {
                         name="userDepartment"
                         required
                         value={userDepartment}
-                        onChange={onSubmitChange}
+                        onChange={(event) => {
+                          setEnterpriseUser({
+                            ...enterpriseUser,
+                            [event.target.name]: event.target.value,
+                          });
+                          if (event.target.value) {
+                            setFlagAdd({ ...flagAdd, flagAddDepartment: true });
+                          } else {
+                            setFlagAdd({
+                              ...flagAdd,
+                              flagAddDepartment: false,
+                            });
+                          }
+                        }}
                       >
-                        <option value="">
-                          Vui lòng chọn phòng ban
-                        </option>
+                        <option value="">Vui lòng chọn phòng ban</option>
                         <option value="Nhân sự">Nhân sự</option>
                         <option value="IT">IT</option>
                         <option value="Marketing">Marketing</option>
@@ -437,14 +481,28 @@ export default function AdminDashboard() {
                         id="userPhone"
                         placeholder="Ví dụ: 0845372112"
                         value={userPhone}
-                        onChange={onSubmitChange}
+                        onChange={(event) => {
+                          setEnterpriseUser({
+                            ...enterpriseUser,
+                            [event.target.name]: event.target.value,
+                          });
+                          if (event.target.value) {
+                            setFlagAdd({ ...flagAdd, flagAddPhone: true });
+                          } else {
+                            setFlagAdd({ ...flagAdd, flagAddPhone: false });
+                          }
+                        }}
                         required
                       />
                     </FormGroup>
                   </ModalBody>
                   <ModalFooter>
                     <Button
-                      onClick={flag ? toggleFormAdd : null}
+                      onClick={
+                        flagAddEmail && flagAddDepartment && flagAddPhone
+                          ? toggleFormAdd
+                          : null
+                      }
                       type="submit"
                       outline
                       color="info"
@@ -515,7 +573,14 @@ export default function AdminDashboard() {
                                 disabled
                                 value={editEmail}
                                 onChange={(event) => {
-                                  setEditEmail(event.target.value);
+                                  setEditEnterpriseUser({
+                                    ...editEnterpriseUser,
+                                    [event.target.name]: event.target.value,
+                                  });
+                                  setFlagEdit({
+                                    ...flagEdit,
+                                    flagEditEmail: true,
+                                  });
                                 }}
                               />
                             </FormGroup>
@@ -527,11 +592,27 @@ export default function AdminDashboard() {
                               <CustomInput
                                 type="select"
                                 id="userDepartment"
-                                name="editDepartment"
+                                name="editDept"
                                 required
                                 value={editDept}
                                 onChange={(event) => {
-                                  setEditDept(event.target.value);
+                                  setEditEnterpriseUser({
+                                    ...editEnterpriseUser,
+                                    [event.target.name]: event.target.value,
+                                  });
+                                  if (event.target.value) {
+                                    setFlagEdit({
+                                      ...flagEdit,
+                                      flagEditEmail: true,
+                                      flagEditDepartment:true,
+                                    });
+                                  } else {
+                                    setFlagEdit({
+                                      ...flagEdit,
+                                      flagEditEmail: true,
+                                      flagEditDepartment:false,
+                                    });
+                                  }
                                 }}
                               >
                                 <option value="">
@@ -552,20 +633,52 @@ export default function AdminDashboard() {
                               <Input
                                 className="without_number"
                                 type="number"
-                                name="editPhone"
+                                name="editTel"
                                 id="userPhone"
                                 placeholder="Ví dụ: 0845372112"
                                 required
                                 value={editTel}
                                 onChange={(event) => {
-                                  setEditTel(event.target.value);
+                                  setEditEnterpriseUser({
+                                    ...editEnterpriseUser,
+                                    [event.target.name]: event.target.value,
+                                  });
+                                  if (event.target.value) {
+                                    setFlagEdit({
+                                      ...flagEdit,
+                                      flagEditEmail: true,
+                                      flagEditPhone:true,
+                                    });
+                                  } else {
+                                    setFlagEdit({
+                                      ...flagEdit,
+                                      flagEditEmail: true,
+                                      flagEditPhone:false,
+                                    });
+                                  }
+                                  // console.log(
+                                  //   event.target.value,
+                                  //   "++",
+                                  //   "im here flagAddDepartment: ",
+                                  //   flagEditDepartment,
+                                  //   ",im here flagAddEmail: ",
+                                  //   flagEditEmail,
+                                  //   " im here flagAddPhone: ",
+                                  //   flagEditPhone
+                                  // );
                                 }}
                               />
                             </FormGroup>
                           </ModalBody>
                           <ModalFooter>
                             <Button
-                              onClick={toggleFormEdit}
+                              onClick={
+                                flagEditEmail &&
+                                flagEditDepartment &&
+                                flagEditPhone
+                                  ? toggleFormEdit
+                                  : null
+                              }
                               type="submit"
                               outline
                               color="info"
