@@ -254,7 +254,7 @@ function LoginForm() {
     return (
         <div className='page-container'>
             <div className='content-wrap'>
-                <FormNav />
+                <FormNav token={emailtoken} />
                 <div className='container-fluid'>
                     <div style={{ paddingTop: '2vh' }} />
                     <SystemTime />

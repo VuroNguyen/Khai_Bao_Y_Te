@@ -33,7 +33,6 @@ function App() {
           component={LoginForm} />
         <PrivateRoutes
           path={routeConfig.history["list-url"]}
-          exact
           component={UserHistory} />
         <Route
           path={routeConfig.register["list-url"]}
@@ -50,7 +49,7 @@ function App() {
           path={routeConfig.enterpriseinfo["list-url"]}
           exact
           component={EnterpriseInfo} />
-        <Route
+        <PrivateRoutes
           path={routeConfig.report["list-url"]}
           component={Report} />
       </Switch>

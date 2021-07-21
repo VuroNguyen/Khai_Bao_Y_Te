@@ -4,15 +4,24 @@ import {
     NavLink
 } from 'reactstrap';
 import addImage from '../../../assets/images/add1.png';
+import jwt_decode from 'jwt-decode';
 import '../index.css';
+import checkToken from '../../utils/seturl';
 
 const CustomNav = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
 
+    const today = new Date();
 
-    return (
+    const alertnotoken = () => {
+        if( props.token == null || props.token === '' || jwt_decode(props.token).exp * 1000 < today.getTime() ){
+            alert('Không tìm thấy token. Đang đưa người dùng về trang đăng nhập... (send from CustomNav alertnotoken)')
+        }
+        else return;
+    }
+       return (
         <Navbar light expand="md">
             <NavbarBrand href="/" >
                 <div className='d-flex align-items-center'>
@@ -29,12 +38,12 @@ const CustomNav = (props) => {
                 <Nav className="ml-auto" navbar>
                     <Col xs="auto">
                         <NavItem>
-                            <NavLink href="/report">Báo cáo</NavLink>
+                            <NavLink href={checkToken(props.token, 'report')} onClick={() => alertnotoken()}>Báo cáo</NavLink>
                         </NavItem>
                     </Col>
                     <Col xs="auto">
                         <NavItem>
-                            <NavLink href="/enterprise">Thông tin doanh nghiệp</NavLink>
+                            <NavLink href={checkToken(props.token, 'enterprise')} onClick={() => alertnotoken()}>Thông tin doanh nghiệp</NavLink>
                         </NavItem>
                     </Col>
                 </Nav>
