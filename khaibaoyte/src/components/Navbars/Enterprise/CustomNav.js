@@ -46,6 +46,11 @@ const CustomNav = (props) => {
                             <NavLink href={checkToken(props.token, 'enterprise')} onClick={() => alertnotoken()}>Thông tin doanh nghiệp</NavLink>
                         </NavItem>
                     </Col>
+                    <Col xs="auto">
+                        <NavItem>
+                            <NavLink href={checkToken(props.token, 'enterprise')} onClick={() => alertnotoken()}>Thoát</NavLink>
+                        </NavItem>
+                    </Col>
                 </Nav>
             </Collapse>
         </Navbar>

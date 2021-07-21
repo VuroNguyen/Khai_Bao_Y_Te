@@ -47,6 +47,11 @@ const EnterpriseNav = (props) => {
                             <NavLink href={checkToken(props.token, 'admindashboard')} onClick={() => alertnotoken()}>Quản lý nhân viên</NavLink>
                         </NavItem>
                     </Col>
+                    <Col xs="auto">
+                        <NavItem>
+                            <NavLink href={checkToken(props.token, 'enterprise')} onClick={() => alertnotoken()}>Thoát</NavLink>
+                        </NavItem>
+                    </Col>
                 </Nav>
             </Collapse>
         </Navbar>

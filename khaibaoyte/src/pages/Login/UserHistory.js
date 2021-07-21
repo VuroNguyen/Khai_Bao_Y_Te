@@ -1,12 +1,13 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Container, Table } from 'reactstrap';
+import { Table } from 'reactstrap';
 import Footer from '../../components/Footer';
 import HistoryNav from '../../components/Navbars/Enterprise/HistoryNav';
-import jwt_decode from 'jwt-decode';
 import SystemTime from '../../components/System';
+import {serverUrl} from '../../config/Route/server'
 
 const UserHistory = (props) => {
     const [data, setData] = useState([]);
@@ -45,10 +46,10 @@ const UserHistory = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-                `http://localhost:5000/api/khaibao/form?email=${email}`,
+                `${serverUrl}/api/khaibao/form?email=${email}`,
             );
             const response = await axios(
-                `http://localhost:5000/api/khaibao/form/count?email=${email}`,
+                `${serverUrl}/api/khaibao/form/count?email=${email}`,
             );
             setData(result.data);
             setCount(response.data);

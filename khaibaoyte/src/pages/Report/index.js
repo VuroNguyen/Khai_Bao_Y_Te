@@ -2,6 +2,7 @@ import axios from "axios";
 import vi from "date-fns/locale/vi";
 //decode
 import jwt_decode from "jwt-decode";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -106,6 +107,7 @@ const Report = (props) => {
                 <th>Email</th>
                 <th>Phòng ban</th>
                 <th>SĐT</th>
+                <th>Khai báo lúc</th>
                 <th>Các dấu hiệu</th>
                 <th>Di chuyển</th>
                 <th>Tiếp xúc</th>
@@ -118,6 +120,7 @@ const Report = (props) => {
                   <td>{data.email}</td>
                   <td>{data.department}</td>
                   <td>{data.phone}</td>
+                  <td>{moment(data.createdAt).format('DD/MM/YYYY')}</td>
                   <td>{data.quest4}</td>
                   <td>{data.quest5}</td>
                   <td>{data.quest6}</td>

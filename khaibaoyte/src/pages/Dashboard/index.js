@@ -164,6 +164,8 @@ export default function AdminDashboard() {
 
   const addUser = async (event) => {
     event.preventDefault();
+
+    let flagEmail = false
     try {
       const addUserEnterprise = await registerUserEnterprise(data, emailtoken);
       console.log(addUserEnterprise);
@@ -173,23 +175,29 @@ export default function AdminDashboard() {
           message: "Email đã tồn tại hoặc không đúng",
         });
         setTimeout(() => {
-          setAlert(null);
+          setAlert(null)
         }, 5000);
         // setFlagAdd({ ...flagAdd, flagAddEmail: false });
-        // setModalFormAdd(true);
+        // setModalFormAdd(false);
         setFlagAdd({ ...flagAdd, flagAddEmail: false });
+        flagEmail = false;
+        console.log("im not success");
       }
       if (addUserEnterprise.success) {
         // setFlagAdd({ ...flagAdd, flagAddEmail: false });
-        // setModalFormAdd(true);
+        // setM odalFormAdd(true);
         setFlagAdd({ ...flagAdd, flagAddEmail: true });
+        flagEmail = true;
+        console.log("im success");
+        setEnterpriseUser({
+          userEmail: "",
+          userDepartment: "",
+          userPhone: "",
+        });
       }
 
-      flagAddEmail && flagAddDepartment && flagAddPhone
-        ? setModalFormAdd(false)
-        : setModalFormAdd(true);
       console.log(
-        ",im here flagAddEmail: ",
+        "im here flagAddEmail: ",
         flagAddEmail,
         "im here flagAddDepartment: ",
         flagAddDepartment,
@@ -197,10 +205,9 @@ export default function AdminDashboard() {
         flagAddPhone
       );
 
-      // if (addUserEnterprise.success) {
-      //   setFlagAdd({ ...flagAdd, flagAddEmail: true });
-      //   setModalFormAdd(false);
-      // }
+      flagEmail && flagAddEmail && flagAddDepartment && flagAddPhone
+      ? setModalFormAdd(false)
+      : setModalFormAdd(true);
       setFetch(true);
     } catch (error) {
       console.log(error);
@@ -278,12 +285,12 @@ export default function AdminDashboard() {
                       value={userEmail}
                       onChange={(event) => {
                         const re =
-                          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                          /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$/;
                         setEnterpriseUser({
                           ...enterpriseUser,
                           [event.target.name]: event.target.value,
                         });
-                        if (re.test(userEmail)) {
+                        if (re.test(event.target.value)) {
                           setFlagAdd({ ...flagAdd, flagAddEmail: true });
                         } else {
                           setFlagAdd({ ...flagAdd, flagAddEmail: false });

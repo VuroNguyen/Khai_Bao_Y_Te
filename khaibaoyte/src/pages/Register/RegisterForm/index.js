@@ -7,6 +7,7 @@ import Footer from '../../../components/Footer';
 import BlankNav from '../../../components/Navbars/Enterprise/BlankNav';
 import SystemTime from '../../../components/System';
 import './index.css';
+import {serverUrl} from '../../../config/Route/server'
 
 
 export default function RegisterForm() {
@@ -29,7 +30,7 @@ export default function RegisterForm() {
         try {
             const res = await axios({
                 method: 'POST',
-                url: 'http://localhost:5000/enterprise/register',
+                url: `${serverUrl}/enterprise/register`,
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -82,7 +83,7 @@ export default function RegisterForm() {
         bodyFormData.append('document', file);
         setLoadingUpload(true);
         try {
-            const { data } = await axios.post('http://localhost:5000/enterprise/uploaddoc', bodyFormData, {
+            const { data } = await axios.post(`${serverUrl}/enterprise/uploaddoc`, bodyFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -101,7 +102,7 @@ export default function RegisterForm() {
         <div className='page-container'>
             <div className='content-wrap'>
                 <BlankNav />
-                <div className='container-fluid'>
+                <div className='container'>
                     <div style={{ paddingTop: '2vh' }} />
                     <SystemTime />
                     <div style={{ paddingTop: '3vh' }} />
