@@ -5,11 +5,14 @@ import EnterpriseNav from '../../components/Navbars/Enterprise/EnterpriseNav';
 import SystemTime from '../../components/System';
 
 function EnterpriseInfo() {
+        //get token from localStorage
+        const usertoken = localStorage.getItem('khaibaoyte');
+        const emailtoken = window.location.href.split('enterprise/')[1];
     return (
         <div className='page-container'>
             <div className='content-wrap'>
-                <EnterpriseNav />
-                <div className='container'>
+                <EnterpriseNav token={emailtoken}/>
+                <div className='container-fluid'>
                     <div style={{ paddingTop: '2vh' }} />
                     <SystemTime />
                     <div style={{ paddingTop: '3vh' }} />

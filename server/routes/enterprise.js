@@ -82,7 +82,7 @@ router.post('/register',  async (req, res) => {
 
         await newEnterprise.save()
 
-        const accessToken = jwt.sign({ enterpriseId: newEnterprise._id, name, email: newEnterprise.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' })
+        const accessToken = jwt.sign({ enterpriseId: newEnterprise._id, name, email: newEnterprise.email, MST: newEnterprise.MST }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' })
 
         res.json({ success: true, message: 'Nhận email thành công', accessToken, enterpriseInfo: newEnterprise })
     } catch (error) {
@@ -112,7 +112,7 @@ router.post('/login', async (req, res) => {
         if (!enterprise)
             return res.status(400).json({ success: false, message: 'Incorrect Email' })
 
-        const enterpriseAccessToken = jwt.sign({ enterpriseId: enterprise._id, email, name: enterprise.name }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' })
+        const enterpriseAccessToken = jwt.sign({ enterpriseId: enterprise._id, email, name: enterprise.name, MST: enterprise.MST }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30m' })
         sendEnterpriseDaily(email, urlEnterprise, enterpriseAccessToken)
 
         res.json({ success: true, message: 'Login Mail thành công', accessToken: enterpriseAccessToken, enterprise: enterprise })

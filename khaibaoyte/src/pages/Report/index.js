@@ -66,8 +66,8 @@ const Report = (props) => {
   return (
     <div className="page-container">
       <div className="content-wrap">
-        <ManageNav />
-        <div className="container">
+        <ManageNav token={token}/>
+        <div className="container-fluid">
           <div style={{ paddingTop: "2vh" }} />
           <SystemTime />
           <div style={{ paddingTop: "3vh" }} />
