@@ -233,6 +233,9 @@ router.get('/getSpecificDay/:datetime', async (req, res) => {
     const enterpriseName = req.query.enterpriseName;
     const nameQuery = enterpriseName ? { enterpriseName: { $regex: new RegExp(enterpriseName), $options: "g" } } : {};
 
+    const email = req.query.email;
+    const emailQuery = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
+
     const start = new Date(req.params.datetime)
     const dateParts = req.params.datetime.split('-'),
           y = parseInt(dateParts[0], 10),
@@ -267,7 +270,7 @@ router.get('/getSpecificDay/:datetime', async (req, res) => {
              },
 
              { $project: { userInfo: 0 } },
-             {$match: {$and: [nameQuery, {"createdAt": {
+             {$match: {$and: [email ? emailQuery : enterpriseName ? nameQuery : {}, {"createdAt": {
                 $gte: start,
                 $lt: end,
             }}]}}
