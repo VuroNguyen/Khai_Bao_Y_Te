@@ -22,6 +22,11 @@ const EnterpriseNav = (props) => {
         else return;
     }
 
+    const logout = () => {
+        localStorage.removeItem('khaibaoyte');
+        alert('Đăng xuất thành công');
+    }
+
     return (
         <Navbar light expand="md">
             <NavbarBrand href="/" >
@@ -49,7 +54,7 @@ const EnterpriseNav = (props) => {
                     </Col>
                     <Col xs="auto">
                         <NavItem>
-                            <NavLink href={checkToken(props.token, 'enterprise')} onClick={() => alertnotoken()}>Thoát</NavLink>
+                            <NavLink href='/' onClick={() => logout()}>Thoát</NavLink>
                         </NavItem>
                     </Col>
                 </Nav>
