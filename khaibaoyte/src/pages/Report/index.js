@@ -67,7 +67,7 @@ const Report = (props) => {
     <div className="page-container">
       <div className="content-wrap">
         <ManageNav />
-        <div className="container-fluid">
+        <div className="container">
           <div style={{ paddingTop: "2vh" }} />
           <SystemTime />
           <div style={{ paddingTop: "3vh" }} />
