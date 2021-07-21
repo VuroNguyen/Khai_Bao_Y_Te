@@ -54,22 +54,22 @@ router.post('/register',  async (req, res) => {
     const { name, email, address, MST, document } = req.body
 
     const validName = await Enterprise.findOne({ name })
-    if (validName) return res.status(400).json({ success: false, message: 'Tên Doanh Nghiệp Đã Tồn Tại' })
+    if (validName) return res.json({ success: false, message: 'Tên Doanh Nghiệp Đã Tồn Tại' })
 
     if (!name || !email || !address || !MST)
-        return res.status(400).json({ success: false, message: 'Có ô chưa nhập' })
+        return res.json({ success: false, message: 'Có ô chưa nhập' })
 
     if (!validateEmail(email))
-        return res.status(400).json({ success: false, message: 'Xin hãy nhập mail khác' })
+        return res.json({ success: false, message: 'Xin hãy nhập mail khác' })
 
     const enterprise = await Enterprise.findOne({ email })
-    if (enterprise) return res.status(400).json({ success: false, message: 'Email đã tồn tại' })
+    if (enterprise) return res.json({ success: false, message: 'Email đã tồn tại' })
 
     const enterpriseMST = await Enterprise.findOne({ MST })
-    if (enterpriseMST) return res.status(400).json({ success: false, message: 'MST đã tồn tại' })
+    if (enterpriseMST) return res.json({ success: false, message: 'MST đã tồn tại' })
 
     const isUser = await User.findOne({ email })
-    if (isUser) return res.status(400).json({ success: false, message: 'Email này đã được đăng kí dưới dạng email nhân viên' })
+    if (isUser) return res.json({ success: false, message: 'Email này đã được đăng kí dưới dạng email nhân viên' })
 
     try {
         const newEnterprise = new Enterprise({
