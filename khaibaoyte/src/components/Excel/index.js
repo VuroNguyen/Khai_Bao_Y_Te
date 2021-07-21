@@ -17,6 +17,6 @@ export const ExportToExcel = ({ apiData, fileName }) => {
     };
 
     return (
-        <Button outline color="info" onClick={(e) => exportToCSV(apiData, fileName)}>Xuất ra file Excel tổng hợp</Button>
+        <Button outline color="info" onClick={(e) => exportToCSV(apiData, fileName)}>Xuất ra file Excel</Button>
     );
 };
