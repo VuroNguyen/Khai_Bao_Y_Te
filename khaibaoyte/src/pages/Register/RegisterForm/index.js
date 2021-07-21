@@ -101,7 +101,7 @@ export default function RegisterForm() {
         <div className='page-container'>
             <div className='content-wrap'>
                 <BlankNav />
-                <div className='container'>
+                <div className='container-fluid'>
                     <div style={{ paddingTop: '2vh' }} />
                     <SystemTime />
                     <div style={{ paddingTop: '3vh' }} />
