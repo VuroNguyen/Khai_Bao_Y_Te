@@ -4,8 +4,8 @@ GET http://localhost:5000/api/khaibao/form
 
 ###
 
-//lấy tất cả form trong 1 ngày xác định. nhập ngày như dưới theo name của enterprise
-GET http://localhost:5000/enterprise/getSpecificDay/2021-07-17?enterpriseName=CÔNG
+//lấy tất cả form trong 1 ngày xác định. nhập ngày như dưới theo name của enterprise và mail
+GET http://localhost:5000/enterprise/getSpecificDay/2021-07-17?email=nhatlam1695@gmail.com
 
 
 ###
