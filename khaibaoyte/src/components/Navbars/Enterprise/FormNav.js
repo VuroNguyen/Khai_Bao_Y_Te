@@ -16,7 +16,7 @@ const FormNav = (props) => {
     const today = new Date();
 
     const alertnotoken = () => {
-        if( props.token == null || props.token === '' || jwt_decode(props.token).exp * 1000 < today.getTime() ){
+        if (props.token == null || props.token === '' || jwt_decode(props.token).exp * 1000 < today.getTime()) {
             alert('Không tìm thấy token. Đang đưa người dùng về trang đăng nhập... (send from CustomNav alertnotoken)')
         }
         else return;
@@ -26,11 +26,11 @@ const FormNav = (props) => {
         <Navbar light expand="md">
             <NavbarBrand href="/" >
                 <div className='d-flex align-items-center'>
-                    <div className='col-sm'>
-                        <img
-                            src={addImage}
-                            alt='icon' />
-                    </div>
+                    <div style={{ marginLeft: "-4px" }} />
+                    <img
+                        src={addImage}
+                        alt='icon' />
+                    <div className='ml-2' />
                     Khai Báo Y Tế Doanh Nghiệp
                 </div>
             </NavbarBrand>

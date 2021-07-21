@@ -14,12 +14,12 @@ const BlankNav = (props) => {
     return (
         <Navbar light expand="md">
             <NavbarBrand href="/" >
-                <div className='d-flex align-items-center'>
-                    <div className='col-sm'>
-                        <img
-                            src={addImage}
-                            alt='icon' />
-                    </div>
+            <div className='d-flex align-items-center'>
+                    <div style={{ marginLeft: "-4px" }} />
+                    <img
+                        src={addImage}
+                        alt='icon' />
+                    <div className='ml-2' />
                     Khai Báo Y Tế Doanh Nghiệp
                 </div>
             </NavbarBrand>
