@@ -18,17 +18,11 @@ function LoginForm() {
     // Anh Lam làm thêm cái local
     //get token from localStorage
     const usertoken = localStorage.getItem('khaibaoyte');
-    const emailtoken = window.location.href.split('form/')[1];
+    const emailtoken = window.location.href.split('form/')[1] ? window.location.href.split('form/')[1] : null ;
     //Decode token
     const decoded = jwt_decode(emailtoken);
     const useremail = decoded.email;
     const userID = decoded.userId;
-
-    // const active = async () => {
-
-    //     alert(activeData.data.message)
-    //     console.log(activeData)
-    // }
 
     // set location for react-router to parse data to
     const userData = useLocation();
@@ -59,16 +53,6 @@ function LoginForm() {
 
     const [length, setLength] = useState('');
 
-    const checkuserAuth = (e) => {
-        if (localStorage.getItem('khaibaoyte') == null) {
-            history.push({
-                pathname: "/",
-            });
-            alert('Không có xác thực, vui lòng quay lại Trang khai báo')
-            return false;
-        } else return true;
-    }
-
     //useEffect để a show 2 cái API số lần khai báo trong ngày, lần khai báo cuối lúc
     useEffect(() => {
         const fetchData = async () => {
@@ -86,14 +70,7 @@ function LoginForm() {
             setUserInfoLastest(lastest.data[0] ? lastest.data[0].createdAt : 'Chua');
             setLength(lastest.data.length);
             console.log('Lastest: ', lastest.data);
-            // console.log('Total: ', total.data);
-            // console.log(lastest.data[0].createdAt);
-            //In ra check
-            // console.log(useremail);
-            // console.log('Decoded: ', decoded);
-            // console.log('lần cuối lúc: ', getCreatedAtdate);
         };
-
         gettokenfromurl();
         fetchData();
     }, [])
@@ -169,14 +146,6 @@ function LoginForm() {
         setAnswer4(tempArr);
     }
 
-    // // set values on click/inputs
-    // const handleuserDepartment = (e) => {
-    //     setUserDepartment(e.target.value);
-    // }
-    // const handleuserTelephone = (e) => {
-    //     setUserTelephone(e.target.value);
-    // }
-
     const onValueChange = (e) => {
         if (e.target.name === "question5") {
             setAnswer5(e.target.value);
@@ -209,14 +178,14 @@ function LoginForm() {
                 url: `${serverUrl}/api/khaibao`,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${usertoken}`
+                    'Authorization': `Bearer ${emailtoken}`
                 },
                 data: data,
             })
             console.log(res.data);
             alert('Bạn đã khai báo thành công, bạn có thể xem lại lịch sử khai báo sau đây')
             history.push({
-                pathname: `/history`,
+                pathname: `/history/`,
                 state: { useremail: useremail }
             });
 
@@ -233,7 +202,6 @@ function LoginForm() {
         if (answer4.length !== 0) {
             setUserDepartment(decoded.department ? decoded.department : 'Không có');
             setUserTelephone(decoded.phone ? decoded.phone : '0');
-            // alert('deparment ' + userdepartment + ' tel ' + usertelephone + ' ans4 ' + JSON.stringify(answer4) + ' ans5 ' + answer5 + ' ans6 ' + answer6 + ' ans7 ' + answer7);
             validated = true;
             postReport(answer);
         }
@@ -246,11 +214,10 @@ function LoginForm() {
 
     const handleHistory = e => {
         history.push({
-            pathname: `/history`,
+            pathname: `/history/`,
             state: { useremail: useremail }
         });
     }
-
     return (
         <div className='page-container'>
             <div className='content-wrap'>
@@ -259,7 +226,6 @@ function LoginForm() {
                     <div style={{ paddingTop: '2vh' }} />
                     <SystemTime />
                     <div style={{ paddingTop: '3vh' }} />
-                    {window.onloadstart = checkuserAuth()}
                     <Form onSubmit={handleHistory}>
                         <div className='text-center'>
                             <h3 style={{ color: '#55befc' }}>Khai báo</h3>

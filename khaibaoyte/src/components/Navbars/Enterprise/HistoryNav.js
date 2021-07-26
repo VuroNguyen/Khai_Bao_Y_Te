@@ -17,7 +17,8 @@ const HistoryNav = (props) => {
     let getMST = jwt_decode(localdata).MST;
 
     const isEnterprise = () => {
-        if (getMST !== null || getMST !== '') {
+        console.log(getMST)
+        if (getMST !== undefined) {
             return true;
         }
         else return false;
@@ -49,7 +50,10 @@ const HistoryNav = (props) => {
                 <Nav className="ml-auto" navbar>
                     <Col xs="auto">
                         {isEnterprise()
-                            ? <></>
+                            ? 
+                            <NavItem>
+                                <NavLink href={checkToken(props.token, 'admindashboard')} onClick={() => alertnotoken()}>Quản lý nhân viên</NavLink>
+                            </NavItem>
                             :
                             <NavItem>
                                 <NavLink href={checkToken(props.token, 'form')} onClick={() => alertnotoken()}>Trang khai báo</NavLink>
